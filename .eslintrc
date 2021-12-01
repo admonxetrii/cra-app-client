@@ -1,5 +1,12 @@
 {
     "plugins": ["@react-native-community"],
+    "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
     "rules": {
         "quotes": [2, "double", {"avoidEscape": true}]
     }
