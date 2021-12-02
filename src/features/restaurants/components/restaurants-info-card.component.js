@@ -1,57 +1,19 @@
 import React from "react";
-import styled from "styled-components/native";
-import { Text, View } from "react-native";
-import { Card } from "react-native-paper";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faStar, faUtensils } from "@fortawesome/free-solid-svg-icons";
-import { SvgXml } from "react-native-svg";
 import { Spacer } from "../../../components/spacer/spacer.component";
+import { Text } from "../../../components/typography/text.component";
 
-const Section = styled(View)`
-  flex-direction: row;
-  align-items: center;
-`;
-
-const SectionEnd = styled(View)`
-  font-family: ${(props) => props.theme.fonts.heading};
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-end;
-`;
-
-const Open = styled(SvgXml)`
-  flex-direction: row;
-`;
-
-const RestaurantCard = styled(Card)`
-  background-color: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const RestaurantCardCover = styled(Card.Cover)`
-  padding: ${(props) => props.theme.space[2]};
-  background-color: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const Info = styled(View)`
-  padding: ${(props) => props.theme.space[2]};
-`;
-
-const RestaurantAddress = styled(Text)`
-  font-family: ${(props) => props.theme.fonts.body};
-  font-size: ${(props) => props.theme.fontSizes.caption};
-  color: ${(props) => props.theme.colors.text.secondary};
-`;
-
-const RestaurantTitle = styled(Text)`
-  font-family: ${(props) => props.theme.fonts.bold};
-  font-size: ${(props) => props.theme.fontSizes.title};
-  color: ${(props) => props.theme.colors.text.primary};
-`;
-
-const Rating = styled(View)`
-  flex-direction: row;
-  margin-top: 4px;
-`;
+import {
+  RestaurantCard,
+  RestaurantCardCover,
+  Rating,
+  RestaurantAddress,
+  RestaurantTitle,
+  Section,
+  SectionEnd,
+  Info,
+} from "./restaurants-info-card.styles";
 
 export const RestaurantsInfoCard = ({ restaurants = {} }) => {
   const {
@@ -76,13 +38,13 @@ export const RestaurantsInfoCard = ({ restaurants = {} }) => {
           <RestaurantAddress>{address}</RestaurantAddress>
           <SectionEnd>
             {isClosedTemporarily && (
-              <Text style={{ color: "red" }}>CLOSED TEMPORARILY</Text>
+              <Text variant="error">CLOSED TEMPORARILY</Text>
             )}
             <Spacer position="left" size="large">
               {isOpenNow ? (
-                <Text style={{ color: "green" }}>OPEN</Text>
+                <Text variant="success">OPEN</Text>
               ) : (
-                <Text style={{ color: "red" }}>CLOSED</Text>
+                <Text variant="error">CLOSED</Text>
               )}
             </Spacer>
             <Spacer position="left" size="large">
