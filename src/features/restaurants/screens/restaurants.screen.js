@@ -12,17 +12,19 @@ const SafeArea = styled(SafeAreaView)`
 
 const RestaurantListContainer = styled(View)`
   flex: 1;
-  padding: 16px;
+  padding: ${(props) => props.theme.space[3]};
 `;
 
 const Title = styled(Text)`
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-family: ${(props) => props.theme.fonts.body};
+  font-size: ${(props) => props.theme.fontSizes.h3};
+  font-weight: ${(props) => props.theme.fontWeights.bold};
+  margin-bottom: ${(props) => props.theme.space[3]};
+  color: ${(props) => props.theme.colors.brand.primary};
 `;
 
 const SearchbarContainer = styled(View)`
-  padding: 16px;
+  padding: ${(props) => props.theme.space[3]};
 `;
 
 export const RestaurantsScreen = () => {
@@ -30,7 +32,7 @@ export const RestaurantsScreen = () => {
     <>
       <SafeArea>
         <SearchbarContainer>
-          <Searchbar />
+          <Searchbar placeholder="Restaurant Khojnus!!!" />
         </SearchbarContainer>
         <RestaurantListContainer>
           <Title>Restaurant List</Title>
