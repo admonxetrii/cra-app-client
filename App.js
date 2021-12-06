@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { MainLayout } from "./src/features";
+import { CustomDrawer } from "./src/features/Navigation/CustomDrawer";
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,7 @@ const App = () => {
         }}
         initialRouteName={"Home"}
       >
-        <Stack.Screen name="Home" component={MainLayout} />
+        <Stack.Screen name="Home" component={CustomDrawer} />
       </Stack.Navigator>
     </NavigationContainer>
   );
