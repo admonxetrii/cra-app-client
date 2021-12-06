@@ -8,6 +8,7 @@ import {
   RestaurantListContainer,
   Title,
 } from "./restaurants-screen.styles";
+import { Spacer } from "../../../components/spacer/spacer.component";
 
 export const RestaurantsScreen = () => {
   return (
@@ -29,7 +30,11 @@ export const RestaurantsScreen = () => {
               { name: 7 },
               { name: 8 },
             ]}
-            renderItem={() => <RestaurantsInfoCard />}
+            renderItem={() => (
+              <Spacer position="bottom" size="medium">
+                <RestaurantsInfoCard />
+              </Spacer>
+            )}
             keyExtractor={(item) => item.name}
             contentContainerStyle={{ paddingVertical: 16 }}
           />
