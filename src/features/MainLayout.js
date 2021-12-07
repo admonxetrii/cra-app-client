@@ -17,27 +17,39 @@ const MainLayout = ({ restaurants = {} }) => {
   } = restaurants;
 
   return (
-    <Card>
-      <Card.Cover
-        source={{ uri: image[0] }}
-        style={{ padding: 16, backgroundColor: theme.colors.bg.primary }}
-      />
-      <View
-        style={{
-          padding: 16,
-        }}
-      >
-        <Text
+    <View style={{ flex: 1, padding: 16 }}>
+      <Card elevation={5}>
+        <Card.Cover
+          source={{ uri: image[0] }}
+          style={{ padding: 16, backgroundColor: theme.colors.bg.primary }}
+        />
+        <View
           style={{
-            fontFamily: theme.fonts.body,
-            fontSize: theme.fontSizes.body,
-            color: theme.colors.text.primary,
+            padding: 16,
           }}
         >
-          {name}
-        </Text>
-      </View>
-    </Card>
+          <Text
+            style={{
+              fontFamily: theme.fonts.body,
+              fontSize: theme.fontSizes.body,
+              color: theme.colors.text.primary,
+            }}
+          >
+            {name}
+          </Text>
+          <View>
+            <Text
+              style={{
+                fontSize: theme.fontSizes.caption,
+                color: theme.colors.text.secondary,
+              }}
+            >
+              {address}
+            </Text>
+          </View>
+        </View>
+      </Card>
+    </View>
   );
 };
 
