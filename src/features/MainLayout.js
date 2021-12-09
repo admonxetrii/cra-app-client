@@ -1,11 +1,27 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Card, Searchbar } from "react-native-paper";
-import { SIZES } from "../../constants";
 import { theme } from "../infrastructure/theme";
-import Animated from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 
-const MainLayout = ({ restaurants = {}, drawerAnimationStyle }) => {
+import { connect } from "react-redux";
+import { setSelectedTab } from "./Store/tab/tabActions";
+import { Header } from "./Header";
+import { DrawerActions } from "@react-navigation/native";
+
+import { FONTS, SIZES, icons, constants, images } from "../../constants";
+
+const MainLayout = ({
+  restaurants = {},
+  drawerAnimationStyle,
+  navigation,
+  selectedTab,
+  setSelectedTab,
+}) => {
   const {
     name = "Tropical Rest",
     icon,
@@ -18,6 +34,10 @@ const MainLayout = ({ restaurants = {}, drawerAnimationStyle }) => {
     isClosedTemporarily = false,
   } = restaurants;
 
+  React.useEffect(() => {
+    setSelectedTab(constants.screens.home);
+  });
+
   return (
     <Animated.View
       style={{
@@ -27,45 +47,121 @@ const MainLayout = ({ restaurants = {}, drawerAnimationStyle }) => {
         ...drawerAnimationStyle,
       }}
     >
-      <Searchbar
-        placeholder="Search Restaurant"
-        style={{
-          marginBottom: SIZES.radius,
+      {/* Header  */}
+      <Header
+        containerStyle={{
+          height: 50,
+          paddingHorizontal: SIZES.padding,
+          marginTop: 10,
+          marginLeft: -25,
+          alignItems: "center",
         }}
-      />
-      <Card elevation={5}>
-        <Card.Cover
-          source={{ uri: image[0] }}
-          style={{ padding: 16, backgroundColor: theme.colors.bg.primary }}
-        />
-        <View
-          style={{
-            padding: 16,
-          }}
-        >
-          <Text
+        title={selectedTab.toUpperCase()}
+        leftComponent={
+          <TouchableOpacity
             style={{
-              fontFamily: theme.fonts.body,
-              fontSize: theme.fontSizes.body,
-              color: theme.colors.text.primary,
+              width: 40,
+              height: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: theme.colors.brand.primary,
+              borderRadius: SIZES.radius,
             }}
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
           >
-            {name}
-          </Text>
-          <View>
-            <Text
+            <Image
+              source={icons.menu}
               style={{
-                fontSize: theme.fontSizes.caption,
-                color: theme.colors.text.secondary,
+                tintColor: theme.colors.brand.primary,
               }}
-            >
-              {address}
-            </Text>
-          </View>
-        </View>
-      </Card>
+            />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              marginRight: -25,
+              borderRadius: SIZES.radius,
+            }}
+            onPress={console.log("Profile")}
+          >
+            <Image
+              source={images.profile}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: SIZES.radius,
+              }}
+            />
+          </TouchableOpacity>
+        }
+      />
+
+      {/* Content  */}
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
+        <Text>Home ko contents haru</Text>
+      </View>
     </Animated.View>
   );
 };
 
-export default MainLayout;
+function mapStateToProps(state) {
+  return {
+    selectedTab: state.tabReducer.selectedTab,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setSelectedTab: (selectedTab) => {
+      return dispatch(setSelectedTab(selectedTab));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+
+// <Searchbar
+//         placeholder="Search Restaurant"
+//         style={{
+//           marginBottom: SIZES.radius,
+//         }}
+//       />
+//       <Card elevation={5}>
+//         <Card.Cover
+//           source={{ uri: image[0] }}
+//           style={{ padding: 16, backgroundColor: theme.colors.bg.primary }}
+//         />
+//         <View
+//           style={{
+//             padding: 16,
+//           }}
+//         >
+//           <Text
+//             style={{
+//               fontFamily: theme.fonts.body,
+//               fontSize: theme.fontSizes.body,
+//               color: theme.colors.text.primary,
+//             }}
+//           >
+//             {name}
+//           </Text>
+//           <View>
+//             <Text
+//               style={{
+//                 fontSize: theme.fontSizes.caption,
+//                 color: theme.colors.text.secondary,
+//               }}
+//             >
+//               {address}
+//             </Text>
+//           </View>
+//         </View>
+//       </Card>

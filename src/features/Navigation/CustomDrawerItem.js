@@ -14,7 +14,7 @@ export const CustomDrawerItem = ({ label, icon, isFocused, onPress }) => {
         alignItems: "center",
         paddingLeft: SIZES.radius,
         borderRadius: SIZES.base,
-        backgroundColor: isFocused ? "black" : null,
+        backgroundColor: isFocused ? "rgba(0, 0, 0, 0.1)" : null,
       }}
       onPress={onPress}
     >

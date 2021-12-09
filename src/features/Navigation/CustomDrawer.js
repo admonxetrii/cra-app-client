@@ -11,6 +11,7 @@ import Animated from "react-native-reanimated";
 
 import { connect } from "react-redux";
 import { setSelectedTab } from "../Store/tab/tabActions";
+import { fonts } from "../../infrastructure/theme/fonts";
 
 const Drawer = createDrawerNavigator();
 
@@ -45,6 +46,7 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
         drawerType="slide"
         overlayColor="transparent"
         screenOptions={{
+          headerShown: false,
           headerTintColor: theme.colors.brand.primary,
           drawerType: "slide",
           overlayColor: "transparent",
