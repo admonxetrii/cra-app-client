@@ -1,9 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Card } from "react-native-paper";
+import { Card, Searchbar } from "react-native-paper";
+import { SIZES } from "../../constants";
 import { theme } from "../infrastructure/theme";
+import Animated from "react-native-reanimated";
 
-const MainLayout = ({ restaurants = {} }) => {
+const MainLayout = ({ restaurants = {}, drawerAnimationStyle }) => {
   const {
     name = "Tropical Rest",
     icon,
@@ -17,7 +19,20 @@ const MainLayout = ({ restaurants = {} }) => {
   } = restaurants;
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
+    <Animated.View
+      style={{
+        flex: 1,
+        padding: 16,
+        backgroundColor: "white",
+        ...drawerAnimationStyle,
+      }}
+    >
+      <Searchbar
+        placeholder="Search Restaurant"
+        style={{
+          marginBottom: SIZES.radius,
+        }}
+      />
       <Card elevation={5}>
         <Card.Cover
           source={{ uri: image[0] }}
@@ -49,7 +64,7 @@ const MainLayout = ({ restaurants = {} }) => {
           </View>
         </View>
       </Card>
-    </View>
+    </Animated.View>
   );
 };
 

@@ -1,5 +1,5 @@
-const profile = require("../assets/images/profile.png")
+const profile = require("../assets/images/pp.png");
 
 export default {
-    profile,
-}
+  profile,
+};
