@@ -2,15 +2,19 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MainLayout } from "..";
+import Notification from "../Notification/Notification";
 
 import { theme } from "../../infrastructure/theme";
 
 import { CustomDrawerContent } from "./CustomDrawerContent";
 import Animated from "react-native-reanimated";
 
+import { connect } from "react-redux";
+import { setSelectedTab } from "../Store/tab/tabActions";
+
 const Drawer = createDrawerNavigator();
 
-export const CustomDrawer = () => {
+const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
   // const [progress, setProgress] = React.useState(new Animated.Value(0));
   const progress = new Animated.Value(0);
   const scale = Animated.interpolateNode(progress, {
@@ -61,7 +65,13 @@ export const CustomDrawer = () => {
           setTimeout(() => {
             // setProgress = props.progress;
           }, 0);
-          return <CustomDrawerContent navigation={props.navigation} />;
+          return (
+            <CustomDrawerContent
+              navigation={props.navigation}
+              selectedTab={selectedTab}
+              setSelectedTab={setSelectedTab}
+            />
+          );
         }}
       >
         <Drawer.Screen name="MainLayout">
@@ -69,7 +79,28 @@ export const CustomDrawer = () => {
             <MainLayout {...props} drawerAnimationStyle={animatedStyle} />
           )}
         </Drawer.Screen>
+        <Drawer.Screen name="Notification">
+          {(props) => (
+            <Notification {...props} drawerAnimationStyle={animatedStyle} />
+          )}
+        </Drawer.Screen>
       </Drawer.Navigator>
     </View>
   );
 };
+
+function mapStateToProps(state) {
+  return {
+    selectedTab: state.tabReducer.selectedTab,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setSelectedTab: (selectedTab) => {
+      return dispatch(setSelectedTab(selectedTab));
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);

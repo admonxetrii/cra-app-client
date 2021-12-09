@@ -2,7 +2,11 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { CustomDrawer } from "./src/features/Navigation/CustomDrawer";
+import CustomDrawer from "./src/features/Navigation/CustomDrawer";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import rootReducer from "./src/features/Store/rootReducer";
 
 import {
   useFonts as usePoppins,
@@ -10,9 +14,10 @@ import {
   Poppins_500Medium,
 } from "@expo-google-fonts/poppins";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const Stack = createStackNavigator();
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const App = () => {
   const [poppinsLoaded] = usePoppins({ Poppins_400Regular, Poppins_500Medium });
@@ -23,16 +28,18 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-        initialRouteName={"Home"}
-      >
-        <Stack.Screen name="Home" component={CustomDrawer} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+          initialRouteName={"Home"}
+        >
+          <Stack.Screen name="Home" component={CustomDrawer} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

@@ -8,7 +8,11 @@ import { constants, icons, SIZES, images } from "../../../constants";
 
 import { CustomDrawerItem } from "./CustomDrawerItem";
 
-export const CustomDrawerContent = ({ navigation }) => {
+export const CustomDrawerContent = ({
+  navigation,
+  selectedTab,
+  setSelectedTab,
+}) => {
   return (
     <DrawerContentScrollView
       scrollEnabled={true}
@@ -92,9 +96,25 @@ export const CustomDrawerContent = ({ navigation }) => {
           }}
         >
           {/* Menu Items  */}
-          <CustomDrawerItem label="Home" icon={icons.home} />
+          <CustomDrawerItem
+            label="Home"
+            icon={icons.home}
+            isFocused={selectedTab == "Home"}
+            onPress={() => {
+              setSelectedTab("Home");
+              navigation.navigate("MainLayout");
+            }}
+          />
           <CustomDrawerItem label="Wallet" icon={icons.wallet} />
-          <CustomDrawerItem label="Notification" icon={icons.notification} />
+          <CustomDrawerItem
+            label="Notification"
+            icon={icons.notification}
+            isFocused={selectedTab == "Notification"}
+            onPress={() => {
+              setSelectedTab("Notification");
+              navigation.navigate("Notification");
+            }}
+          />
           <CustomDrawerItem label="Favourites" icon={icons.favourite} />
 
           {/* line divider  */}
