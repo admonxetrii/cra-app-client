@@ -26,95 +26,106 @@ const MainLayout = ({
   selectedTab,
   setSelectedTab,
 }) => {
-  // const homeTabFlex = useSharedValue(1);
-  // const homeTabColor = useSharedValue(theme.colors.bg.primary);
-  // const searchTabFlex = useSharedValue(1);
-  // const searchTabColor = useSharedValue(theme.colors.bg.primary);
-  // const cartTabFlex = useSharedValue(1);
-  // const cartTabColor = useSharedValue(theme.colors.bg.primary);
-  // const favouriteTabFlex = useSharedValue(1);
-  // const favouriteTabColor = useSharedValue(theme.colors.bg.primary);
-  // const notificationTabFlex = useSharedValue(1);
-  // const notificationTabColor = useSharedValue(theme.colors.bg.primary);
+  const homeTabFlex = useSharedValue(1);
+  const homeTabColor = useSharedValue(theme.colors.bg.primary);
+  const searchTabFlex = useSharedValue(1);
+  const searchTabColor = useSharedValue(theme.colors.bg.primary);
+  const cartTabFlex = useSharedValue(1);
+  const cartTabColor = useSharedValue(theme.colors.bg.primary);
+  const favouriteTabFlex = useSharedValue(1);
+  const favouriteTabColor = useSharedValue(theme.colors.bg.primary);
+  const notificationTabFlex = useSharedValue(1);
+  const notificationTabColor = useSharedValue(theme.colors.bg.primary);
 
-  // const homeFlexStyle = useAnimatedStyle(() => {
-  //   return {
-  //     flex: homeTabFlex.value,
-  //   };
-  // });
+  const homeFlexStyle = useAnimatedStyle(() => {
+    return {
+      flex: homeTabFlex.value,
+    };
+  });
 
-  // const homeColorStyle = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: homeTabColor.value,
-  //   };
-  // });
+  const homeColorStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: homeTabColor.value,
+    };
+  });
 
-  // const searchFlexStyle = useAnimatedStyle(() => {
-  //   return {
-  //     flex: searchTabFlex.value,
-  //   };
-  // });
+  const searchFlexStyle = useAnimatedStyle(() => {
+    return {
+      flex: searchTabFlex.value,
+    };
+  });
 
-  // const searchColorStyle = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: searchTabColor.value,
-  //   };
-  // });
+  const searchColorStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: searchTabColor.value,
+    };
+  });
 
-  // const cartFlexStyle = useAnimatedStyle(() => {
-  //   return {
-  //     flex: cartTabFlex.value,
-  //   };
-  // });
+  const cartFlexStyle = useAnimatedStyle(() => {
+    return {
+      flex: cartTabFlex.value,
+    };
+  });
 
-  // const cartColorStyle = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: cartTabColor.value,
-  //   };
-  // });
+  const cartColorStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: cartTabColor.value,
+    };
+  });
 
-  // const notificationFlexStyle = useAnimatedStyle(() => {
-  //   return {
-  //     flex: notificationTabFlex.value,
-  //   };
-  // });
+  const notificationFlexStyle = useAnimatedStyle(() => {
+    return {
+      flex: notificationTabFlex.value,
+    };
+  });
 
-  // const notificationColorStyle = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: notificationTabColor.value,
-  //   };
-  // });
+  const notificationColorStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: notificationTabColor.value,
+    };
+  });
 
-  // const favouriteFlexStyle = useAnimatedStyle(() => {
-  //   return {
-  //     flex: favouriteTabFlex.value,
-  //   };
-  // });
+  const favouriteFlexStyle = useAnimatedStyle(() => {
+    return {
+      flex: favouriteTabFlex.value,
+    };
+  });
 
-  // const favouriteColorStyle = useAnimatedStyle(() => {
-  //   return {
-  //     backgroundColor: favouriteTabColor.value,
-  //   };
-  // });
+  const favouriteColorStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: favouriteTabColor.value,
+    };
+  });
 
   React.useEffect(() => {
     setSelectedTab(constants.screens.home);
   }, []);
 
-  // React.useEffect(() => {
-  //   if (selectedTab == constants.screens.home) {
-  //     homeFlexStyle.value = withTiming(4, { duration: 500 });
-  //     homeColorStyle.value = withTiming(theme.colors.brand.primary, {
-  //       duration: 500,
-  //     });
-  //   } else {
-  //     homeFlexStyle.value = withTiming(1, { duration: 500 });
-  //     homeColorStyle.value = withTiming(theme.colors.bg.primary, {
-  //       duration: 500,
-  //     });
-  //   }
-  // }, selectedTab);
-  // console.log(restaurant.name);
+  React.useEffect(() => {
+    if (selectedTab == constants.screens.home) {
+      homeFlexStyle.value = withTiming(4, { duration: 500 });
+      homeColorStyle.value = withTiming(theme.colors.brand.primary, {
+        duration: 500,
+      });
+    } else {
+      homeFlexStyle.value = withTiming(1, { duration: 500 });
+      homeColorStyle.value = withTiming(theme.colors.bg.primary, {
+        duration: 500,
+      });
+    }
+    if (selectedTab == constants.screens.search) {
+      searchFlexStyle.value = withTiming(4, { duration: 500 });
+      searchColorStyle.value = withTiming(theme.colors.brand.primary, {
+        duration: 500,
+      });
+    } else {
+      searchFlexStyle.value = withTiming(1, { duration: 500 });
+      searchColorStyle.value = withTiming(theme.colors.bg.primary, {
+        duration: 500,
+      });
+    }
+  }, selectedTab);
+  console.log(restaurant.name);
 
   return (
     <Animated.View
@@ -223,40 +234,40 @@ const MainLayout = ({
           <TabButton
             label={constants.screens.home}
             icon={icons.home}
-            // outerContainerStyle={tabStyle.homeFlexStyle}
-            // innerContainerStyle={tabStyle.homeColorStyle}
+            outerContainerStyle={homeFlexStyle}
+            innerContainerStyle={homeColorStyle}
             isFocused={selectedTab == constants.screens.home}
             onPress={() => setSelectedTab(constants.screens.home)}
           />
           <TabButton
             label={constants.screens.search}
             icon={icons.search}
-            // outerContainerStyle={tabStyle.searchFlexStyle}
-            // innerContainerStyle={tabStyle.searchColorStyle}
+            outerContainerStyle={searchFlexStyle}
+            innerContainerStyle={searchColorStyle}
             isFocused={selectedTab == constants.screens.search}
             onPress={() => setSelectedTab(constants.screens.search)}
           />
           <TabButton
             label={constants.screens.cart}
             icon={icons.cart}
-            // outerContainerStyle={tabStyle.cartFlexStyle}
-            // innerContainerStyle={tabStyle.cartColorStyle}
+            outerContainerStyle={cartFlexStyle}
+            innerContainerStyle={cartColorStyle}
             isFocused={selectedTab == constants.screens.cart}
             onPress={() => setSelectedTab(constants.screens.cart)}
           />
           <TabButton
             label={constants.screens.notification}
             icon={icons.notification}
-            // outerContainerStyle={tabStyle.notificationFlexStyle}
-            // innerContainerStyle={tabStyle.notificationColorStyle}
+            outerContainerStyle={notificationFlexStyle}
+            innerContainerStyle={notificationColorStyle}
             isFocused={selectedTab == constants.screens.notification}
             onPress={() => setSelectedTab(constants.screens.notification)}
           />
           <TabButton
             label={constants.screens.favourite}
             icon={icons.favourite}
-            // outerContainerStyle={tabStyle.favouriteFlexStyle}
-            // innerContainerStyle={tabStyle.favouriteColorStyle}
+            outerContainerStyle={favouriteFlexStyle}
+            innerContainerStyle={favouriteColorStyle}
             isFocused={selectedTab == constants.screens.favourite}
             onPress={() => setSelectedTab(constants.screens.favourite)}
           />
