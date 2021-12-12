@@ -1,7 +1,8 @@
+import { constants } from "../../../../constants";
 import * as tabActionType from "./tabActions";
 
 const initialState = {
-  selectedTab: "",
+  selectedTab: constants.screens.home,
 };
 
 const tabReducer = (state = initialState, action) => {
@@ -9,7 +10,7 @@ const tabReducer = (state = initialState, action) => {
     case tabActionType.SET_SELECTED_TAB:
       return {
         ...state,
-        selectedTab: action.payload.selectedTab,
+        selectedTab: action.payload,
       };
     default:
       return state;

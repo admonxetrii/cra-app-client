@@ -4,6 +4,7 @@ import { View, Text, FlatList } from "react-native";
 import { Card, Searchbar } from "react-native-paper";
 import { SIZES } from "../../../../constants";
 import { theme } from "../../theme";
+import AnimatedText from "../../../features/text/AnimatedText";
 
 export const Restaurant = () => {
   const [isLoading, setLoading] = useState(false);

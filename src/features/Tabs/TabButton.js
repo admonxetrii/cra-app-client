@@ -16,28 +16,34 @@ export const TabButton = ({
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Animated.View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Animated.View
-          style={{
-            flexDirection: "row",
-            width: "80%",
-            height: 50,
+        style={[
+          {
+            flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: 25,
-          }}
+          },
+          outerContainerStyle,
+        ]}
+      >
+        <Animated.View
+          style={[
+            {
+              flexDirection: "row",
+              width: "80%",
+              height: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 25,
+            },
+            innerContainerStyle,
+          ]}
         >
           <Image
             source={icon}
             style={{
               width: 20,
               height: 20,
-              tintColor: "black",
+              tintColor: isFocused ? "white" : "black",
             }}
           />
           {isFocused && (
@@ -45,7 +51,7 @@ export const TabButton = ({
               numberOfLines={1}
               style={{
                 marginLeft: SIZES.base,
-                color: "gray",
+                color: isFocused ? "white" : "gray",
                 fontFamily: theme.fonts.body,
               }}
             >
