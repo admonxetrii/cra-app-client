@@ -6,28 +6,78 @@ import { SIZES } from "../../../../constants";
 import { theme } from "../../theme";
 
 export const Restaurant = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  console.log(data);
+  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState([
+    {
+      addedDate: "2021-11-26T07:50:42.348949Z",
+      address: "Lalitpur, Nepal",
+      icon: null,
+      id: 7,
+      image:
+        "http://192.168.0.108:8000/media/uploads/restaurants/907d3e82e5375e38e46859b92f323c14_EkkvoTT.jpg",
+      isClosedTemporarily: null,
+      isOpenNow: null,
+      modifiedBy: 1,
+      modifiedDate: "2021-11-26T07:50:42.348949Z",
+      name: "Nisham Wagle",
+      rating: null,
+    },
+    {
+      addedDate: "2021-11-26T07:50:42.348949Z",
+      address: "Lalitpur, Nepal",
+      icon: null,
+      id: 4,
+      image:
+        "http://192.168.0.108:8000/media/uploads/restaurants/907d3e82e5375e38e46859b92f323c14_EkkvoTT.jpg",
+      isClosedTemporarily: null,
+      isOpenNow: null,
+      modifiedBy: 1,
+      modifiedDate: "2021-11-26T07:50:42.348949Z",
+      name: "Nisham Wagle",
+      rating: null,
+    },
+    {
+      addedDate: "2021-11-26T07:50:42.348949Z",
+      address: "Lalitpur, Nepal",
+      icon: null,
+      id: 2,
+      image:
+        "http://192.168.0.108:8000/media/uploads/restaurants/907d3e82e5375e38e46859b92f323c14_EkkvoTT.jpg",
+      isClosedTemporarily: null,
+      isOpenNow: null,
+      modifiedBy: 1,
+      modifiedDate: "2021-11-26T07:50:42.348949Z",
+      name: "Nisham Wagle",
+      rating: null,
+    },
+  ]);
+  // console.log(data);
 
-  getData = () => {
+  const getData = () => {
+    setLoading(true);
     axios
-      .get("http://127.0.0.1:8000/api/restaurants/")
+      .get("http://192.168.0.108:8000/api/restaurants/")
       .then(function (response) {
         // handle success
-        console.log(response);
+        // console.log(response.data);
+        setData(response.data);
+        setLoading(false);
+        // setData(response.data.data);
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
+        console.log(error, "hello eroor");
+        setLoading(false);
       })
       .then(function () {
         // always execute
       });
   };
 
+  // console.log(data);
+
   useEffect(() => {
-    getData();
+    // getData();
   }, []);
 
   return (
@@ -38,9 +88,13 @@ export const Restaurant = () => {
           marginBottom: SIZES.radius,
         }}
       />
-      {isLoading && (
+
+      {isLoading ? (
+        <Text>Loading...</Text>
+      ) : (
         <FlatList
-          data={[data]}
+          data={data}
+          keyExtractor={(item) => item.id}
           renderItem={(item) => (
             <Card elevation={5}>
               <Card.Cover
