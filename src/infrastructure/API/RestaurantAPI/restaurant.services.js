@@ -7,50 +7,7 @@ import { theme } from "../../theme";
 
 export const Restaurant = () => {
   const [isLoading, setLoading] = useState(false);
-  const [data, setData] = useState([
-    {
-      addedDate: "2021-11-26T07:50:42.348949Z",
-      address: "Lalitpur, Nepal",
-      icon: null,
-      id: 7,
-      image:
-        "http://192.168.0.108:8000/media/uploads/restaurants/907d3e82e5375e38e46859b92f323c14_EkkvoTT.jpg",
-      isClosedTemporarily: null,
-      isOpenNow: null,
-      modifiedBy: 1,
-      modifiedDate: "2021-11-26T07:50:42.348949Z",
-      name: "Nisham Wagle",
-      rating: null,
-    },
-    {
-      addedDate: "2021-11-26T07:50:42.348949Z",
-      address: "Lalitpur, Nepal",
-      icon: null,
-      id: 4,
-      image:
-        "http://192.168.0.108:8000/media/uploads/restaurants/907d3e82e5375e38e46859b92f323c14_EkkvoTT.jpg",
-      isClosedTemporarily: null,
-      isOpenNow: null,
-      modifiedBy: 1,
-      modifiedDate: "2021-11-26T07:50:42.348949Z",
-      name: "Nisham Wagle",
-      rating: null,
-    },
-    {
-      addedDate: "2021-11-26T07:50:42.348949Z",
-      address: "Lalitpur, Nepal",
-      icon: null,
-      id: 2,
-      image:
-        "http://192.168.0.108:8000/media/uploads/restaurants/907d3e82e5375e38e46859b92f323c14_EkkvoTT.jpg",
-      isClosedTemporarily: null,
-      isOpenNow: null,
-      modifiedBy: 1,
-      modifiedDate: "2021-11-26T07:50:42.348949Z",
-      name: "Nisham Wagle",
-      rating: null,
-    },
-  ]);
+  const [data, setData] = useState([]);
   // console.log(data);
 
   const getData = () => {
@@ -77,7 +34,7 @@ export const Restaurant = () => {
   // console.log(data);
 
   useEffect(() => {
-    // getData();
+    getData();
   }, []);
 
   return (
@@ -90,12 +47,12 @@ export const Restaurant = () => {
       />
 
       {isLoading ? (
-        <Text>Loading...</Text>
+        <Text>Loading..</Text>
       ) : (
         <FlatList
           data={data}
           keyExtractor={(item) => item.id}
-          renderItem={(item) => (
+          renderItem={({ item }) => (
             <Card elevation={5}>
               <Card.Cover
                 source={{ uri: item.image }}
