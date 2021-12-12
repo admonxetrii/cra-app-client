@@ -3,13 +3,13 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Card, Searchbar } from "react-native-paper";
 import { theme } from "../infrastructure/theme";
 import Animated, {
+  Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 
-import { connect } from "react-redux";
-import { setSelectedTab } from "./Store/tab/tabActions";
+import { useDispatch, useSelector } from "react-redux";
 import { Header } from "./Header";
 import { DrawerActions } from "@react-navigation/native";
 
@@ -19,15 +19,14 @@ import { TabButton } from "./Tabs/TabButton";
 
 // data
 import { Restaurant } from "../infrastructure/API/RestaurantAPI/restaurant.services";
+import { setSelectedTab } from "./Store/tab/tabActions";
 
-const MainLayout = ({
-  drawerAnimationStyle,
-  navigation,
-  selectedTab,
-  setSelectedTab,
-}) => {
+const MainLayout = ({ drawerAnimationStyle, navigation }) => {
+  const selectedTab = useSelector((state) => state.tabReducer.selectedTab);
+  const dispatch = useDispatch();
+
   const homeTabFlex = useSharedValue(1);
-  const homeTabColor = useSharedValue(theme.colors.bg.primary);
+  const homeTabColor = useSharedValue(theme.colors.brand.primary);
   const searchTabFlex = useSharedValue(1);
   const searchTabColor = useSharedValue(theme.colors.bg.primary);
   const cartTabFlex = useSharedValue(1);
@@ -97,43 +96,86 @@ const MainLayout = ({
     };
   });
 
+  const handleSelectedTab = (tab) => {
+    dispatch(setSelectedTab(tab));
+  };
+
   React.useEffect(() => {
-    setSelectedTab(constants.screens.home);
+    handleSelectedTab(selectedTab);
   }, []);
 
   React.useEffect(() => {
     if (selectedTab == constants.screens.home) {
-      homeFlexStyle.value = withTiming(4, { duration: 500 });
-      homeColorStyle.value = withTiming(theme.colors.brand.primary, {
+      homeTabFlex.value = withTiming(4, { duration: 500 });
+      homeTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
       });
     } else {
-      homeFlexStyle.value = withTiming(1, { duration: 500 });
-      homeColorStyle.value = withTiming(theme.colors.bg.primary, {
+      homeTabFlex.value = withTiming(1, { duration: 500 });
+      homeTabColor.value = withTiming(theme.colors.bg.primary, {
         duration: 500,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
       });
     }
-    if (selectedTab == constants.screens.search) {
-      searchFlexStyle.value = withTiming(4, { duration: 500 });
-      searchColorStyle.value = withTiming(theme.colors.brand.primary, {
+    if (selectedTab === constants.screens.search) {
+      searchTabFlex.value = withTiming(4, { duration: 500 });
+      searchTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
       });
     } else {
-      searchFlexStyle.value = withTiming(1, { duration: 500 });
-      searchColorStyle.value = withTiming(theme.colors.bg.primary, {
+      searchTabFlex.value = withTiming(1, { duration: 500 });
+      searchTabColor.value = withTiming(theme.colors.bg.primary, {
         duration: 500,
       });
     }
-  }, selectedTab);
-  console.log(restaurant.name);
+    if (selectedTab === constants.screens.cart) {
+      cartTabFlex.value = withTiming(4, { duration: 500 });
+      cartTabColor.value = withTiming(theme.colors.brand.primary, {
+        duration: 500,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      });
+    } else {
+      cartTabFlex.value = withTiming(1, { duration: 500 });
+      cartTabColor.value = withTiming(theme.colors.bg.primary, {
+        duration: 500,
+      });
+    }
+    if (selectedTab === constants.screens.favourite) {
+      favouriteTabFlex.value = withTiming(4, { duration: 500 });
+      favouriteTabColor.value = withTiming(theme.colors.brand.primary, {
+        duration: 500,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      });
+    } else {
+      favouriteTabFlex.value = withTiming(1, { duration: 500 });
+      favouriteTabColor.value = withTiming(theme.colors.bg.primary, {
+        duration: 500,
+      });
+    }
+    if (selectedTab === constants.screens.notification) {
+      notificationTabFlex.value = withTiming(4, { duration: 500 });
+      notificationTabColor.value = withTiming(theme.colors.brand.primary, {
+        duration: 500,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      });
+    } else {
+      notificationTabFlex.value = withTiming(1, { duration: 500 });
+      notificationTabColor.value = withTiming(theme.colors.bg.primary, {
+        duration: 500,
+      });
+    }
+  }, [selectedTab]);
 
   return (
     <Animated.View
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        ...drawerAnimationStyle,
-      }}
+      style={[
+        {
+          flex: 1,
+          backgroundColor: "white",
+        },
+        drawerAnimationStyle,
+      ]}
     >
       {/* Header  */}
       <Header
@@ -237,7 +279,7 @@ const MainLayout = ({
             outerContainerStyle={homeFlexStyle}
             innerContainerStyle={homeColorStyle}
             isFocused={selectedTab == constants.screens.home}
-            onPress={() => setSelectedTab(constants.screens.home)}
+            onPress={() => handleSelectedTab(constants.screens.home)}
           />
           <TabButton
             label={constants.screens.search}
@@ -245,7 +287,7 @@ const MainLayout = ({
             outerContainerStyle={searchFlexStyle}
             innerContainerStyle={searchColorStyle}
             isFocused={selectedTab == constants.screens.search}
-            onPress={() => setSelectedTab(constants.screens.search)}
+            onPress={() => handleSelectedTab(constants.screens.search)}
           />
           <TabButton
             label={constants.screens.cart}
@@ -253,7 +295,7 @@ const MainLayout = ({
             outerContainerStyle={cartFlexStyle}
             innerContainerStyle={cartColorStyle}
             isFocused={selectedTab == constants.screens.cart}
-            onPress={() => setSelectedTab(constants.screens.cart)}
+            onPress={() => handleSelectedTab(constants.screens.cart)}
           />
           <TabButton
             label={constants.screens.notification}
@@ -261,7 +303,7 @@ const MainLayout = ({
             outerContainerStyle={notificationFlexStyle}
             innerContainerStyle={notificationColorStyle}
             isFocused={selectedTab == constants.screens.notification}
-            onPress={() => setSelectedTab(constants.screens.notification)}
+            onPress={() => handleSelectedTab(constants.screens.notification)}
           />
           <TabButton
             label={constants.screens.favourite}
@@ -269,7 +311,7 @@ const MainLayout = ({
             outerContainerStyle={favouriteFlexStyle}
             innerContainerStyle={favouriteColorStyle}
             isFocused={selectedTab == constants.screens.favourite}
-            onPress={() => setSelectedTab(constants.screens.favourite)}
+            onPress={() => handleSelectedTab(constants.screens.favourite)}
           />
         </View>
       </View>
@@ -277,18 +319,4 @@ const MainLayout = ({
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    selectedTab: state.tabReducer.selectedTab,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    setSelectedTab: (selectedTab) => {
-      return dispatch(setSelectedTab(selectedTab));
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+export default MainLayout;
