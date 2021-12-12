@@ -16,7 +16,7 @@ export const Restaurant = () => {
       .get("http://192.168.0.108:8000/api/restaurants/")
       .then(function (response) {
         // handle success
-        // console.log(response.data);
+        console.log(response.data);
         setData(response.data);
         setLoading(false);
         // setData(response.data.data);
@@ -47,13 +47,13 @@ export const Restaurant = () => {
       />
 
       {isLoading ? (
-        <Text>Loading..</Text>
+        <Text>Loading...</Text>
       ) : (
         <FlatList
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Card elevation={5}>
+            <Card key={item.id} elevation={5}>
               <Card.Cover
                 source={{ uri: item.image }}
                 style={{
