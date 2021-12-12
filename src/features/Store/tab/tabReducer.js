@@ -1,7 +1,8 @@
+import { constants } from "../../../../constants";
 import * as tabActionType from "./tabActions";
 
 const initialState = {
-  selectedTab: "",
+  selectedTab: constants.screens.home,
 };
 
 const tabReducer = (state = initialState, action) => {
