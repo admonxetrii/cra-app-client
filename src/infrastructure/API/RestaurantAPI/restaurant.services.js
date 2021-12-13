@@ -39,7 +39,11 @@ export const Restaurant = () => {
   }, []);
 
   return (
-    <View>
+    <View
+      style={{
+        marginBottom: 16,
+      }}
+    >
       <Searchbar
         placeholder="Search Restaurant"
         style={{

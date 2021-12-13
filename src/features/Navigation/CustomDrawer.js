@@ -81,11 +81,6 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
             <MainLayout {...props} drawerAnimationStyle={animatedStyle} />
           )}
         </Drawer.Screen>
-        <Drawer.Screen name="Notification">
-          {(props) => (
-            <Notification {...props} drawerAnimationStyle={animatedStyle} />
-          )}
-        </Drawer.Screen>
       </Drawer.Navigator>
     </View>
   );

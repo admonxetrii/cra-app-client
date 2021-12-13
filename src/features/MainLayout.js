@@ -15,7 +15,11 @@ import { DrawerActions } from "@react-navigation/native";
 
 import { FONTS, SIZES, icons, constants, images } from "../../constants";
 import { LinearGradient } from "expo-linear-gradient";
+
 import { TabButton } from "./Tabs/TabButton";
+
+// Views
+import { Home, CartTab, Favourite, Notification, Search } from ".";
 
 // data
 import { Restaurant } from "../infrastructure/API/RestaurantAPI/restaurant.services";
@@ -106,7 +110,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
 
   React.useEffect(() => {
     if (selectedTab == constants.screens.home) {
-      homeTabFlex.value = withTiming(4, { duration: 500 });
+      homeTabFlex.value = withTiming(3, { duration: 300 });
       homeTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
       });
@@ -118,7 +122,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.search) {
-      searchTabFlex.value = withTiming(4, { duration: 500 });
+      searchTabFlex.value = withTiming(3, { duration: 300 });
       searchTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
         easing: Easing.bezier(0.25, 0.1, 0.25, 1),
@@ -130,7 +134,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.cart) {
-      cartTabFlex.value = withTiming(4, { duration: 500 });
+      cartTabFlex.value = withTiming(3, { duration: 300 });
       cartTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
         easing: Easing.bezier(0.25, 0.1, 0.25, 1),
@@ -142,7 +146,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.favourite) {
-      favouriteTabFlex.value = withTiming(4, { duration: 500 });
+      favouriteTabFlex.value = withTiming(3, { duration: 300 });
       favouriteTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
         easing: Easing.bezier(0.25, 0.1, 0.25, 1),
@@ -154,7 +158,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.notification) {
-      notificationTabFlex.value = withTiming(4, { duration: 500 });
+      notificationTabFlex.value = withTiming(3, { duration: 300 });
       notificationTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
         easing: Easing.bezier(0.25, 0.1, 0.25, 1),
@@ -234,7 +238,11 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
           padding: 16,
         }}
       >
-        <Restaurant />
+        {selectedTab == constants.screens.home && <Home />}
+        {selectedTab == constants.screens.search && <Search />}
+        {selectedTab == constants.screens.cart && <CartTab />}
+        {selectedTab == constants.screens.notification && <Notification />}
+        {selectedTab == constants.screens.favourite && <Favourite />}
       </View>
 
       {/* Footer  */}
