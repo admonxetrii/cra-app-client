@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, FlatList, Image, TouchableOpacity } from "react-native";
 import { Card, Searchbar } from "react-native-paper";
 import { theme } from "../infrastructure/theme";
 import Animated, {
@@ -26,6 +26,8 @@ import { Restaurant } from "../infrastructure/API/RestaurantAPI/restaurant.servi
 import { setSelectedTab } from "./Store/tab/tabActions";
 
 const MainLayout = ({ drawerAnimationStyle, navigation }) => {
+  const flatListRef = React.useRef();
+
   const selectedTab = useSelector((state) => state.tabReducer.selectedTab);
   const dispatch = useDispatch();
 
@@ -110,6 +112,10 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
 
   React.useEffect(() => {
     if (selectedTab == constants.screens.home) {
+      flatListRef?.current?.scrollToIndex({
+        index: 0,
+        animated: false,
+      });
       homeTabFlex.value = withTiming(3, { duration: 300 });
       homeTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
@@ -122,6 +128,10 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.search) {
+      flatListRef?.current?.scrollToIndex({
+        index: 1,
+        animated: false,
+      });
       searchTabFlex.value = withTiming(3, { duration: 300 });
       searchTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
@@ -134,6 +144,10 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.cart) {
+      flatListRef?.current?.scrollToIndex({
+        index: 2,
+        animated: false,
+      });
       cartTabFlex.value = withTiming(3, { duration: 300 });
       cartTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
@@ -146,6 +160,10 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.favourite) {
+      flatListRef?.current?.scrollToIndex({
+        index: 3,
+        animated: false,
+      });
       favouriteTabFlex.value = withTiming(3, { duration: 300 });
       favouriteTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
@@ -158,6 +176,10 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       });
     }
     if (selectedTab === constants.screens.notification) {
+      flatListRef?.current?.scrollToIndex({
+        index: 4,
+        animated: false,
+      });
       notificationTabFlex.value = withTiming(3, { duration: 300 });
       notificationTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
@@ -238,11 +260,41 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
           padding: 16,
         }}
       >
-        {selectedTab == constants.screens.home && <Home />}
+        <FlatList
+          ref={flatListRef}
+          horizontal
+          scrollEnabled={false}
+          pagingEnabled
+          snapToAlignment="center"
+          snapToInterval={SIZES.width}
+          showsHorizontalScrollIndicator={false}
+          data={constants.bottom_tabs}
+          keyExtractor={(item) => `${item.id}`}
+          renderItem={({ item, index }) => {
+            return (
+              <View
+                style={{
+                  height: SIZES.height,
+                  width: SIZES.width,
+                }}
+              >
+                {item.label == constants.screens.home && <Home />}
+                {item.label == constants.screens.search && <Search />}
+                {item.label == constants.screens.cart && <CartTab />}
+                {item.label == constants.screens.notification && (
+                  <Notification />
+                )}
+                {item.label == constants.screens.favourite && <Favourite />}
+              </View>
+            );
+          }}
+        />
+
+        {/* {selectedTab == constants.screens.home && <Home />}
         {selectedTab == constants.screens.search && <Search />}
         {selectedTab == constants.screens.cart && <CartTab />}
         {selectedTab == constants.screens.notification && <Notification />}
-        {selectedTab == constants.screens.favourite && <Favourite />}
+        {selectedTab == constants.screens.favourite && <Favourite />} */}
       </View>
 
       {/* Footer  */}
