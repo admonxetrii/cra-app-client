@@ -9,6 +9,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./src/features/Store/rootReducer";
 
 import OnBoarding from "./src/features/OnBoarding/OnBoarding";
+import SignIn from "./src/features/SignIn/SignIn";
 
 import {
   useFonts as usePoppins,
@@ -48,6 +49,7 @@ const App = () => {
           initialRouteName={"OnBoarding"}
         >
           <Stack.Screen name="OnBoarding" component={OnBoarding} />
+          <Stack.Screen name="SignIn" component={SignIn} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

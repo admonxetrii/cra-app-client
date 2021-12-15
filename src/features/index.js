@@ -17,6 +17,8 @@ import Notification from "./Notification/Notification";
 
 import OnBoarding from "./OnBoarding/OnBoarding";
 
+import SignIn from "./SignIn/SignIn";
+
 export {
   MainLayout,
   Home,
@@ -25,4 +27,5 @@ export {
   Favourite,
   Notification,
   OnBoarding,
+  SignIn,
 };

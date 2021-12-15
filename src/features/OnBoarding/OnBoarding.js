@@ -35,9 +35,9 @@ const OnBoarding = ({ navigation }) => {
           const dotColor = dotPosition.interpolate({
             inputRange: [index - 1, index, index + 1],
             outputRange: [
-              COLORS.lightOrange,
+              theme.colors.brand.secondary,
               theme.colors.brand.primary,
-              COLORS.lightOrange,
+              theme.colors.brand.secondary,
             ],
             extrapolate: "clamp",
           });
@@ -173,6 +173,7 @@ const OnBoarding = ({ navigation }) => {
               labelStyle={{
                 color: theme.colors.brand.primary,
               }}
+              onPress={() => navigation.replace("SignIn")}
             />
           </View>
         )}
