@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./src/features/Store/rootReducer";
 
+import OnBoarding from "./src/features/OnBoarding/OnBoarding";
+
 import {
   useFonts as usePoppins,
   Poppins_400Regular,
@@ -34,9 +36,9 @@ const App = () => {
           screenOptions={{
             headerShown: false,
           }}
-          initialRouteName={"Home"}
+          initialRouteName={"OnBoarding"}
         >
-          <Stack.Screen name="Home" component={CustomDrawer} />
+          <Stack.Screen name="OnBoarding" component={OnBoarding} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

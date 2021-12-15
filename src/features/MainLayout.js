@@ -22,7 +22,7 @@ import { TabButton } from "./Tabs/TabButton";
 import { Home, CartTab, Favourite, Notification, Search } from ".";
 
 // data
-import { Restaurant } from "../infrastructure/API/RestaurantAPI/restaurant.services";
+import { Restaurant } from "../API/RestaurantAPI/restaurant.services";
 import { setSelectedTab } from "./Store/tab/tabActions";
 
 const MainLayout = ({ drawerAnimationStyle, navigation }) => {
