@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { Card, Searchbar } from "react-native-paper";
+import { View, Image, TouchableOpacity } from "react-native";
 import { theme } from "../infrastructure/theme";
 import Animated, {
   Easing,
@@ -22,7 +21,6 @@ import { TabButton } from "./Tabs/TabButton";
 import { Home, CartTab, Favourite, Notification, Search } from ".";
 
 // data
-import { Restaurant } from "../API/RestaurantAPI/restaurant.services";
 import { setSelectedTab } from "./Store/tab/tabActions";
 
 const MainLayout = ({ drawerAnimationStyle, navigation }) => {

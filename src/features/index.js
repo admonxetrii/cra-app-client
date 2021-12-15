@@ -15,4 +15,14 @@ import Favourite from "./Favourite/Favourite";
 // Notification
 import Notification from "./Notification/Notification";
 
-export { MainLayout, Home, Search, CartTab, Favourite, Notification };
+import OnBoarding from "./OnBoarding/OnBoarding";
+
+export {
+  MainLayout,
+  Home,
+  Search,
+  CartTab,
+  Favourite,
+  Notification,
+  OnBoarding,
+};
