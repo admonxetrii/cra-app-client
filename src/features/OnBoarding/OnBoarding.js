@@ -2,7 +2,14 @@ import React from "react";
 import { View, Text, Image, Animated } from "react-native";
 import { color } from "react-native-reanimated";
 
-import { constants, images, SIZES, COLORS, FONTS } from "../../../constants";
+import {
+  constants,
+  images,
+  SIZES,
+  COLORS,
+  FONTS,
+  icons,
+} from "../../../constants";
 
 import { theme } from "../../infrastructure/theme";
 import {
@@ -156,6 +163,7 @@ const OnBoarding = ({ navigation }) => {
             }}
           >
             <PrimaryButton
+              icon={icons.edit}
               buttonContainerStyle={{
                 height: 40,
                 borderRadius: 50,
@@ -165,6 +173,7 @@ const OnBoarding = ({ navigation }) => {
               labelStyle={{ color: "white" }}
             />
             <SecondaryButton
+              icon={icons.profile}
               buttonContainerStyle={{
                 height: 40,
                 borderRadius: 50,

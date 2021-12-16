@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { theme } from "../../infrastructure/theme";
 
@@ -8,6 +8,7 @@ export const SecondaryButton = ({
   label,
   labelStyle,
   onPress,
+  icon,
 }) => {
   return (
     <TouchableOpacity
@@ -51,6 +52,8 @@ export const SecondaryButton = ({
             colors={[theme.colors.brand.primary, theme.colors.brand.secondary]}
             style={{
               position: "absolute",
+              justifyContent: "center",
+              alignItems: "center",
               right: 0,
               borderRadius: 50,
               height: "100%",
@@ -58,7 +61,16 @@ export const SecondaryButton = ({
             }}
             start={{ x: 0, y: 1 }}
             end={{ x: 1, y: 1 }}
-          ></LinearGradient>
+          >
+            <Image
+              source={icon}
+              style={{
+                height: 20,
+                width: 20,
+                tintColor: "white",
+              }}
+            />
+          </LinearGradient>
         </View>
       </LinearGradient>
     </TouchableOpacity>
