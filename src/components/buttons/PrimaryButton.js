@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { theme } from "../../infrastructure/theme";
 
@@ -24,18 +24,41 @@ export default PrimaryButton = ({
           justifyContent: "center",
           alignItems: "center",
           borderRadius: 50,
+          padding: 2,
         }}
         start={{ x: 0, y: 1 }}
         end={{ x: 1, y: 1 }}
       >
-        <Text
+        <View
           style={{
-            fontFamily: theme.fonts.semibold,
-            ...labelStyle,
+            height: "100%",
+            width: "100%",
+            flexGrow: 1,
+            flexDirection: "row",
+            position: "absolute",
+            justifyContent: "center",
           }}
         >
-          {label}
-        </Text>
+          <Text
+            style={{
+              alignSelf: "center",
+              fontFamily: theme.fonts.semibold,
+              ...labelStyle,
+            }}
+          >
+            {label}
+          </Text>
+          <View
+            style={{
+              position: "absolute",
+              right: 0,
+              borderRadius: 50,
+              height: "100%",
+              width: buttonContainerStyle.height - 4,
+              backgroundColor: "#FFFFFF",
+            }}
+          ></View>
+        </View>
       </LinearGradient>
     </TouchableOpacity>
   );

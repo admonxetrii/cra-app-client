@@ -47,6 +47,18 @@ export const SecondaryButton = ({
           >
             {label}
           </Text>
+          <LinearGradient
+            colors={[theme.colors.brand.primary, theme.colors.brand.secondary]}
+            style={{
+              position: "absolute",
+              right: 0,
+              borderRadius: 50,
+              height: "100%",
+              width: buttonContainerStyle.height - 4,
+            }}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 1 }}
+          ></LinearGradient>
         </View>
       </LinearGradient>
     </TouchableOpacity>
