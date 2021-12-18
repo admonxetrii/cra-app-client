@@ -8,8 +8,7 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./src/features/Store/rootReducer";
 
-import OnBoarding from "./src/features/OnBoarding/OnBoarding";
-import SignIn from "./src/features/SignIn/SignIn";
+import { OnBoarding, SignIn } from "./src/features";
 
 import {
   useFonts as usePoppins,

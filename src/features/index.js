@@ -17,7 +17,9 @@ import Notification from "./Notification/Notification";
 
 import OnBoarding from "./OnBoarding/OnBoarding";
 
-import SignIn from "./SignIn/SignIn";
+import SignIn from "./Authentication/SignIn";
+
+import AuthLayout from "./Authentication/AuthLayout";
 
 export {
   MainLayout,
@@ -28,4 +30,5 @@ export {
   Notification,
   OnBoarding,
   SignIn,
+  AuthLayout,
 };
