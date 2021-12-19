@@ -12,11 +12,7 @@ import {
 } from "../../../constants";
 
 import { theme } from "../../infrastructure/theme";
-import {
-  TextButton,
-  PrimaryButton,
-  SecondaryButton,
-} from "../../components/buttons";
+import { TextButton, PrimaryButton, SecondaryButton } from "../../components";
 
 const OnBoarding = ({ navigation }) => {
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -104,15 +100,14 @@ const OnBoarding = ({ navigation }) => {
         }}
       >
         {/* Pagination / Dots  */}
+        <Dots />
         <View
           style={{
             flex: 1,
             marginTop: "10%",
             justifyContent: "center",
           }}
-        >
-          <Dots />
-        </View>
+        ></View>
 
         {/* Buttons  */}
         {currentIndex < constants.onboarding_screens.length - 1 && (
@@ -155,6 +150,7 @@ const OnBoarding = ({ navigation }) => {
         {currentIndex == constants.onboarding_screens.length - 1 && (
           <View
             style={{
+              bottom: "20%",
               padding: 100,
               justifyContent: "center",
               alignItems: "center",
@@ -163,9 +159,10 @@ const OnBoarding = ({ navigation }) => {
             }}
           >
             <PrimaryButton
-              icon={icons.edit}
+              icon={icons.profile}
               buttonContainerStyle={{
                 height: 40,
+                width: "80%",
                 borderRadius: 50,
                 marginBottom: 20,
               }}
@@ -173,9 +170,10 @@ const OnBoarding = ({ navigation }) => {
               labelStyle={{ color: "white" }}
             />
             <SecondaryButton
-              icon={icons.profile}
+              icon={icons.login}
               buttonContainerStyle={{
                 height: 40,
+                width: "80%",
                 borderRadius: 50,
               }}
               label={"Sign In"}
@@ -250,7 +248,7 @@ const OnBoarding = ({ navigation }) => {
               <View
                 style={{
                   flex: 1,
-                  marginTop: 30,
+                  marginBottom: 30,
                   alignItems: "center",
                   justifyContent: "center",
                   paddingHorizontal: SIZES.radius,

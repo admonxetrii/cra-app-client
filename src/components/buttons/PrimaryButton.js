@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { theme } from "../../infrastructure/theme";
 
-export default PrimaryButton = ({
+const PrimaryButton = ({
   buttonContainerStyle,
   label,
   labelStyle,
@@ -13,7 +13,6 @@ export default PrimaryButton = ({
   return (
     <TouchableOpacity
       style={{
-        width: "80%",
         ...buttonContainerStyle,
       }}
       onPress={onPress}
@@ -75,3 +74,4 @@ export default PrimaryButton = ({
     </TouchableOpacity>
   );
 };
+export default PrimaryButton;

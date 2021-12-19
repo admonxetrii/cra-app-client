@@ -15,11 +15,16 @@ import Favourite from "./Favourite/Favourite";
 // Notification
 import Notification from "./Notification/Notification";
 
+//Authentication
+import AuthLayout from "./Authentication/AuthLayout";
+import SignIn from "./Authentication/SignIn";
+import SignUp from "./Authentication/SignUp";
+import ForgotPassword from "./Authentication/ForgotPassword";
+import { AuthContext } from "./Authentication/AuthContext";
+
 import OnBoarding from "./OnBoarding/OnBoarding";
 
-import SignIn from "./Authentication/SignIn";
-
-import AuthLayout from "./Authentication/AuthLayout";
+import CustomDrawer from "./Navigation/CustomDrawer";
 
 export {
   MainLayout,
@@ -30,5 +35,9 @@ export {
   Notification,
   OnBoarding,
   SignIn,
+  SignUp,
+  ForgotPassword,
   AuthLayout,
+  AuthContext,
+  CustomDrawer,
 };

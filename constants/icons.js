@@ -21,6 +21,13 @@ const star = require("../assets/icons/star.png");
 const wallet = require("../assets/icons/wallet.png");
 const help = require("../assets/icons/help.png");
 const edit = require("../assets/icons/edit.png");
+const password = require("../assets/icons/password.png");
+const eyeOpen = require("../assets/icons/eyeOpen.png");
+const eyeClosed = require("../assets/icons/eyeClosed.png");
+const email = require("../assets/icons/email.png");
+const login = require("../assets/icons/login.png");
+const wrong = require("../assets/icons/wrong.png");
+const check = require("../assets/icons/check.png");
 
 export default {
   coupon,
@@ -46,4 +53,11 @@ export default {
   wallet,
   help,
   edit,
+  password,
+  eyeOpen,
+  eyeClosed,
+  wrong,
+  email,
+  login,
+  check,
 };

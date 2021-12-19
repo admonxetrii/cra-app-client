@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { theme } from "../../infrastructure/theme";
 
-export const SecondaryButton = ({
+const SecondaryButton = ({
   buttonContainerStyle,
   label,
   labelStyle,
@@ -13,7 +13,6 @@ export const SecondaryButton = ({
   return (
     <TouchableOpacity
       style={{
-        width: "80%",
         ...buttonContainerStyle,
       }}
       onPress={onPress}
@@ -76,3 +75,4 @@ export const SecondaryButton = ({
     </TouchableOpacity>
   );
 };
+export default SecondaryButton;
