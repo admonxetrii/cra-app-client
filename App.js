@@ -152,8 +152,6 @@ const App = () => {
     );
   }
 
-  let initialScreen = "OnBoarding";
-
   return (
     <Provider store={store}>
       <AuthContext.Provider value={authContext}>

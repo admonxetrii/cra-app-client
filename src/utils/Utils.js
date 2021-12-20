@@ -1,16 +1,16 @@
-function isValidEmail(value) {
+function isValidUsernameOrEmail(value) {
   const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    /^(?:[A-Z\d][A-Z\d_-]{4,10}|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i;
   return re.test(String(value).toLowerCase());
 }
 
-function validateEmail(value, setEmailError) {
+function validateUsernameOrEmail(value, setUsernameOrEmailError) {
   if (value == "") {
-    setEmailError("");
-  } else if (isValidEmail(value)) {
-    setEmailError("");
+    setUsernameOrEmailError("");
+  } else if (isValidUsernameOrEmail(value)) {
+    setUsernameOrEmailError("");
   } else {
-    setEmailError("Invalid Email");
+    setUsernameOrEmailError("Invalid Username or Email");
   }
 }
 
@@ -23,8 +23,8 @@ function validatePassword(value, setPasswordError) {
 }
 
 const utils = {
-  isValidEmail,
-  validateEmail,
+  isValidUsernameOrEmail,
+  validateUsernameOrEmail,
   validatePassword,
 };
 
