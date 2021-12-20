@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { View, Text, FlatList } from "react-native";
 import { Card, Searchbar } from "react-native-paper";
-import { SIZES } from "../../../../constants";
-import { theme } from "../../theme";
-import AnimatedText from "../../../features/text/AnimatedText";
+import { SIZES } from "../../../constants";
+import { theme } from "../../infrastructure/theme";
 
 export const Restaurant = () => {
   const [isLoading, setLoading] = useState(false);
@@ -39,7 +38,11 @@ export const Restaurant = () => {
   }, []);
 
   return (
-    <View>
+    <View
+      style={{
+        marginBottom: 16,
+      }}
+    >
       <Searchbar
         placeholder="Search Restaurant"
         style={{

@@ -1,19 +1,17 @@
 import React from "react";
 import { View, Text } from "react-native";
-import Animated from "react-native-reanimated";
 
-const Favourite = () => {
+const ForgotPassword = () => {
   return (
-    <Animated.View
+    <View
       style={{
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Text>Favourite page</Text>
-    </Animated.View>
+      <Text> Forgot Password page!!!</Text>
+    </View>
   );
 };
-
-export default Favourite;
+export default ForgotPassword;

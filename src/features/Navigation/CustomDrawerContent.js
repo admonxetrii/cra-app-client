@@ -8,11 +8,15 @@ import { constants, icons, SIZES, images } from "../../../constants";
 
 import { CustomDrawerItem } from "./CustomDrawerItem";
 
+import { AuthContext } from "..";
+
 export const CustomDrawerContent = ({
   navigation,
   selectedTab,
   setSelectedTab,
 }) => {
+  const { signOut } = React.useContext(AuthContext);
+
   return (
     <DrawerContentScrollView
       scrollEnabled={true}
@@ -145,7 +149,13 @@ export const CustomDrawerContent = ({
             marginBottom: SIZES.padding,
           }}
         >
-          <CustomDrawerItem label="Log out" icon={icons.logout} />
+          <CustomDrawerItem
+            label="Log out"
+            icon={icons.logout}
+            onPress={() => {
+              signOut();
+            }}
+          />
         </View>
       </View>
     </DrawerContentScrollView>

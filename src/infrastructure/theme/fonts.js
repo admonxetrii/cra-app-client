@@ -2,7 +2,9 @@ export const fonts = {
   body: "Poppins_400Regular",
   heading: "Lato_400Regular",
   monospace: "Poppins_400Regular",
-  bold: "Poppins_500Medium",
+  medium: "Poppins_500Medium",
+  semibold: "Poppins_600SemiBold",
+  bold: "Poppins_700Bold",
 };
 
 export const fontWeights = {
