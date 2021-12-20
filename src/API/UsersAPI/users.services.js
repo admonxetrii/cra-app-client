@@ -1,5 +1,9 @@
-import React from "react";
-import { View } from "react-native";
-import axios from "axios";
+import axios from "../index";
 
-// const
+const userService = {
+  login: async (data) => {
+    return await axios.post("/auth/jwt", data);
+  },
+};
+
+export default userService;
