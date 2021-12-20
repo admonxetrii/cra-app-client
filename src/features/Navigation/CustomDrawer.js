@@ -10,7 +10,7 @@ import { CustomDrawerContent } from "./CustomDrawerContent";
 import Animated from "react-native-reanimated";
 
 import { connect } from "react-redux";
-import { setSelectedTab } from "../Store/tab/tabActions";
+import { setSelectedTab } from "../../store/tab/tabActions.js";
 import { fonts } from "../../infrastructure/theme/fonts";
 
 const Drawer = createDrawerNavigator();
@@ -93,7 +93,7 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
 
 function mapStateToProps(state) {
   return {
-    selectedTab: state.tabReducer.selectedTab,
+    selectedTab: state.tab.selectedTab,
   };
 }
 

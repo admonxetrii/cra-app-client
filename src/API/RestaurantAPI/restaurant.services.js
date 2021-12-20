@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { View, Text, FlatList } from "react-native";
-import { Card, Searchbar } from "react-native-paper";
-import { SIZES } from "../../../constants";
-import { theme } from "../../infrastructure/theme";
+import { ActivityIndicator, Card, Searchbar, Colors } from "react-native-paper";
+import { SIZES } from "../../../../constants";
+import { theme } from "../../theme";
 
 export const Restaurant = () => {
   const [isLoading, setLoading] = useState(false);
@@ -51,7 +51,13 @@ export const Restaurant = () => {
       />
 
       {isLoading ? (
-        <Text>Loading...</Text>
+        <View>
+          <ActivityIndicator
+            animating={true}
+            size="large"
+            color={Colors.red400}
+          />
+        </View>
       ) : (
         <FlatList
           data={data}

@@ -20,7 +20,6 @@ import AuthLayout from "./Authentication/AuthLayout";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
 import ForgotPassword from "./Authentication/ForgotPassword";
-import { AuthContext } from "./Authentication/AuthContext";
 
 import OnBoarding from "./OnBoarding/OnBoarding";
 
@@ -38,6 +37,5 @@ export {
   SignUp,
   ForgotPassword,
   AuthLayout,
-  AuthContext,
   CustomDrawer,
 };

@@ -3,14 +3,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { View, Text, ActivityIndicator } from "react-native";
 
-// import CustomDrawer from "./src/features/Navigation/CustomDrawer";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import thunk from "redux-thunk";
-import rootReducer from "./src/features/Store/rootReducer";
 
 import {
-  AuthContext,
   OnBoarding,
   SignIn,
   SignUp,
@@ -40,55 +36,12 @@ import {
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
 import { FONTS } from "./constants";
+import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
+import store from "./src/store";
 
 const Stack = createStackNavigator();
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
-
 const App = () => {
-  const initialLoginState = {
-    isLoading: true,
-    username: null,
-    userToken: null,
-  };
-
-  const loginReducer = (prevState, action) => {
-    switch (action.type) {
-      case "RETRIEVE_TOKEN":
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGIN":
-        return {
-          ...prevState,
-          username: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case "LOGOUT":
-        return {
-          ...prevState,
-          username: null,
-          userToken: null,
-          isLoading: false,
-        };
-      case "REGISTER":
-        return {
-          ...prevState,
-          username: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-    }
-  };
-
-  const [loginState, dispatch] = React.useReducer(
-    loginReducer,
-    initialLoginState
-  );
-
   const [poppinsLoaded] = usePoppins({
     Poppins_100Thin,
     Poppins_100Thin_Italic,
@@ -110,28 +63,11 @@ const App = () => {
     Poppins_900Black_Italic,
   });
 
-  const authContext = React.useMemo(() => ({
-    signIn: (userName, password) => {
-      let userToken;
-      userToken = null;
-      if (userName == "user" && password == "pass") {
-        userToken = "asdasd";
-      }
-      dispatch({ type: "LOGIN", id: userName, token: userToken });
-    },
-    signOut: () => {
-      dispatch({ type: "LOGOUT" });
-    },
-    signUp: () => {},
-  }));
-
   React.useEffect(() => {
-    setTimeout(() => {
-      dispatch({ type: "RETRIEVE_TOKEN", token: null });
-    }, 1000);
+    // check token
   }, []);
 
-  if (loginState.isLoading) {
+  if (!poppinsLoaded) {
     return (
       <View
         style={{
@@ -154,32 +90,30 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer>
-          {loginState.userToken === null ? (
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}
-              initialRouteName="OnBoarding"
-            >
-              <Stack.Screen name="OnBoarding" component={OnBoarding} />
-              <Stack.Screen name="SignIn" component={SignIn} />
-              <Stack.Screen name="SignUp" component={SignUp} />
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-            </Stack.Navigator>
-          ) : (
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-              }}
-              initialRouteName="CustomDrawer"
-            >
-              <Stack.Screen name="CustomDrawer" component={CustomDrawer} />
-            </Stack.Navigator>
-          )}
-        </NavigationContainer>
-      </AuthContext.Provider>
+      <NavigationContainer>
+        {null === null ? (
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName="OnBoarding"
+          >
+            <Stack.Screen name="OnBoarding" component={OnBoarding} />
+            <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName="CustomDrawer"
+          >
+            <Stack.Screen name="CustomDrawer" component={CustomDrawer} />
+          </Stack.Navigator>
+        )}
+      </NavigationContainer>
     </Provider>
   );
 };
