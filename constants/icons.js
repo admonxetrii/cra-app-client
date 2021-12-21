@@ -28,6 +28,8 @@ const email = require("../assets/icons/email.png");
 const login = require("../assets/icons/login.png");
 const wrong = require("../assets/icons/wrong.png");
 const check = require("../assets/icons/check.png");
+const mobile = require("../assets/icons/mobile.png");
+const user = require("../assets/icons/user.png");
 
 export default {
   coupon,
@@ -60,4 +62,6 @@ export default {
   email,
   login,
   check,
+  mobile,
+  user,
 };

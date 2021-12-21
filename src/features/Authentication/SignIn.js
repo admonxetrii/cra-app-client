@@ -32,6 +32,10 @@ const SignIn = ({ navigation }) => {
         width: SIZES.width * 0.6,
         height: SIZES.width * 0.6,
       }}
+      imageContainerStyle={{
+        width: SIZES.width * 0.6,
+        height: SIZES.width * 0.6,
+      }}
       title={"Login"}
       subTitle={"Welcome back! You've been missed."}
     >

@@ -103,7 +103,7 @@ const FormInput = ({
             source={icon}
             style={{
               height: 20,
-              width: 20,
+              resizeMode: "contain",
               tintColor: theme.colors.brand.primary,
             }}
           />

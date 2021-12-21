@@ -168,6 +168,7 @@ const OnBoarding = ({ navigation }) => {
               }}
               label={"Create Account"}
               labelStyle={{ color: "white" }}
+              onPress={() => navigation.replace("SignUp")}
             />
             <SecondaryButton
               icon={icons.login}
