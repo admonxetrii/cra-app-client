@@ -1,4 +1,4 @@
-export const SET_SELECTED_TAB = "SET_SELECTED_TAB";
+import { SET_SELECTED_TAB } from "../actionConstant";
 
 export const setSelectedTabSuccess = (selectedTab) => ({
   type: SET_SELECTED_TAB,

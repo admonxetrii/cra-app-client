@@ -1,5 +1,5 @@
 import { constants } from "../../../constants";
-import * as tabActionType from "./tabActions";
+import { SET_SELECTED_TAB } from "../actionConstant";
 
 const initialState = {
   selectedTab: constants.screens.home,
@@ -7,7 +7,7 @@ const initialState = {
 
 const tabReducer = (state = initialState, action) => {
   switch (action.type) {
-    case tabActionType.SET_SELECTED_TAB:
+    case SET_SELECTED_TAB:
       return {
         ...state,
         selectedTab: action.payload,

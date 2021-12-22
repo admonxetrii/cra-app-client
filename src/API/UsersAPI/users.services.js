@@ -1,9 +1,13 @@
-import axios from "../index";
+import axios from "../";
 
-const userService = {
+export default {
   login: async (data) => {
-    return await axios.post("/auth/jwt", data);
+    return await axios.post("/auth/token/", data);
+  },
+  getToken: async (refresh) => {
+    return await axios.post("/auth/token/refresh/", { refresh });
+  },
+  verifyToken: async (token) => {
+    return await axios.post("/auth/token/verify/", { token });
   },
 };
-
-export default userService;

@@ -7,16 +7,19 @@ import { theme } from "../../infrastructure/theme";
 import { constants, icons, SIZES, images } from "../../../constants";
 
 import { CustomDrawerItem } from "./CustomDrawerItem";
-
-import { AuthContext } from "..";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/auth/authAction";
 
 export const CustomDrawerContent = ({
   navigation,
   selectedTab,
   setSelectedTab,
 }) => {
-  const { signOut } = React.useContext(AuthContext);
+  const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <DrawerContentScrollView
       scrollEnabled={true}
@@ -150,11 +153,9 @@ export const CustomDrawerContent = ({
           }}
         >
           <CustomDrawerItem
+            onPress={handleLogout}
             label="Log out"
             icon={icons.logout}
-            onPress={() => {
-              signOut();
-            }}
           />
         </View>
       </View>
