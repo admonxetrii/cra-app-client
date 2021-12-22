@@ -11,6 +11,8 @@ import {
 } from "../../components";
 import { svg } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
+import { useDispatch } from "react-redux";
+import { loginRequest } from "../../store/auth/authAction";
 
 const SignIn = ({ navigation }) => {
   const [username, setUsername] = React.useState("");
@@ -19,10 +21,15 @@ const SignIn = ({ navigation }) => {
   const [showPass, setShowPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
-  const { signIn } = React.useContext(AuthContext);
+  const dispatch = useDispatch();
 
-  const loginHandler = (userName, passWord) => {
-    signIn(userName, passWord);
+  const loginHandler = () => {
+    dispatch(
+      loginRequest({
+        username,
+        password,
+      })
+    );
   };
 
   return (
@@ -143,7 +150,6 @@ const SignIn = ({ navigation }) => {
           label={"LOGIN"}
           labelStyle={{ color: "white", ...FONTS.h2 }}
           onPress={() => {
-            console.log(username, password);
             loginHandler(username, password);
           }}
         />

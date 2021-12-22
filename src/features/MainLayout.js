@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { theme } from "../infrastructure/theme";
 import Animated, {
   Easing,
@@ -21,10 +21,10 @@ import { TabButton } from "./Tabs/TabButton";
 import { Home, CartTab, Favourite, Notification, Search } from ".";
 
 // data
-import { setSelectedTab } from "./Store/tab/tabActions";
+import { setSelectedTab } from "../store/tab/tabActions";
 
 const MainLayout = ({ drawerAnimationStyle, navigation }) => {
-  const selectedTab = useSelector((state) => state.tabReducer.selectedTab);
+  const selectedTab = useSelector((state) => state.tab.selectedTab);
   const dispatch = useDispatch();
 
   const homeTabFlex = useSharedValue(1);
@@ -135,7 +135,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       cartTabFlex.value = withTiming(3, { duration: 300 });
       cartTabColor.value = withTiming(theme.colors.brand.primary, {
         duration: 500,
-        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
       });
     } else {
       cartTabFlex.value = withTiming(1, { duration: 500 });

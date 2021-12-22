@@ -1,0 +1,11 @@
+export const LOGIN_REQ = "LOGIN_REQ";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+
+export const VERIFY_TOKEN_REQ = "VERIFY_TOKEN_REQ";
+export const VERIFY_TOKEN_SUCCESS = "VERIFY_TOKEN_SUCCESS";
+export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
+
+export const LOGOUT = "LOGOUT";
+
+export const SET_SELECTED_TAB = "SET_SELECTED_TAB";

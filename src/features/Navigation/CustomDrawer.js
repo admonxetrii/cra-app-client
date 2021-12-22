@@ -9,13 +9,12 @@ import { theme } from "../../infrastructure/theme";
 import { CustomDrawerContent } from "./CustomDrawerContent";
 import Animated from "react-native-reanimated";
 
-import { connect } from "react-redux";
-import { setSelectedTab } from "../Store/tab/tabActions";
-import { fonts } from "../../infrastructure/theme/fonts";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectedTab } from "../../store/tab/tabActions.js";
 
 const Drawer = createDrawerNavigator();
 
-const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
+const CustomDrawer = () => {
   // const [progress, setProgress] = React.useState(new Animated.Value(0));
   const progress = new Animated.Value(0);
   const scale = Animated.interpolateNode(progress, {
@@ -35,6 +34,13 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
     transform: [{ scale }],
   };
 
+  const dispatch = useDispatch();
+
+  const selectedTab = useSelector((state) => state.tab.selectedTab);
+  const handleSelectedTab = (a) => {
+    console.log(a);
+    dispatch(setSelectedTab(a));
+  };
   return (
     <View
       style={{
@@ -71,7 +77,7 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
             <CustomDrawerContent
               navigation={props.navigation}
               selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
+              setSelectedTab={handleSelectedTab}
             />
           );
         }}
@@ -91,18 +97,4 @@ const CustomDrawer = ({ selectedTab, setSelectedTab }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    selectedTab: state.tabReducer.selectedTab,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    setSelectedTab: (selectedTab) => {
-      return dispatch(setSelectedTab(selectedTab));
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);
+export default CustomDrawer;
