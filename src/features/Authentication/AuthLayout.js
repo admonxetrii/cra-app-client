@@ -11,6 +11,7 @@ const AuthLayout = ({
   title,
   subTitle,
   titleContainerStyle,
+  imageContainerStyle,
   children,
 }) => {
   return (
@@ -41,8 +42,7 @@ const AuthLayout = ({
             source={banner}
             resizeMode="contain"
             style={{
-              width: SIZES.width * 0.6,
-              height: SIZES.width * 0.6,
+              ...imageContainerStyle,
               marginBottom: -SIZES.padding,
             }}
           />

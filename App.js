@@ -127,7 +127,7 @@ const App = () => {
 
   React.useEffect(() => {
     setTimeout(() => {
-      dispatch({ type: "RETRIEVE_TOKEN", token: "sadasd" });
+      dispatch({ type: "RETRIEVE_TOKEN", token: null });
     }, 1000);
   }, []);
 
@@ -151,8 +151,6 @@ const App = () => {
       </View>
     );
   }
-
-  let initialScreen = "OnBoarding";
 
   return (
     <Provider store={store}>

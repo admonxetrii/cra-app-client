@@ -15,7 +15,7 @@ import { theme } from "../../infrastructure/theme";
 const SignIn = ({ navigation }) => {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [emailError, setEmailError] = React.useState("");
+  const [usernameOrEmailError, setUsernameOrEmailError] = React.useState("");
   const [showPass, setShowPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
@@ -28,6 +28,14 @@ const SignIn = ({ navigation }) => {
   return (
     <AuthLayout
       banner={svg.login}
+      bannerContainerStyle={{
+        width: SIZES.width * 0.6,
+        height: SIZES.width * 0.6,
+      }}
+      imageContainerStyle={{
+        width: SIZES.width * 0.6,
+        height: SIZES.width * 0.6,
+      }}
       title={"Login"}
       subTitle={"Welcome back! You've been missed."}
     >
@@ -41,13 +49,12 @@ const SignIn = ({ navigation }) => {
         <FormInput
           label={"Username"}
           onChange={(text) => {
-            console.log(text);
-            //validate email
-            // utils.validateEmail(text, setEmailError);
+            // validate email
+            utils.validateUsernameOrEmail(text, setUsernameOrEmailError);
             setUsername(text);
           }}
-          errorMsg={emailError}
-          placeholder={"Enter your email here..."}
+          errorMsg={usernameOrEmailError}
+          placeholder={"Enter your username or email here..."}
           appendComponent={
             <View
               style={{
@@ -56,7 +63,8 @@ const SignIn = ({ navigation }) => {
             >
               <Image
                 source={
-                  username == "" || (username != "" && emailError == "")
+                  username == "" ||
+                  (username != "" && usernameOrEmailError == "")
                     ? icons.check
                     : icons.wrong
                 }
@@ -67,7 +75,7 @@ const SignIn = ({ navigation }) => {
                   tintColor:
                     username == ""
                       ? COLORS.gray
-                      : username != "" && emailError == ""
+                      : username != "" && usernameOrEmailError == ""
                       ? COLORS.green
                       : COLORS.red,
                 }}

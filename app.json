@@ -26,6 +26,7 @@
       },
       "package": "com.admonxetrii.craappclient"
     },
+    
     "web": {
       "favicon": "./assets/favicon.png"
     },
