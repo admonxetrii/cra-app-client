@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { utils } from "../../utils";
-import { AuthLayout, AuthContext } from "../";
+import { AuthLayout } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../../constants";
 import {
   FormInput,
@@ -25,8 +25,6 @@ const SignUp = ({ navigation }) => {
   const [showPass, setShowPass] = React.useState(false);
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
-
-  const { signIn } = React.useContext(AuthContext);
 
   const loginHandler = (userName, passWord) => {
     signIn(userName, passWord);
