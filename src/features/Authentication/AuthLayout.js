@@ -3,6 +3,7 @@ import { View, Text, Image, Platform } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { images, FONTS, SIZES, COLORS } from "../../../constants";
+import KeyboardAvoidingWrapper from "../../components/wrapper/keyboardAvoidingWapper";
 import { theme } from "../../infrastructure/theme";
 
 const AuthLayout = ({
@@ -15,21 +16,12 @@ const AuthLayout = ({
   children,
 }) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingVertical: SIZES.padding,
-        backgroundColor: "white",
-      }}
-    >
-      <KeyboardAwareScrollView
-        keyboardDismissMode="on-drag"
-        contentContainerStyle={{
+    <KeyboardAvoidingWrapper>
+      <View
+        style={{
           flex: 1,
-          paddingHorizontal: SIZES.padding,
+          padding: SIZES.padding,
         }}
-        enableOnAndroid={true}
-        enableAutomaticScroll={Platform.OS === "ios"}
       >
         {/* App Icon  */}
 
@@ -77,8 +69,8 @@ const AuthLayout = ({
 
         {/* Content  */}
         {children}
-      </KeyboardAwareScrollView>
-    </View>
+      </View>
+    </KeyboardAvoidingWrapper>
   );
 };
 

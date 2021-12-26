@@ -13,7 +13,7 @@ export const Restaurant = () => {
   const getData = () => {
     setLoading(true);
     axios
-      .get("http://192.168.0.112:8000/api/restaurants/")
+      .get("/restaurants/")
       .then(function (response) {
         // handle success
         console.log(response.data);

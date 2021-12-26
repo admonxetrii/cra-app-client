@@ -46,155 +46,157 @@ const SignIn = ({ navigation }) => {
       title={"Login"}
       subTitle={"Welcome back! You've been missed."}
     >
-      <View
-        style={{
-          flex: 1,
-          marginTop: SIZES.padding * 2,
-        }}
-      >
-        {/* Form Input  */}
-        <FormInput
-          label={"Username"}
-          onChange={(text) => {
-            // validate email
-            utils.validateUsernameOrEmail(text, setUsernameOrEmailError);
-            setUsername(text);
+      <>
+        <View
+          style={{
+            flex: 1,
+            marginTop: SIZES.padding * 2,
           }}
-          errorMsg={usernameOrEmailError}
-          placeholder={"Enter your username or email here..."}
-          appendComponent={
-            <View
-              style={{
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                source={
-                  username == "" ||
-                  (username != "" && usernameOrEmailError == "")
-                    ? icons.check
-                    : icons.wrong
-                }
+        >
+          {/* Form Input  */}
+          <FormInput
+            label={"Username"}
+            onChange={(text) => {
+              // validate email
+              utils.validateUsernameOrEmail(text, setUsernameOrEmailError);
+              setUsername(text);
+            }}
+            errorMsg={usernameOrEmailError}
+            placeholder={"Enter your username or email here..."}
+            appendComponent={
+              <View
+                style={{
+                  justifyContent: "center",
+                }}
+              >
+                <Image
+                  source={
+                    username == "" ||
+                    (username != "" && usernameOrEmailError == "")
+                      ? icons.check
+                      : icons.wrong
+                  }
+                  style={{
+                    right: 30,
+                    height: 20,
+                    width: 20,
+                    tintColor:
+                      username == ""
+                        ? COLORS.gray
+                        : username != "" && usernameOrEmailError == ""
+                        ? COLORS.green
+                        : COLORS.red,
+                  }}
+                />
+              </View>
+            }
+            icon={icons.email}
+          />
+          <FormInput
+            label={"Password"}
+            secureTextEntry={!showPass}
+            autoCompleteType="password"
+            containerStyle={{
+              marginTop: SIZES.radius,
+            }}
+            onChange={(text) => {
+              setPassword(text);
+            }}
+            placeholder={"Password goes here..."}
+            appendComponent={
+              <TouchableOpacity
                 style={{
                   right: 30,
-                  height: 20,
-                  width: 20,
-                  tintColor:
-                    username == ""
-                      ? COLORS.gray
-                      : username != "" && usernameOrEmailError == ""
-                      ? COLORS.green
-                      : COLORS.red,
+                  width: 40,
+                  alignItems: "flex-end",
+                  justifyContent: "center",
                 }}
-              />
-            </View>
-          }
-          icon={icons.email}
-        />
-        <FormInput
-          label={"Password"}
-          secureTextEntry={!showPass}
-          autoCompleteType="password"
-          containerStyle={{
-            marginTop: SIZES.radius,
-          }}
-          onChange={(text) => {
-            setPassword(text);
-          }}
-          placeholder={"Password goes here..."}
-          appendComponent={
-            <TouchableOpacity
-              style={{
-                right: 30,
-                width: 40,
-                alignItems: "flex-end",
-                justifyContent: "center",
-              }}
-              onPress={() => setShowPass(!showPass)}
-            >
-              <Image
-                source={showPass ? icons.eyeClosed : icons.eyeOpen}
-                style={{
-                  height: 20,
-                  width: 20,
-                  tintColor: COLORS.gray,
-                }}
-              />
-            </TouchableOpacity>
-          }
-          icon={icons.password}
-        />
-        {/* Save Me  */}
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.radius,
-            justifyContent: "space-between",
-          }}
-        >
-          <CustomSwitch
-            title={"Remember Me"}
-            value={saveMe}
-            onChange={(value) => setSaveMe(value)}
+                onPress={() => setShowPass(!showPass)}
+              >
+                <Image
+                  source={showPass ? icons.eyeClosed : icons.eyeOpen}
+                  style={{
+                    height: 20,
+                    width: 20,
+                    tintColor: COLORS.gray,
+                  }}
+                />
+              </TouchableOpacity>
+            }
+            icon={icons.password}
           />
-        </View>
-
-        <PrimaryButton
-          icon={icons.login}
-          buttonContainerStyle={{
-            height: 55,
-            width: "100%",
-            borderRadius: 50,
-            marginTop: SIZES.radius,
-          }}
-          label={"LOGIN"}
-          labelStyle={{ color: "white", ...FONTS.h2 }}
-          onPress={() => {
-            loginHandler(username, password);
-          }}
-        />
-
-        {/* Facebook & Google  */}
-
-        {/* Forgot Password and Sign Up page navigations  */}
-        <View
-          style={{
-            bottom: 0,
-            justifyContent: "center",
-            alignSelf: "center",
-            paddingHorizontal: SIZES.padding,
-            marginVertical: SIZES.padding,
-          }}
-        >
-          <TextButton
-            buttonContainerStyle={{
-              padding: 20,
-              backgroundColor: null,
-            }}
-            label={"Forgot Password?"}
-            labelStyle={{ color: theme.colors.brand.primary }}
-            onPress={() => navigation.navigate("SignUp")}
-          />
+          {/* Save Me  */}
           <View
             style={{
-              marginBottom: 0,
               flexDirection: "row",
+              marginTop: SIZES.radius,
+              justifyContent: "space-between",
             }}
           >
-            <Text>Don't have an account? </Text>
-            <TextButton
-              buttonContainerStyle={{
-                backgroundColor: null,
-              }}
-              label={"Sign Up"}
-              labelStyle={{
-                color: theme.colors.brand.primary,
-              }}
-              onPress={() => navigation.navigate("SignUp")}
+            <CustomSwitch
+              title={"Remember Me"}
+              value={saveMe}
+              onChange={(value) => setSaveMe(value)}
             />
           </View>
+
+          <PrimaryButton
+            icon={icons.login}
+            buttonContainerStyle={{
+              height: 55,
+              width: "100%",
+              borderRadius: 50,
+              marginTop: SIZES.radius,
+            }}
+            label={"LOGIN"}
+            labelStyle={{ color: "white", ...FONTS.h2 }}
+            onPress={() => {
+              loginHandler(username, password);
+            }}
+          />
+
+          {/* Facebook & Google  */}
+
+          {/* Forgot Password and Sign Up page navigations  */}
+          <View
+            style={{
+              bottom: 0,
+              justifyContent: "center",
+              alignSelf: "center",
+              paddingHorizontal: SIZES.padding,
+              marginVertical: SIZES.padding,
+            }}
+          >
+            <TextButton
+              buttonContainerStyle={{
+                padding: 20,
+                backgroundColor: null,
+              }}
+              label={"Forgot Password?"}
+              labelStyle={{ color: theme.colors.brand.primary }}
+              onPress={() => navigation.navigate("SignUp")}
+            />
+            <View
+              style={{
+                marginBottom: 0,
+                flexDirection: "row",
+              }}
+            >
+              <Text>Don't have an account? </Text>
+              <TextButton
+                buttonContainerStyle={{
+                  backgroundColor: null,
+                }}
+                label={"Sign Up"}
+                labelStyle={{
+                  color: theme.colors.brand.primary,
+                }}
+                onPress={() => navigation.navigate("SignUp")}
+              />
+            </View>
+          </View>
         </View>
-      </View>
+      </>
     </AuthLayout>
   );
 };

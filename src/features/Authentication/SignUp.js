@@ -26,8 +26,6 @@ const SignUp = ({ navigation }) => {
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
-  const { signIn } = React.useContext(AuthContext);
-
   const loginHandler = (userName, passWord) => {
     signIn(userName, passWord);
   };
