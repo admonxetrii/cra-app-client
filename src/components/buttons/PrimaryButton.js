@@ -9,9 +9,11 @@ const PrimaryButton = ({
   labelStyle,
   onPress,
   icon,
+  disabled,
 }) => {
   return (
     <TouchableOpacity
+      disabled={disabled}
       style={{
         ...buttonContainerStyle,
       }}

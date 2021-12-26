@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
 import {
   OnBoarding,
@@ -32,13 +32,21 @@ import {
   Poppins_900Black,
   Poppins_900Black_Italic,
 } from "@expo-google-fonts/poppins";
-import { FONTS } from "./constants";
-import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyTokenRequest } from "./src/store/auth/authAction";
 import Storage from "./src/Helper/Storage";
-
+import { setNavigation } from "./src/store/navigation/navigationAction";
 const Stack = createStackNavigator();
+
+const NavigationRefHandler = () => {
+  const dispatch = useDispatch();
+
+  const navigation = useNavigation();
+  useEffect(() => {
+    dispatch(setNavigation(navigation));
+  }, []);
+  return <></>;
+};
 
 const Router = () => {
   const [poppinsLoaded] = usePoppins({
@@ -90,6 +98,7 @@ const Router = () => {
   return (
     <>
       <NavigationContainer>
+        <NavigationRefHandler />
         <Stack.Navigator
           screenOptions={{
             headerShown: false,

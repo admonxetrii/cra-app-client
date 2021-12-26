@@ -10,4 +10,7 @@ export default {
   verifyToken: async (token) => {
     return await axios.post("/auth/token/verify/", { token });
   },
+  signup: async (data) => {
+    return await axios.post("/auth/register/", data);
+  },
 };

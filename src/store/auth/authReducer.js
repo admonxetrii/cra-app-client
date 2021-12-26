@@ -3,6 +3,9 @@ import {
   LOGIN_REQ,
   LOGIN_SUCCESS,
   LOGOUT,
+  SIGNUP_FAILED,
+  SIGNUP_REQ,
+  SIGNUP_SUCCESS,
   VERIFY_TOKEN_FAILED,
   VERIFY_TOKEN_REQ,
   VERIFY_TOKEN_SUCCESS,
@@ -21,6 +24,13 @@ const initialState = {
   verify: {
     loading: false,
     error: null,
+  },
+  signup: {
+    loading: false,
+    error: null,
+    inputData: {},
+    data: {},
+    loadingButtonContent: "Signup",
   },
 };
 
@@ -106,6 +116,39 @@ const authReducer = (state = initialState, action) => {
         verify: {
           loading: false,
           error: null,
+        },
+      };
+    case SIGNUP_REQ:
+      return {
+        ...state,
+        signup: {
+          loading: true,
+          error: null,
+          data: {},
+          loadingButtonContent: "please wait...",
+          inputData: action.data,
+        },
+      };
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        signup: {
+          loading: false,
+          error: null,
+          data: action.data,
+          loadingButtonContent: "Signup",
+          inputData: {},
+        },
+      };
+    case SIGNUP_FAILED:
+      return {
+        ...state,
+        signup: {
+          loading: false,
+          error: action.error,
+          data: {},
+          loadingButtonContent: "Signup",
+          inputData: {},
         },
       };
     default:

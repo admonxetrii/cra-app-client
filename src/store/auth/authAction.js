@@ -3,6 +3,9 @@ import {
   LOGIN_REQ,
   LOGIN_SUCCESS,
   LOGOUT,
+  SIGNUP_FAILED,
+  SIGNUP_REQ,
+  SIGNUP_SUCCESS,
   VERIFY_TOKEN_FAILED,
   VERIFY_TOKEN_REQ,
   VERIFY_TOKEN_SUCCESS,
@@ -55,5 +58,27 @@ export function verifyTokenSuccess(data) {
 export function logout() {
   return {
     type: LOGOUT,
+  };
+}
+
+//signup
+
+export function signupReq(data) {
+  return {
+    type: SIGNUP_REQ,
+    data,
+  };
+}
+
+export function signupSuccess(data) {
+  return {
+    type: SIGNUP_SUCCESS,
+    data,
+  };
+}
+export function signupFailed(error) {
+  return {
+    type: SIGNUP_FAILED,
+    error,
   };
 }

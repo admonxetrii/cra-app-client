@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { utils } from "../../utils";
 import { AuthLayout, AuthContext } from "../";
@@ -11,6 +11,8 @@ import {
 } from "../../components";
 import { svg } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
+import { useDispatch, useSelector } from "react-redux";
+import { signupReq } from "../../store/auth/authAction";
 
 const SignUp = ({ navigation }) => {
   const [username, setUsername] = React.useState("");
@@ -26,9 +28,22 @@ const SignUp = ({ navigation }) => {
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
-  const loginHandler = (userName, passWord) => {
-    signIn(userName, passWord);
+  const [errors, setErrors] = useState({});
+
+  const dispatch = useDispatch();
+
+  const handleSignup = () => {
+    const signupData = {
+      email,
+      username,
+      phone_number: phone,
+      password,
+      confirm_password: confirmPassword,
+    };
+    dispatch(signupReq(signupData));
   };
+
+  const signup = useSelector((state) => state.auth.signup);
 
   return (
     <AuthLayout
@@ -260,16 +275,17 @@ const SignUp = ({ navigation }) => {
           }
           icon={icons.password}
         />
-
         <PrimaryButton
           icon={icons.profile}
+          onPress={handleSignup}
+          disabled={confirmPasswordError !== ""}
           buttonContainerStyle={{
             height: 55,
             width: "100%",
             borderRadius: 50,
             marginTop: SIZES.radius,
           }}
-          label={"REGISTER"}
+          label={signup?.loadingButtonContent}
           labelStyle={{ color: "white", ...FONTS.h2 }}
         />
 

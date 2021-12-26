@@ -9,3 +9,15 @@ export const VERIFY_TOKEN_FAILED = "VERIFY_TOKEN_FAILED";
 export const LOGOUT = "LOGOUT";
 
 export const SET_SELECTED_TAB = "SET_SELECTED_TAB";
+
+export const SIGNUP_REQ = "SIGNUP_REQ";
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNUP_FAILED = "SIGNUP_FAILED";
+
+export const NAVIGATE = "NAVIGATE";
+
+export const SET_NAVIGATION_REF = "SET_NAVIGATION_REF";
+export const REPLACE = "REPLACE";
+
+export const SET_TOAST_REF = "SET_TOAST_REF";
+export const NOTIFY = "NOTIFY";
