@@ -19,6 +19,7 @@ import Notification from "./Notification/Notification";
 import AuthLayout from "./Authentication/AuthLayout";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
+import Otp from "./Authentication/Otp";
 import ForgotPassword from "./Authentication/ForgotPassword";
 
 import OnBoarding from "./OnBoarding/OnBoarding";
@@ -35,6 +36,7 @@ export {
   OnBoarding,
   SignIn,
   SignUp,
+  Otp,
   ForgotPassword,
   AuthLayout,
   CustomDrawer,

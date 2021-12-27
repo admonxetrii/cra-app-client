@@ -4,6 +4,7 @@ const loyalty = require("../assets/images/undraw/loyalty.png");
 const started = require("../assets/images/undraw/started.png");
 const login = require("../assets/images/undraw/login.png");
 const signup = require("../assets/images/undraw/signup.png");
+const otp = require("../assets/images/undraw/otp.png");
 
 export default {
   dinein,
@@ -12,4 +13,5 @@ export default {
   started,
   login,
   signup,
+  otp,
 };

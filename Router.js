@@ -7,6 +7,7 @@ import {
   OnBoarding,
   SignIn,
   SignUp,
+  Otp,
   ForgotPassword,
   CustomDrawer,
 } from "./src/features";
@@ -112,6 +113,7 @@ const Router = () => {
               <Stack.Screen name="OnBoarding" component={OnBoarding} />
               <Stack.Screen name="SignIn" component={SignIn} />
               <Stack.Screen name="SignUp" component={SignUp} />
+              <Stack.Screen name="Otp" component={Otp} />
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             </>
           )}

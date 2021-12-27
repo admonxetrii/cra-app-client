@@ -62,7 +62,7 @@ function* signupAPI() {
     if (response.data.status === 201) {
       yield Toast.success("User registered successfully.");
       yield put(signupSuccess(response.data));
-      yield put(navigate("SignIn"));
+      yield put(navigate("Otp"));
     } else {
       yield put(signupFailed(response.data));
       yield Toast.error("invalid data");

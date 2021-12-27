@@ -21,6 +21,10 @@ const SignIn = ({ navigation }) => {
   const [showPass, setShowPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
+  function isLoginEnable() {
+    return username != "" && password != "" && usernameOrEmailError == "";
+  }
+
   const dispatch = useDispatch();
 
   const loginHandler = () => {
@@ -142,6 +146,7 @@ const SignIn = ({ navigation }) => {
 
           <PrimaryButton
             icon={icons.login}
+            disabled={isLoginEnable() ? false : true}
             buttonContainerStyle={{
               height: 55,
               width: "100%",
@@ -174,7 +179,7 @@ const SignIn = ({ navigation }) => {
               }}
               label={"Forgot Password?"}
               labelStyle={{ color: theme.colors.brand.primary }}
-              onPress={() => navigation.navigate("SignUp")}
+              onPress={() => navigation.navigate("Otp")}
             />
             <View
               style={{

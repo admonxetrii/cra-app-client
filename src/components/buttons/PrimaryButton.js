@@ -20,7 +20,14 @@ const PrimaryButton = ({
       onPress={onPress}
     >
       <LinearGradient
-        colors={[theme.colors.brand.primary, theme.colors.brand.secondary]}
+        colors={
+          disabled
+            ? [
+                theme.colors.brand.primaryMuted,
+                theme.colors.brand.secondaryMuted,
+              ]
+            : [theme.colors.brand.primary, theme.colors.brand.secondary]
+        }
         style={{
           flex: 1,
           justifyContent: "center",
@@ -68,7 +75,9 @@ const PrimaryButton = ({
               style={{
                 height: 20,
                 width: 20,
-                tintColor: theme.colors.brand.secondary,
+                tintColor: disabled
+                  ? theme.colors.brand.primaryMuted
+                  : theme.colors.brand.secondary,
               }}
             />
           </View>
