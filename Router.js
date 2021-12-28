@@ -75,6 +75,7 @@ const Router = () => {
 
   React.useEffect(async () => {
     const token = await Storage.getToken("access");
+    // console.log(token);
     if (token) {
       dispatch(verifyTokenRequest(token));
     }

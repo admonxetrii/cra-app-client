@@ -7,6 +7,13 @@ export default {
   getToken: async (refresh) => {
     return await axios.post("/auth/token/refresh/", { refresh });
   },
+  getUserDetail: async (token) => {
+    return await axios.get("/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  },
   verifyToken: async (token) => {
     return await axios.post("/auth/token/verify/", { token });
   },

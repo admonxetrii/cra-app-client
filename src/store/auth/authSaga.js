@@ -25,8 +25,14 @@ function* loginAPI(action) {
     if (response.status === 200) {
       yield Storage.setAccessToken(response.data.access);
       yield Storage.setRefreshToken(response.data.refresh);
-      //TODO:: fetch user datawhwew
-      yield put(loginSuccess({ user: "craadmin" }));
+      console.log(response.data.access);
+
+      //set current user details
+      const userDetail = yield userService.getUserDetail(response.data.access);
+      console.log(userDetail.data);
+      yield Storage.setUserDetail(userDetail.data);
+
+      yield put(loginSuccess({ userData: userDetail }));
       yield Toast.success("Logged in successfully");
     } else {
       yield put(loginFailed(response.data));
