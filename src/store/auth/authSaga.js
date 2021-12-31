@@ -25,8 +25,14 @@ function* loginAPI(action) {
     if (response.status === 200) {
       yield Storage.setAccessToken(response.data.access);
       yield Storage.setRefreshToken(response.data.refresh);
-      //TODO:: fetch user datawhwew
-      yield put(loginSuccess({ user: "craadmin" }));
+      console.log(response.data.access);
+
+      //set current user details
+      const userDetail = yield userService.getUserDetail(response.data.access);
+      console.log(userDetail.data);
+      yield Storage.setUserDetail(userDetail.data);
+
+      yield put(loginSuccess({ userData: userDetail }));
       yield Toast.success("Logged in successfully");
     } else {
       yield put(loginFailed(response.data));
@@ -42,7 +48,8 @@ function* verifyTokenAPI(action) {
     const response = yield userService.verifyToken(action.data);
     if (response.status === 200) {
       yield put(verifyTokenSuccess({ user: "craadmin" }));
-    } else {
+    } else if (response.status === 401) {
+      yield Toast.error("Session expired!");
       yield put(verifyTokenFailed(response.data));
     }
   } catch (error) {
@@ -62,7 +69,7 @@ function* signupAPI() {
     if (response.data.status === 201) {
       yield Toast.success("User registered successfully.");
       yield put(signupSuccess(response.data));
-      yield put(navigate("SignIn"));
+      yield put(navigate("Otp"));
     } else {
       yield put(signupFailed(response.data));
       yield Toast.error("invalid data");

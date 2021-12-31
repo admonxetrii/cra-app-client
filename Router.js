@@ -7,6 +7,7 @@ import {
   OnBoarding,
   SignIn,
   SignUp,
+  Otp,
   ForgotPassword,
   CustomDrawer,
 } from "./src/features";
@@ -74,6 +75,7 @@ const Router = () => {
 
   React.useEffect(async () => {
     const token = await Storage.getToken("access");
+    // console.log(token);
     if (token) {
       dispatch(verifyTokenRequest(token));
     }
@@ -112,6 +114,7 @@ const Router = () => {
               <Stack.Screen name="OnBoarding" component={OnBoarding} />
               <Stack.Screen name="SignIn" component={SignIn} />
               <Stack.Screen name="SignUp" component={SignUp} />
+              <Stack.Screen name="Otp" component={Otp} />
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             </>
           )}

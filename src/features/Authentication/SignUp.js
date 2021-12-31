@@ -28,9 +28,21 @@ const SignUp = ({ navigation }) => {
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
 
-  const [errors, setErrors] = useState({});
-
   const dispatch = useDispatch();
+
+  function isRegisterEnable() {
+    return (
+      username != "" &&
+      usernameError == "" &&
+      email != "" &&
+      emailError == "" &&
+      password != "" &&
+      confirmPassword != "" &&
+      confirmPasswordError == "" &&
+      phone != "" &&
+      phoneError == ""
+    );
+  }
 
   const handleSignup = () => {
     const signupData = {
@@ -277,8 +289,8 @@ const SignUp = ({ navigation }) => {
         />
         <PrimaryButton
           icon={icons.profile}
+          disabled={isRegisterEnable() ? false : true}
           onPress={handleSignup}
-          disabled={confirmPasswordError !== ""}
           buttonContainerStyle={{
             height: 55,
             width: "100%",
