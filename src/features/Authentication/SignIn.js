@@ -179,7 +179,7 @@ const SignIn = ({ navigation }) => {
               }}
               label={"Forgot Password?"}
               labelStyle={{ color: theme.colors.brand.primary }}
-              onPress={() => navigation.navigate("Otp")}
+              onPress={() => navigation.navigate("ForgotPassword")}
             />
             <View
               style={{

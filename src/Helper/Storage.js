@@ -11,6 +11,11 @@ const Storage = {
 
   getUserDetail: async () => {
     const user = await AsyncStorage.getItem("user");
+    console.log(user);
+    if (user) {
+      return user;
+    }
+    return null;
   },
 
   setAccessToken: async (token) => {

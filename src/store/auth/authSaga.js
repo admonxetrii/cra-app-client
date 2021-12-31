@@ -48,7 +48,8 @@ function* verifyTokenAPI(action) {
     const response = yield userService.verifyToken(action.data);
     if (response.status === 200) {
       yield put(verifyTokenSuccess({ user: "craadmin" }));
-    } else {
+    } else if (response.status === 401) {
+      yield Toast.error("Session expired!");
       yield put(verifyTokenFailed(response.data));
     }
   } catch (error) {
