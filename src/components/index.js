@@ -6,6 +6,8 @@ import CustomSwitch from "./switch/CustomSwitch";
 import HorizontalFoodCard from "./listView/HorizontalFoodCard";
 import CardSection from "./listView/CardSection";
 import VerticalFoodCard from "./listView/VerticalFoodCard";
+import FilterModal from "./modals/FilterModal";
+import IconButton from "./buttons/IconButton";
 
 export {
   TextButton,
@@ -16,4 +18,6 @@ export {
   VerticalFoodCard,
   HorizontalFoodCard,
   CardSection,
+  FilterModal,
+  IconButton,
 };
