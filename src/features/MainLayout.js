@@ -232,7 +232,6 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       <View
         style={{
           flex: 1,
-          padding: 16,
         }}
       >
         {selectedTab == constants.screens.home && <Home />}
