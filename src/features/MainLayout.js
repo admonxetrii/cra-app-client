@@ -8,8 +8,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { Header } from ".";
-
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerActions } from "@react-navigation/native";
 
@@ -19,7 +17,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { TabButton } from "./Tabs/TabButton";
 
 // Views
-import { Home, CartTab, Favourite, Notification, Search } from ".";
+import { Header, Home, CartTab, Favourite, Notification, Search } from ".";
 
 // data
 import { setSelectedTab } from "../store/tab/tabActions";

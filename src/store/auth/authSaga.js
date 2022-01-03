@@ -55,7 +55,7 @@ function* verifyTokenAPI(action) {
     if (response.status === 200) {
       const userDetail = yield userService.getUserDetail(action.data);
       if (userDetail.status === 200) {
-        console.log(userDetail.data);
+        // console.log(userDetail.data);
         yield put(verifyTokenSuccess(userDetail.data));
         yield put(loginSuccess());
       } else {
@@ -99,7 +99,7 @@ function* signupVerificationAPI() {
       (state) => state.auth.signupVerification.inputData
     );
     const username = yield select((state) => state.auth.signup.username);
-    console.log(username, inputData);
+    // console.log(username, inputData);
     const response = yield usersServices.signupVerification({
       otp: inputData,
       username,

@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { MainLayout } from "..";
-import Notification from "../Notification/Notification";
 
 import { theme } from "../../infrastructure/theme";
 
@@ -11,7 +10,6 @@ import Animated from "react-native-reanimated";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setSelectedTab } from "../../store/tab/tabActions.js";
-import Storage from "../../Helper/Storage";
 
 const Drawer = createDrawerNavigator();
 
@@ -39,7 +37,7 @@ const CustomDrawer = () => {
 
   const selectedTab = useSelector((state) => state.tab.selectedTab);
   const handleSelectedTab = (a) => {
-    console.log(a);
+    // console.log(a);
     dispatch(setSelectedTab(a));
   };
   return (

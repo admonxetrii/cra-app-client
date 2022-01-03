@@ -10,6 +10,7 @@ import {
   Otp,
   ForgotPassword,
   CustomDrawer,
+  RestaurantDetail,
 } from "./src/features";
 
 import {
@@ -76,7 +77,7 @@ const Router = () => {
   React.useEffect(async () => {
     const token = await Storage.getToken("access");
     if (token) {
-      console.log(token);
+      // console.log(token);
       dispatch(verifyTokenRequest(token));
     }
   }, []);
@@ -108,7 +109,13 @@ const Router = () => {
           initialRouteName={auth.initialScreen}
         >
           {auth.isLoggedIn ? (
-            <Stack.Screen name="CustomDrawer" component={CustomDrawer} />
+            <>
+              <Stack.Screen name="CustomDrawer" component={CustomDrawer} />
+              <Stack.Screen
+                name="RestaurantDetail"
+                component={RestaurantDetail}
+              />
+            </>
           ) : (
             <>
               <Stack.Screen name="OnBoarding" component={OnBoarding} />
