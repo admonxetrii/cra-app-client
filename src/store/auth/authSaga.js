@@ -58,10 +58,8 @@ function* verifyTokenAPI(action) {
   try {
     const response = yield userService.verifyToken(action.data);
     if (response.status === 200) {
-      console.log(response.data, "verify");
       const userDetail = yield userService.getUserDetail(action.data);
       if (userDetail.status === 200) {
-        console.log(userDetail.data);
         yield put(verifyTokenSuccess(userDetail.data));
         yield put(loginSuccess());
       } else {

@@ -148,6 +148,7 @@ const Otp = () => {
             flexDirection: "row",
             justifyContent: "center",
             marginTop: SIZES.padding,
+            flexWrap: "wrap",
           }}
         >
           <Text style={{ ...FONTS.body4 }}>

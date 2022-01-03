@@ -9,14 +9,18 @@ import {
   HorizontalFoodCard,
   CardSection,
 } from "../../components";
+import { useDispatch } from "react-redux";
+import { navigate } from "../../store/navigation/navigationAction";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
   const [selectedMenuType, setSelectedMenuType] = React.useState(1);
   const [menuList, setMenuList] = React.useState([]);
 
   const [recommends, setRecommends] = React.useState([]);
   const [popular, setPopular] = React.useState([]);
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     handleChangeCategory(selectedCategoryId, selectedMenuType);
@@ -123,7 +127,7 @@ const Home = () => {
                 marginRight: index == popular.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
-              onPress={() => console.log("Vertical Section")}
+              onPress={() => dispatch(navigate("RestaurantDetail"))}
             />
           )}
         />

@@ -2,28 +2,28 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { View, Text, FlatList } from "react-native";
 import { ActivityIndicator, Card, Searchbar, Colors } from "react-native-paper";
-import { SIZES } from "../../../../constants";
-import { theme } from "../../theme";
+import { SIZES } from "../../../constants";
+import { theme } from "../../infrastructure/theme";
 
 export const Restaurant = () => {
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   // console.log(data);
-
+  console.log(getData);
   const getData = () => {
     setLoading(true);
     axios
       .get("/restaurants/")
       .then(function (response) {
         // handle success
-        console.log(response.data);
+        // console.log(response.data);
         setData(response.data);
         setLoading(false);
         // setData(response.data.data);
       })
       .catch(function (error) {
         // handle error
-        console.log(error, "hello eroor");
+        // console.log(error, "hello eroor");
         setLoading(false);
       })
       .then(function () {
@@ -40,16 +40,9 @@ export const Restaurant = () => {
   return (
     <View
       style={{
-        marginBottom: 16,
+        flex: 1,
       }}
     >
-      <Searchbar
-        placeholder="Search Restaurant"
-        style={{
-          marginBottom: SIZES.radius,
-        }}
-      />
-
       {isLoading ? (
         <View>
           <ActivityIndicator

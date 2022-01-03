@@ -11,7 +11,7 @@ import Otp from "./Authentication/Otp";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import Header from "./Header/Header";
 import OnBoarding from "./OnBoarding/OnBoarding";
-
+import RestaurantDetail from "../components/Restaurants/RestaurantDetail";
 import CustomDrawer from "./Navigation/CustomDrawer";
 
 export {
@@ -29,4 +29,5 @@ export {
   AuthLayout,
   CustomDrawer,
   Header,
+  RestaurantDetail,
 };
