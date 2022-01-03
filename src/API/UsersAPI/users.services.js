@@ -8,7 +8,7 @@ export default {
     return await axios.post("/auth/token/refresh/", { refresh });
   },
   getUserDetail: async (token) => {
-    return await axios.get("/auth/me", {
+    return await axios.get("/auth/me/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -19,5 +19,8 @@ export default {
   },
   signup: async (data) => {
     return await axios.post("/auth/register/", data);
+  },
+  signupVerification: async (requestData) => {
+    return await axios.post("/auth/verify-otp/", requestData);
   },
 };

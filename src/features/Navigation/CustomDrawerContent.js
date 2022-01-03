@@ -7,7 +7,7 @@ import { theme } from "../../infrastructure/theme";
 import { constants, icons, SIZES, images } from "../../../constants";
 
 import { CustomDrawerItem } from "./CustomDrawerItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth/authAction";
 
 export const CustomDrawerContent = ({
@@ -16,6 +16,8 @@ export const CustomDrawerContent = ({
   setSelectedTab,
 }) => {
   const dispatch = useDispatch();
+
+  const userData = useSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -79,7 +81,7 @@ export const CustomDrawerContent = ({
                 lineHeight: 22,
               }}
             >
-              Nisham Wagle
+              {`${userData?.first_name} ${userData?.last_name}`}
             </Text>
             <Text
               style={{

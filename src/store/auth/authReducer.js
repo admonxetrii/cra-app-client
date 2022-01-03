@@ -6,6 +6,9 @@ import {
   SIGNUP_FAILED,
   SIGNUP_REQ,
   SIGNUP_SUCCESS,
+  SIGNUP_VERIFY_FAILED,
+  SIGNUP_VERIFY_REQ,
+  SIGNUP_VERIFY_SUCCESS,
   VERIFY_TOKEN_FAILED,
   VERIFY_TOKEN_REQ,
   VERIFY_TOKEN_SUCCESS,
@@ -26,11 +29,19 @@ const initialState = {
     error: null,
   },
   signup: {
+    username: null,
     loading: false,
     error: null,
     inputData: {},
     data: {},
     loadingButtonContent: "Signup",
+  },
+  signupVerification: {
+    loading: false,
+    error: null,
+    inputData: {},
+    data: {},
+    loadingButtonContent: "Veify Account",
   },
 };
 
@@ -51,7 +62,6 @@ const authReducer = (state = initialState, action) => {
         ...state,
         initialScreen: "CustomDrawer",
         isLoggedIn: true,
-        userData: action.data,
         login: {
           ...state.login,
           inputData: {},
@@ -63,7 +73,6 @@ const authReducer = (state = initialState, action) => {
         ...state,
         initialScreen: "OnBoarding",
         isLoggedIn: false,
-        userData: null,
         login: {
           loading: false,
           inputData: {},
@@ -122,6 +131,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         signup: {
+          username: null,
           loading: true,
           error: null,
           data: {},
@@ -130,24 +140,60 @@ const authReducer = (state = initialState, action) => {
         },
       };
     case SIGNUP_SUCCESS:
+      console.log(action.data, "<-----");
       return {
         ...state,
         signup: {
+          inputData: {},
+          username: action.data.username,
           loading: false,
           error: null,
           data: action.data,
           loadingButtonContent: "Signup",
-          inputData: {},
         },
       };
     case SIGNUP_FAILED:
       return {
         ...state,
         signup: {
+          email: null,
           loading: false,
           error: action.error,
           data: {},
           loadingButtonContent: "Signup",
+          inputData: {},
+        },
+      };
+    case SIGNUP_VERIFY_REQ:
+      return {
+        ...state,
+        signupVerification: {
+          loading: true,
+          error: null,
+          data: {},
+          loadingButtonContent: "Verifying...",
+          inputData: action.data,
+        },
+      };
+    case SIGNUP_VERIFY_SUCCESS:
+      return {
+        ...state,
+        signupVerification: {
+          loading: false,
+          error: null,
+          data: action.data,
+          loadingButtonContent: "Verifying...",
+          inputData: {},
+        },
+      };
+    case SIGNUP_VERIFY_FAILED:
+      return {
+        ...state,
+        signupVerification: {
+          loading: false,
+          error: action.error,
+          data: {},
+          loadingButtonContent: "Try Again",
           inputData: {},
         },
       };

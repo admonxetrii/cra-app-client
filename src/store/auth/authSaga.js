@@ -7,6 +7,7 @@ import {
   LOGIN_REQ,
   LOGOUT,
   SIGNUP_REQ,
+  SIGNUP_VERIFY_REQ,
   VERIFY_TOKEN_REQ,
 } from "../actionConstant";
 import { navigate, replace } from "../navigation/navigationAction";
@@ -15,7 +16,10 @@ import {
   loginSuccess,
   signupFailed,
   signupSuccess,
+  signupVerifyFailed,
+  signupVerifySuccess,
   verifyTokenFailed,
+  verifyTokenRequest,
   verifyTokenSuccess,
 } from "./authAction";
 
@@ -25,15 +29,17 @@ function* loginAPI(action) {
     if (response.status === 200) {
       yield Storage.setAccessToken(response.data.access);
       yield Storage.setRefreshToken(response.data.refresh);
-      console.log(response.data.access);
 
       //set current user details
       const userDetail = yield userService.getUserDetail(response.data.access);
-      console.log(userDetail.data);
-      yield Storage.setUserDetail(userDetail.data);
-
-      yield put(loginSuccess({ userData: userDetail }));
-      yield Toast.success("Logged in successfully");
+      if (userDetail.status === 200) {
+        yield verifyTokenSuccess(userDetail.data);
+        yield put(loginSuccess());
+        yield Toast.success("Logged in successfully");
+      } else {
+        yield put(loginFailed(response.data));
+        yield Toast.error(response.data.message);
+      }
     } else {
       yield put(loginFailed(response.data));
       yield Toast.error(response.data.message);
@@ -47,7 +53,15 @@ function* verifyTokenAPI(action) {
   try {
     const response = yield userService.verifyToken(action.data);
     if (response.status === 200) {
-      yield put(verifyTokenSuccess({ user: "craadmin" }));
+      const userDetail = yield userService.getUserDetail(action.data);
+      if (userDetail.status === 200) {
+        console.log(userDetail.data);
+        yield put(verifyTokenSuccess(userDetail.data));
+        yield put(loginSuccess());
+      } else {
+        yield put(loginFailed(response.data));
+        yield Toast.error(response.data.message);
+      }
     } else if (response.status === 401) {
       yield Toast.error("Session expired!");
       yield put(verifyTokenFailed(response.data));
@@ -65,11 +79,10 @@ function* signupAPI() {
   try {
     const inputData = yield select((state) => state.auth.signup.inputData);
     const response = yield usersServices.signup(inputData);
-    console.log(response.data.status, typeof response.data.status);
     if (response.data.status === 201) {
       yield Toast.success("User registered successfully.");
-      yield put(signupSuccess(response.data));
       yield put(navigate("Otp"));
+      yield put(signupSuccess(response.data));
     } else {
       yield put(signupFailed(response.data));
       yield Toast.error("invalid data");
@@ -80,9 +93,39 @@ function* signupAPI() {
   }
 }
 
+function* signupVerificationAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.auth.signupVerification.inputData
+    );
+    const username = yield select((state) => state.auth.signup.username);
+    console.log(username, inputData);
+    const response = yield usersServices.signupVerification({
+      otp: inputData,
+      username,
+    });
+    if (response.data.status === 200) {
+      yield put(signupVerifySuccess(response.data.message));
+      yield Toast.success(response.data.message);
+      yield Storage.setAccessToken(response.data.access);
+      yield put(verifyTokenRequest(response.data.access));
+    } else if (response.data.status === 403) {
+      yield put(signupVerifyFailed(response.data.message));
+      yield Toast.error(response.data.message);
+    } else {
+      yield put(signupVerifyFailed(response.data.message));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    yield put(signupVerifyFailed(error.response));
+    yield Toast.error("Something went wrong");
+  }
+}
+
 export default function* authSaga() {
   yield all([yield takeLatest(LOGIN_REQ, loginAPI)]);
   yield all([yield takeLatest(VERIFY_TOKEN_REQ, verifyTokenAPI)]);
   yield all([yield takeLatest(SIGNUP_REQ, signupAPI)]);
   yield all([yield takeLatest(LOGOUT, logout)]);
+  yield all([yield takeLatest(SIGNUP_VERIFY_REQ, signupVerificationAPI)]);
 }
