@@ -3,6 +3,9 @@ import {
   LOGIN_REQ,
   LOGIN_SUCCESS,
   LOGOUT,
+  RESEND_OTP_FAILED,
+  RESEND_OTP_REQ,
+  RESEND_OTP_SUC,
   SIGNUP_FAILED,
   SIGNUP_REQ,
   SIGNUP_SUCCESS,
@@ -86,7 +89,7 @@ export function signupFailed(error) {
   };
 }
 
-// Password reset
+// Verify Signup
 
 export function signupVerifyReq(data) {
   return {
@@ -103,6 +106,28 @@ export function signupVerifySuccess(data) {
 export function signupVerifyFailed(error) {
   return {
     type: SIGNUP_VERIFY_FAILED,
+    error,
+  };
+}
+
+//Resend Otp
+
+export function resendOtpReq() {
+  return {
+    type: RESEND_OTP_REQ,
+  };
+}
+
+export function resendOtpSuccess(data) {
+  return {
+    type: RESEND_OTP_SUC,
+    data,
+  };
+}
+
+export function resendOtpFailed(error) {
+  return {
+    type: RESEND_OTP_FAILED,
     error,
   };
 }

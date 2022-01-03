@@ -23,4 +23,7 @@ export default {
   signupVerification: async (requestData) => {
     return await axios.post("/auth/verify-otp/", requestData);
   },
+  resendOtp: async (username) => {
+    return await axios.patch("/auth/verify-otp/", { username });
+  },
 };

@@ -6,11 +6,11 @@ import { TextButton, PrimaryButton } from "../../components";
 import { AuthLayout } from "..";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { theme } from "../../infrastructure/theme";
-import { useDispatch } from "react-redux";
-import { signupVerifyReq } from "../../store/auth/authAction";
+import { useDispatch, useSelector } from "react-redux";
+import { resendOtpReq, signupVerifyReq } from "../../store/auth/authAction";
 
 const Otp = () => {
-  const [timer, setTimer] = React.useState(60);
+  const [timer, setTimer] = React.useState(1);
 
   const [otp, setOtp] = useState(null);
 
@@ -34,7 +34,6 @@ const Otp = () => {
   });
 
   const handleOtp = (otp) => {
-    console.log(otp);
     setOtp(otp);
   };
 
@@ -44,6 +43,12 @@ const Otp = () => {
     if (otp) {
       dispatch(signupVerifyReq(otp));
     }
+  };
+
+  // const resendOtp = useSelector((state) => state.auth?.resendOtp);
+
+  const resendOtpHandler = () => {
+    dispatch(resendOtpReq());
   };
 
   return (
@@ -107,11 +112,12 @@ const Otp = () => {
             Didn't receive code?
           </Text>
           <TextButton
+            onPress={resendOtpHandler}
             buttonContainerStyle={{
               marginLeft: SIZES.base,
               backgroundColor: null,
             }}
-            label={timer > 0 ? `Resend (${timer}s)` : "Resend OTP"}
+            label={timer > 0 ? `Resend (${timer}s)` : "Resend Otp"}
             disabled={timer == 0 ? false : true}
             labelStyle={{
               color:

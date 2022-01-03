@@ -6,6 +6,7 @@ import Toast from "../../Helper/toast";
 import {
   LOGIN_REQ,
   LOGOUT,
+  RESEND_OTP_REQ,
   SIGNUP_REQ,
   SIGNUP_VERIFY_REQ,
   VERIFY_TOKEN_REQ,
@@ -14,6 +15,8 @@ import { navigate, replace } from "../navigation/navigationAction";
 import {
   loginFailed,
   loginSuccess,
+  resendOtpFailed,
+  resendOtpSuccess,
   signupFailed,
   signupSuccess,
   signupVerifyFailed,
@@ -125,10 +128,30 @@ function* signupVerificationAPI() {
   }
 }
 
+function* resendOTPAPI() {
+  try {
+    console.log("here");
+    const username = yield select((state) => state.auth.signup.username);
+    console.log(username);
+    const response = yield usersServices.resendOtp(username);
+    if (response.data.status == 200) {
+      yield put(resendOtpSuccess(response.data));
+      yield Toast.success(response.data.message);
+    } else {
+      yield put(resendOtpFailed(response.data.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    yield put(resendOtpFailed(error));
+    yield Toast.error("");
+  }
+}
+
 export default function* authSaga() {
   yield all([yield takeLatest(LOGIN_REQ, loginAPI)]);
   yield all([yield takeLatest(VERIFY_TOKEN_REQ, verifyTokenAPI)]);
   yield all([yield takeLatest(SIGNUP_REQ, signupAPI)]);
   yield all([yield takeLatest(LOGOUT, logout)]);
   yield all([yield takeLatest(SIGNUP_VERIFY_REQ, signupVerificationAPI)]);
+  yield all([yield takeLatest(RESEND_OTP_REQ, resendOTPAPI)]);
 }

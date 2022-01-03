@@ -3,6 +3,9 @@ import {
   LOGIN_REQ,
   LOGIN_SUCCESS,
   LOGOUT,
+  RESEND_OTP_FAILED,
+  RESEND_OTP_REQ,
+  RESEND_OTP_SUC,
   SIGNUP_FAILED,
   SIGNUP_REQ,
   SIGNUP_SUCCESS,
@@ -42,6 +45,13 @@ const initialState = {
     inputData: {},
     data: {},
     loadingButtonContent: "Veify Account",
+  },
+  resendOtp: {
+    loading: false,
+    error: null,
+    inputData: {},
+    data: {},
+    loadingButtonContent: "Resend OTP",
   },
 };
 
@@ -195,6 +205,36 @@ const authReducer = (state = initialState, action) => {
           data: {},
           loadingButtonContent: "Try Again",
           inputData: {},
+        },
+      };
+    case RESEND_OTP_REQ:
+      return {
+        ...state,
+        resendOtp: {
+          loading: true,
+          error: null,
+          data: {},
+          loadingButtonContent: "Please wait",
+        },
+      };
+    case RESEND_OTP_SUC:
+      return {
+        ...state,
+        resendOtp: {
+          loading: false,
+          error: null,
+          data: action.data,
+          loadingButtonContent: "Resend OTP",
+        },
+      };
+    case RESEND_OTP_FAILED:
+      return {
+        ...state,
+        resendOtp: {
+          loading: false,
+          error: action.error,
+          data: {},
+          loadingButtonContent: "Resend OTP",
         },
       };
     default:
