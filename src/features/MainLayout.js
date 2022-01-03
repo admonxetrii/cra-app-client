@@ -8,8 +8,9 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
+import { Header } from ".";
+
 import { useDispatch, useSelector } from "react-redux";
-import { Header } from "./Header";
 import { DrawerActions } from "@react-navigation/native";
 
 import { FONTS, SIZES, icons, constants, images } from "../../constants";
