@@ -26,7 +26,12 @@ import {
 function* loginAPI(action) {
   try {
     const response = yield userService.login(action.data);
-    if (response.status === 200) {
+    if (!response.data.is_verified) {
+      yield put(signupSuccess(response.data));
+      return yield put(navigate("Otp"));
+    }
+    if (response.status === 200 && response.data.is_verified) {
+      console.log(response.data);
       yield Storage.setAccessToken(response.data.access);
       yield Storage.setRefreshToken(response.data.refresh);
 
@@ -53,6 +58,7 @@ function* verifyTokenAPI(action) {
   try {
     const response = yield userService.verifyToken(action.data);
     if (response.status === 200) {
+      console.log(response.data, "verify");
       const userDetail = yield userService.getUserDetail(action.data);
       if (userDetail.status === 200) {
         console.log(userDetail.data);
@@ -99,7 +105,6 @@ function* signupVerificationAPI() {
       (state) => state.auth.signupVerification.inputData
     );
     const username = yield select((state) => state.auth.signup.username);
-    console.log(username, inputData);
     const response = yield usersServices.signupVerification({
       otp: inputData,
       username,
