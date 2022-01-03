@@ -6,40 +6,19 @@ const myProfile = {
   address: "Gwarko , Lalitpur",
 };
 
-const restaurants = [
-  {
-    id: 1,
-    name: tropicalRest,
-  },
-  {
-    id: 2,
-    name: momento,
-  },
-];
-
-const tropicalRest = {
-  name: "Tropical Rest",
-};
-const momento = {
-  name: "Momento",
-};
-
 const categories = [
   {
     id: 1,
-    restaurants: [tropicalRest],
     name: "Fast Food",
     icon: icons.burger,
   },
   {
     id: 2,
-    restaurants: [tropicalRest, momento],
     name: "Fruit Item",
     icon: icons.cherry,
   },
   {
     id: 3,
-    restaurants: [momento],
     name: "Rice Item",
     icon: icons.rice,
   },
@@ -110,7 +89,6 @@ const menu = [
 
 export default {
   myProfile,
-  restaurants,
   categories,
   menu,
 };
