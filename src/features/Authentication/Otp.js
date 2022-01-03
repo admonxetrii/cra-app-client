@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 
 import { COLORS, FONTS, SIZES, svg, icons } from "../../../constants";
@@ -6,9 +6,19 @@ import { TextButton, PrimaryButton } from "../../components";
 import { AuthLayout } from "..";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import { theme } from "../../infrastructure/theme";
+import { useDispatch } from "react-redux";
+import { signupVerifyReq } from "../../store/auth/authAction";
 
 const Otp = () => {
   const [timer, setTimer] = React.useState(60);
+
+  const [otp, setOtp] = useState(null);
+
+  const handleResendOtp = () => {
+    if (otp) {
+      dispatch(signupVerifyReq(otp));
+    }
+  };
 
   React.useEffect(() => {
     let interval = setInterval(() => {
@@ -22,6 +32,19 @@ const Otp = () => {
     }, 1000);
     return () => clearInterval(interval);
   });
+
+  const handleOtp = (otp) => {
+    console.log(otp);
+    setOtp(otp);
+  };
+
+  const dispatch = useDispatch();
+
+  const handleOtpSubmit = () => {
+    if (otp) {
+      dispatch(signupVerifyReq(otp));
+    }
+  };
 
   return (
     <AuthLayout
@@ -51,6 +74,7 @@ const Otp = () => {
       >
         <OTPInputView
           pinCount={6}
+          onCodeFilled={handleOtp}
           style={{
             width: "100%",
             height: 55,
@@ -109,6 +133,7 @@ const Otp = () => {
       >
         <PrimaryButton
           icon={icons.profile}
+          onPress={handleOtpSubmit}
           buttonContainerStyle={{
             height: 55,
             width: "100%",
@@ -129,6 +154,7 @@ const Otp = () => {
             By signing up, you are going to agree our{" "}
           </Text>
           <TextButton
+            onPress={handleResendOtp}
             buttonContainerStyle={{
               backgroundColor: null,
             }}
