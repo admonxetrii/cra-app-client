@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { COLORS, FONTS, SIZES, icons, constants } from "../../../constants";
-import { IconButton, TextButtonWithIcon } from "..";
+import { IconButton, PrimaryButton, TextButton, TextButtonWithIcon } from "..";
 import { theme } from "../../infrastructure/theme";
 
 const FilterSection = ({ containerStyle, title, children }) => {
@@ -30,7 +30,8 @@ const FilterModal = ({ isVisible, onClose }) => {
   const modalAnimatedValue = React.useRef(new Animated.Value(0)).current;
   const [showFilterModal, setShowFilterModal] = React.useState(isVisible);
 
-  const [rating, setRating] = React.useState(1);
+  const [rating, setRating] = React.useState("");
+  const [tags, setTags] = React.useState("");
 
   React.useEffect(() => {
     if (showFilterModal) {
@@ -50,7 +51,7 @@ const FilterModal = ({ isVisible, onClose }) => {
 
   const modalY = modalAnimatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [SIZES.height, SIZES.height - 480],
+    outputRange: [SIZES.height, SIZES.height - 680],
   });
 
   function renderRating() {
@@ -93,7 +94,34 @@ const FilterModal = ({ isVisible, onClose }) => {
   }
 
   function renderTags() {
-    return <FilterSection title="Tags"></FilterSection>;
+    return (
+      <FilterSection title="Tags">
+        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          {constants.tags.map((item, index) => (
+            <TextButton
+              key={`Tags-${index}`}
+              label={item.label}
+              labelStyle={{
+                color: item.id == tags ? COLORS.white : COLORS.gray,
+                ...FONTS.body3,
+              }}
+              buttonContainerStyle={{
+                height: 50,
+                margin: 5,
+                paddingHorizontal: SIZES.padding,
+                alignItems: "center",
+                borderRadius: SIZES.base,
+                backgroundColor:
+                  item.id == tags
+                    ? theme.colors.brand.primary
+                    : COLORS.lightGray2,
+              }}
+              onPress={() => setTags(item.id)}
+            ></TextButton>
+          ))}
+        </View>
+      </FilterSection>
+    );
   }
 
   return (
@@ -167,6 +195,32 @@ const FilterModal = ({ isVisible, onClose }) => {
             {/* Tags  */}
             {renderTags()}
           </ScrollView>
+          {/* Apply filter button  */}
+          <View
+            style={{
+              position: "absolute",
+              bottom: 150,
+              left: 0,
+              right: 0,
+              paddingHorizontal: SIZES.padding,
+              paddingVertical: SIZES.radius,
+              backgroundColor: COLORS.white,
+            }}
+          >
+            <PrimaryButton
+              icon={icons.search}
+              disabled={false}
+              buttonContainerStyle={{
+                height: 55,
+                width: "100%",
+                borderRadius: 50,
+                marginTop: SIZES.radius,
+              }}
+              label={"Apply Filter"}
+              labelStyle={{ color: "white", ...FONTS.h2 }}
+              onPress={() => console.log("filtered")}
+            />
+          </View>
         </Animated.View>
       </View>
     </Modal>

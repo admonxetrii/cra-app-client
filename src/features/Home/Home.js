@@ -1,16 +1,6 @@
 import React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  ScrollView,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import { Searchbar, Card } from "react-native-paper";
-import Animated from "react-native-reanimated";
-import { COLORS, FONTS, SIZES, icons } from "../../../constants";
+import { View, Text, FlatList, Image, TouchableOpacity } from "react-native";
+import { COLORS, FONTS, SIZES } from "../../../constants";
 import dummyData from "../../../constants/dummyData";
 import { theme } from "../../infrastructure/theme";
 
@@ -18,7 +8,6 @@ import {
   VerticalFoodCard,
   HorizontalFoodCard,
   CardSection,
-  FilterModal,
 } from "../../components";
 
 const Home = () => {
@@ -28,8 +17,6 @@ const Home = () => {
 
   const [recommends, setRecommends] = React.useState([]);
   const [popular, setPopular] = React.useState([]);
-
-  const [showFilterModal, setShowFilterModal] = React.useState(false);
 
   React.useEffect(() => {
     handleChangeCategory(selectedCategoryId, selectedMenuType);
@@ -65,81 +52,6 @@ const Home = () => {
   }
 
   //Render
-
-  function renderSearch() {
-    return (
-      <View
-        style={{
-          flexDirection: "row",
-          height: 40,
-          alignItems: "center",
-          marginHorizontal: SIZES.padding,
-          marginVertical: SIZES.base,
-          paddingHorizontal: SIZES.radius,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.lightGray2,
-        }}
-      >
-        {/* Icon  */}
-        <Image
-          source={icons.search}
-          style={{
-            height: 20,
-            width: 20,
-            tintColor: "black",
-          }}
-        />
-
-        {/* Text Input  */}
-        <TextInput
-          style={{
-            flex: 1,
-            marginLeft: SIZES.radius,
-            ...FONTS.body3,
-          }}
-          placeholder="Search Food..."
-        />
-
-        {/* filter  */}
-        <TouchableOpacity onPress={() => setShowFilterModal(true)}>
-          <Image
-            source={icons.filter}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: "black",
-            }}
-          />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  function renderSelectedRestaurant() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding,
-          marginHorizontal: SIZES.padding,
-        }}
-      >
-        <Text style={{ color: theme.colors.brand.primary, ...FONTS.body3 }}>
-          SELECTED RESTAURANT
-        </Text>
-
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            marginTop: SIZES.base,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ ...FONTS.h3 }}>{"Trp"}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
   function renderFoodCategories() {
     return (
       <FlatList
@@ -300,17 +212,6 @@ const Home = () => {
         flex: 1,
       }}
     >
-      {/* Search  */}
-      {renderSearch()}
-
-      {/* Filter  */}
-      {showFilterModal && (
-        <FilterModal
-          isVisible={showFilterModal}
-          onClose={() => setShowFilterModal(false)}
-        />
-      )}
-
       {/* Contents  */}
       <FlatList
         data={menuList}
