@@ -10,7 +10,7 @@ const tropicalRest = {
   id: 1,
   name: "Tropical Rest",
   icon: null,
-  image: "http://192.168.0.110:8000/media/uploads/restaurants/astrou.png",
+  image: "http://192.168.150.165:8000/media/uploads/restaurants/astrou.png",
   address: "Halchowk, Kathmandu",
   isOpenNow: true,
   rating: 4.0,

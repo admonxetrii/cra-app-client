@@ -1,9 +1,16 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+} from "react-native";
 import { FONTS, COLORS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
 import { Header } from "../../features";
-import { IconButton, CartQuantityButton } from "..";
+import { IconButton, CartQuantityButton, MenuButton } from "..";
 import { useDispatch } from "react-redux";
 import { goBack, navigate } from "../../store/navigation/navigationAction";
 import dummyData from "../../../constants/dummyData";
@@ -52,6 +59,7 @@ const RestaurantDetail = () => {
     return (
       <View
         style={{
+          height: SIZES.height * 0.45,
           marginTop: SIZES.base,
           marginBottom: SIZES.padding,
           paddingHorizontal: SIZES.padding,
@@ -67,11 +75,7 @@ const RestaurantDetail = () => {
         />
 
         {/* card In between  */}
-        <View
-          style={{
-            height: 1000,
-          }}
-        >
+        <View>
           {/* Card Detail  */}
           <View
             style={{
@@ -81,14 +85,14 @@ const RestaurantDetail = () => {
               position: "absolute",
               top: -75,
               borderRadius: 15,
-              paddingHorizontal: SIZES.padding,
-              paddingVertical: SIZES.radius,
               alignSelf: "center",
             }}
           >
             {/* Restaurant Title Header  */}
             <View
               style={{
+                paddingHorizontal: SIZES.padding,
+                paddingTop: SIZES.radius,
                 flexDirection: "row",
                 justifyContent: "space-between",
               }}
@@ -124,15 +128,50 @@ const RestaurantDetail = () => {
                 />
               </View>
             </View>
-
             {/* Address  */}
-            <Text style={{ ...FONTS.body5 }}>{restaurant.address}</Text>
 
-            {/* Locations  */}
+            <Text
+              style={{
+                paddingHorizontal: SIZES.padding,
+                ...FONTS.body5,
+              }}
+            >
+              {restaurant.address}
+            </Text>
+
+            {/* Menus  */}
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                flexDirection: "row",
+              }}
+            >
+              {/* Book a Table  */}
+              <MenuButton
+                containerStyle={{ height: 45, width: 45 }}
+                label="Book Table"
+                labelStyle={{ color: theme.colors.brand.primary }}
+                icon={icons.table}
+                iconStyle={{ height: 28, resizeMode: "contain" }}
+              />
+              {/* Scan a Table  */}
+              <MenuButton
+                containerStyle={{ height: 45, width: 45 }}
+                label="Scan a table"
+                labelStyle={{ color: theme.colors.brand.primary }}
+                icon={icons.qr}
+                iconStyle={{ height: 28, resizeMode: "contain" }}
+              />
+            </View>
           </View>
         </View>
       </View>
     );
+  }
+
+  function renderMenu() {
+    return <></>;
   }
 
   return (
@@ -150,6 +189,7 @@ const RestaurantDetail = () => {
         {/* Restaurant Detail */}
         {renderRestaurantDetail()}
         {/* Menu list */}
+        {renderMenu()}
       </ScrollView>
       {/* Footer  */}
     </View>

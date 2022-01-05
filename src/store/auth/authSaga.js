@@ -34,7 +34,6 @@ function* loginAPI(action) {
       return yield put(navigate("Otp"));
     }
     if (response.status === 200 && response.data.is_verified) {
-      console.log(response.data);
       yield Storage.setAccessToken(response.data.access);
       yield Storage.setRefreshToken(response.data.refresh);
 
@@ -134,7 +133,7 @@ function* resendOTPAPI() {
     const username = yield select((state) => state.auth.signup.username);
     console.log(username);
     const response = yield usersServices.resendOtp(username);
-    if (response.data.status == 200) {
+    if (response.data.status === 200) {
       yield put(resendOtpSuccess(response.data));
       yield Toast.success(response.data.message);
     } else {

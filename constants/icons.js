@@ -32,6 +32,7 @@ const mobile = require("../assets/icons/mobile.png");
 const user = require("../assets/icons/user.png");
 const back = require("../assets/icons/back.png");
 const qr = require("../assets/icons/qr.png");
+const table = require("../assets/icons/table.png");
 
 export default {
   coupon,
@@ -68,4 +69,5 @@ export default {
   user,
   back,
   qr,
+  table,
 };

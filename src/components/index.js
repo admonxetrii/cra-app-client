@@ -10,6 +10,7 @@ import FilterModal from "./modals/FilterModal";
 import IconButton from "./buttons/IconButton";
 import TextButtonWithIcon from "./buttons/TextButtonWithIcon";
 import CartQuantityButton from "./buttons/CartQuantityButton";
+import MenuButton from "./buttons/MenuButton";
 
 export {
   TextButton,
@@ -24,4 +25,5 @@ export {
   IconButton,
   TextButtonWithIcon,
   CartQuantityButton,
+  MenuButton,
 };
