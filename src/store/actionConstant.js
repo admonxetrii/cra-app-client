@@ -15,7 +15,7 @@ export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAILED = "SIGNUP_FAILED";
 
 export const NAVIGATE = "NAVIGATE";
-
+export const GOBACK = "GOBACK";
 export const SET_NAVIGATION_REF = "SET_NAVIGATION_REF";
 export const REPLACE = "REPLACE";
 

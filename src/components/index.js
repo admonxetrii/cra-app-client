@@ -9,6 +9,7 @@ import VerticalFoodCard from "./listView/VerticalFoodCard";
 import FilterModal from "./modals/FilterModal";
 import IconButton from "./buttons/IconButton";
 import TextButtonWithIcon from "./buttons/TextButtonWithIcon";
+import CartQuantityButton from "./buttons/CartQuantityButton";
 
 export {
   TextButton,
@@ -22,4 +23,5 @@ export {
   FilterModal,
   IconButton,
   TextButtonWithIcon,
+  CartQuantityButton,
 };

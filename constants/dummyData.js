@@ -6,6 +6,20 @@ const myProfile = {
   address: "Gwarko , Lalitpur",
 };
 
+const tropicalRest = {
+  id: 1,
+  name: "Tropical Rest",
+  icon: null,
+  image: "http://192.168.0.110:8000/media/uploads/restaurants/astrou.png",
+  address: "Halchowk, Kathmandu",
+  isOpenNow: true,
+  rating: 4.0,
+  isClosedTemporarily: false,
+  addedDate: "2022-01-03T15:41:13.308559Z",
+  modifiedDate: "2022-01-03T15:41:13.308559Z",
+  modifiedBy: 1,
+};
+
 const categories = [
   {
     id: 1,
@@ -91,4 +105,5 @@ export default {
   myProfile,
   categories,
   menu,
+  tropicalRest,
 };

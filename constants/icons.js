@@ -30,6 +30,8 @@ const wrong = require("../assets/icons/wrong.png");
 const check = require("../assets/icons/check.png");
 const mobile = require("../assets/icons/mobile.png");
 const user = require("../assets/icons/user.png");
+const back = require("../assets/icons/back.png");
+const qr = require("../assets/icons/qr.png");
 
 export default {
   coupon,
@@ -64,4 +66,6 @@ export default {
   check,
   mobile,
   user,
+  back,
+  qr,
 };

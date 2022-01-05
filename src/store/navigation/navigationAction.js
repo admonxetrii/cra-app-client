@@ -1,4 +1,9 @@
-import { NAVIGATE, REPLACE, SET_NAVIGATION_REF } from "../actionConstant";
+import {
+  GOBACK,
+  NAVIGATE,
+  REPLACE,
+  SET_NAVIGATION_REF,
+} from "../actionConstant";
 
 export function setNavigation(data) {
   return {
@@ -18,5 +23,11 @@ export function replace(data) {
   return {
     type: REPLACE,
     data,
+  };
+}
+
+export function goBack() {
+  return {
+    type: GOBACK,
   };
 }
