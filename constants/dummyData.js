@@ -10,7 +10,7 @@ const tropicalRest = {
   id: 1,
   name: "Tropical Rest",
   icon: null,
-  image: "http://192.168.150.165:8000/media/uploads/restaurants/astrou.png",
+  image: "http://192.168.254.113:8000/media/uploads/restaurants/astrou.png",
   address: "Halchowk, Kathmandu",
   isOpenNow: true,
   rating: 4.0,
@@ -101,9 +101,85 @@ const menu = [
   },
 ];
 
+const MenuList = [
+  {
+    id: 1,
+    title: "Breakfast",
+    icon: null,
+    menus: [
+      {
+        id: 1,
+        title: "English Breakfast",
+        price: 585.0,
+      },
+      {
+        id: 2,
+        title: "TROPICAL HOUSE BREAKFAST",
+        price: 565.0,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Burger / Sandwich",
+    icon: null,
+    menus: [
+      {
+        id: 3,
+        title: "VEG BURGER",
+        price: 255.0,
+      },
+      {
+        id: 4,
+        title: "CHICKEN BURGER",
+        price: 295.0,
+      },
+      {
+        id: 5,
+        title: "TROPICAL SANDWICH",
+        price: 395.0,
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Pizza",
+    icon: null,
+    menus: [
+      {
+        id: 7,
+        title: "MARGHERITA - MEDIUM",
+        price: 385.0,
+      },
+      {
+        id: 8,
+        title: "GRILLED MUSHROOM - LARGE",
+        price: 515.0,
+      },
+    ],
+  },
+];
+
+const myCart = [
+  {
+    ...hamburger,
+    qty: 1,
+  },
+  {
+    ...vegBiryani,
+    qty: 1,
+  },
+  {
+    ...hotTacos,
+    qty: 1,
+  },
+];
+
 export default {
   myProfile,
   categories,
   menu,
   tropicalRest,
+  MenuList,
+  myCart,
 };

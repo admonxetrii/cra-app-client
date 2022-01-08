@@ -11,6 +11,7 @@ import {
   ForgotPassword,
   CustomDrawer,
   RestaurantDetail,
+  CartTab,
 } from "./src/features";
 
 import {
@@ -115,6 +116,7 @@ const Router = () => {
                 name="RestaurantDetail"
                 component={RestaurantDetail}
               />
+              <Stack.Screen name="MyCart" component={CartTab} />
             </>
           ) : (
             <>

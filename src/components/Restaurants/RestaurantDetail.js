@@ -10,7 +10,7 @@ import {
 import { FONTS, COLORS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
 import { Header } from "../../features";
-import { IconButton, CartQuantityButton, MenuButton } from "..";
+import { IconButton, CartQuantityButton, MenuButton, StepperInput } from "..";
 import { useDispatch } from "react-redux";
 import { goBack, navigate } from "../../store/navigation/navigationAction";
 import dummyData from "../../../constants/dummyData";
@@ -18,6 +18,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const RestaurantDetail = () => {
   const [restaurant, setRestaurant] = React.useState(dummyData.tropicalRest);
+  const [category] = React.useState(dummyData.MenuList);
 
   const dispatch = useDispatch();
 
@@ -50,7 +51,12 @@ const RestaurantDetail = () => {
             onPress={() => dispatch(goBack())}
           />
         }
-        rightComponent={<CartQuantityButton quantity={3} />}
+        rightComponent={
+          <CartQuantityButton
+            quantity={3}
+            onPress={() => dispatch(navigate("MyCart"))}
+          />
+        }
       />
     );
   }
@@ -163,6 +169,13 @@ const RestaurantDetail = () => {
                 icon={icons.qr}
                 iconStyle={{ height: 28, resizeMode: "contain" }}
               />
+              <MenuButton
+                containerStyle={{ height: 45, width: 45 }}
+                label="Pay bills"
+                labelStyle={{ color: theme.colors.brand.primary }}
+                icon={icons.coupon}
+                iconStyle={{ height: 28, resizeMode: "contain" }}
+              />
             </View>
           </View>
         </View>
@@ -171,7 +184,64 @@ const RestaurantDetail = () => {
   }
 
   function renderMenu() {
-    return <></>;
+    return (
+      <>
+        {category.map((item, index) => (
+          <>
+            <View
+              key={index}
+              style={{
+                height: 55,
+                justifyContent: "center",
+                borderRadius: SIZES.radius,
+                marginHorizontal: SIZES.padding,
+                marginVertical: SIZES.radius,
+              }}
+            >
+              <Text style={{ ...FONTS.h3 }}>{item.title}</Text>
+              <View
+                style={{
+                  borderBottomColor: COLORS.lightGray1,
+                  marginTop: 5,
+                  borderBottomWidth: 1,
+                }}
+              />
+            </View>
+            {item.menus.map((listItem, index) => (
+              <View
+                key={index}
+                style={{
+                  backgroundColor: COLORS.lightGray2,
+                  marginHorizontal: SIZES.padding,
+                  marginVertical: SIZES.base,
+                  borderRadius: SIZES.radius,
+                  padding: SIZES.padding,
+                  flexDirection: "row",
+                }}
+              >
+                <View>
+                  <Text style={{ ...FONTS.body3 }}>{listItem.title}</Text>
+                  <Text
+                    style={{ ...FONTS.h4, color: theme.colors.brand.primary }}
+                  >
+                    Rs. {listItem.price}/-
+                  </Text>
+                </View>
+                {/* <View
+                  style={{
+                    position: "absolute",
+                    alignSelf: "center",
+                    right: SIZES.base / 1.5,
+                  }}
+                >
+                  <StepperInput value={0} />
+                </View> */}
+              </View>
+            ))}
+          </>
+        ))}
+      </>
+    );
   }
 
   return (
@@ -188,8 +258,11 @@ const RestaurantDetail = () => {
       <ScrollView>
         {/* Restaurant Detail */}
         {renderRestaurantDetail()}
+
         {/* Menu list */}
         {renderMenu()}
+
+        {/* Scan a table button */}
       </ScrollView>
       {/* Footer  */}
     </View>
