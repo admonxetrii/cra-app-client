@@ -105,9 +105,11 @@ const CartTab = () => {
                 borderRadius: SIZES.radius,
               }}
               value={data.item.qty}
-              onAdd={() =>
-                updateQuantityHandler(data.item.qty + 1, data.item.id)
-              }
+              onAdd={() => {
+                if (data.item.qty < 10) {
+                  updateQuantityHandler(data.item.qty + 1, data.item.id);
+                }
+              }}
               onMinus={() => {
                 if (data.item.qty > 1) {
                   updateQuantityHandler(data.item.qty - 1, data.item.id);

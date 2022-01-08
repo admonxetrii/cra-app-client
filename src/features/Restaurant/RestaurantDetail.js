@@ -9,8 +9,13 @@ import {
 } from "react-native";
 import { FONTS, COLORS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
-import { Header } from "../../features";
-import { IconButton, CartQuantityButton, MenuButton, StepperInput } from "..";
+import { Header } from "..";
+import {
+  IconButton,
+  CartQuantityButton,
+  MenuButton,
+  StepperInput,
+} from "../../components";
 import { useDispatch } from "react-redux";
 import { goBack, navigate } from "../../store/navigation/navigationAction";
 import dummyData from "../../../constants/dummyData";
@@ -168,6 +173,7 @@ const RestaurantDetail = () => {
                 labelStyle={{ color: theme.colors.brand.primary }}
                 icon={icons.qr}
                 iconStyle={{ height: 28, resizeMode: "contain" }}
+                onPress={() => dispatch(navigate("ScanTable"))}
               />
               <MenuButton
                 containerStyle={{ height: 45, width: 45 }}
@@ -189,7 +195,7 @@ const RestaurantDetail = () => {
         {category.map((item, index) => (
           <>
             <View
-              key={index}
+              key={`CATE-${item.id}`}
               style={{
                 height: 55,
                 justifyContent: "center",
@@ -209,7 +215,7 @@ const RestaurantDetail = () => {
             </View>
             {item.menus.map((listItem, index) => (
               <View
-                key={index}
+                key={`MENU-${listItem.id}`}
                 style={{
                   backgroundColor: COLORS.lightGray2,
                   marginHorizontal: SIZES.padding,

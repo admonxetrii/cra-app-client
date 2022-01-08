@@ -12,6 +12,7 @@ import {
   CustomDrawer,
   RestaurantDetail,
   CartTab,
+  ScanTable,
 } from "./src/features";
 
 import {
@@ -117,6 +118,7 @@ const Router = () => {
                 component={RestaurantDetail}
               />
               <Stack.Screen name="MyCart" component={CartTab} />
+              <Stack.Screen name="ScanTable" component={ScanTable} />
             </>
           ) : (
             <>

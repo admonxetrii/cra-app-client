@@ -11,8 +11,9 @@ import Otp from "./Authentication/Otp";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import Header from "./Header/Header";
 import OnBoarding from "./OnBoarding/OnBoarding";
-import RestaurantDetail from "../components/Restaurants/RestaurantDetail";
+import RestaurantDetail from "./Restaurant/RestaurantDetail";
 import CustomDrawer from "./Navigation/CustomDrawer";
+import ScanTable from "./Restaurant/ScanTable";
 
 export {
   MainLayout,
@@ -30,4 +31,5 @@ export {
   CustomDrawer,
   Header,
   RestaurantDetail,
+  ScanTable,
 };

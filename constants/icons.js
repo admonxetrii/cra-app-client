@@ -33,6 +33,8 @@ const user = require("../assets/icons/user.png");
 const back = require("../assets/icons/back.png");
 const qr = require("../assets/icons/qr.png");
 const table = require("../assets/icons/table.png");
+const plus = require("../assets/icons/plus.png");
+const minus = require("../assets/icons/minus.png");
 
 export default {
   coupon,
@@ -70,4 +72,6 @@ export default {
   back,
   qr,
   table,
+  minus,
+  plus,
 };

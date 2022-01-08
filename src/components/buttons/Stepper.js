@@ -22,11 +22,11 @@ const StepperInput = ({ containerStyle, value = 0, onAdd, onMinus }) => {
               alignItems: "center",
               justifyContent: "center",
             }}
-            icon={icons.wrong}
+            icon={icons.minus}
             iconStyle={{
               height: 20,
               width: 20,
-              tintColor: value > 0 ? theme.colors.brand.primary : COLORS.gray,
+              tintColor: value > 1 ? theme.colors.brand.primary : COLORS.gray,
             }}
             onPress={onMinus}
           />
@@ -47,7 +47,7 @@ const StepperInput = ({ containerStyle, value = 0, onAdd, onMinus }) => {
           alignItems: "center",
           justifyContent: "center",
         }}
-        icon={icons.check}
+        icon={icons.plus}
         iconStyle={{
           height: 20,
           width: 20,
