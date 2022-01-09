@@ -26,10 +26,13 @@ const VerticalFoodCard = ({ contentContainerStyle, item, onPress }) => {
         }}
       >
         <Image
-          source={item.image}
+          source={{
+            uri: item.image,
+          }}
           style={{
             height: "100%",
             width: "100%",
+            borderRadius: SIZES.radius,
           }}
         />
       </View>

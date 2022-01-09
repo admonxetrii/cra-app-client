@@ -9,12 +9,21 @@ import {
   HorizontalFoodCard,
   CardSection,
 } from "../../components";
-import { useDispatch } from "react-redux";
-import { navigate } from "../../store/navigation/navigationAction";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  navigate,
+  navigateWithProps,
+} from "../../store/navigation/navigationAction";
+import {
+  fetchRestaurantByCategoryReq,
+  fetchRestaurantByCategorySuccess,
+  fetchRestaurantCategoryReq,
+} from "../../store/restaurant/restaurantAction";
+import { useEffect } from "react";
 
 const Home = ({ navigation }) => {
-  const [selectedCategoryId, setSelectedCategoryId] = React.useState(1);
-  const [selectedMenuType, setSelectedMenuType] = React.useState(1);
+  const [selectedCategoryId, setSelectedCategoryId] = React.useState(null);
+  const [selectedMenuType, setSelectedMenuType] = React.useState(null);
   const [menuList, setMenuList] = React.useState([]);
 
   const [recommends, setRecommends] = React.useState([]);
@@ -23,8 +32,28 @@ const Home = ({ navigation }) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    handleChangeCategory(selectedCategoryId, selectedMenuType);
+    dispatch(fetchRestaurantCategoryReq());
   }, []);
+
+  const RestaurantCategories = useSelector(
+    (state) => state.restaurant.restaurantCategories
+  );
+
+  const restaurantByCategory = useSelector(
+    (state) => state.restaurant.restaurantByCategory
+  );
+
+  const handleChangeCategoryById = (id) => {
+    setSelectedCategoryId(id);
+    dispatch(fetchRestaurantByCategoryReq(id));
+  };
+
+  useEffect(() => {
+    if (RestaurantCategories.length) {
+      dispatch(fetchRestaurantByCategoryReq(RestaurantCategories[0].id));
+      setSelectedCategoryId(RestaurantCategories[0].id);
+    }
+  }, [RestaurantCategories]);
 
   //Handler
   function handleChangeCategory(categoryId, menuType) {
@@ -56,10 +85,10 @@ const Home = ({ navigation }) => {
   }
 
   //Render
-  function renderFoodCategories() {
+  function renderFoodCategories(data) {
     return (
       <FlatList
-        data={dummyData.categories}
+        data={data}
         keyExtractor={(item) => `${item.id}`}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -78,17 +107,17 @@ const Home = ({ navigation }) => {
                   ? theme.colors.brand.primary
                   : COLORS.lightGray2,
             }}
-            onPress={() => {
-              setSelectedCategoryId(item.id);
-              handleChangeCategory(item.id, selectedMenuType);
-            }}
+            onPress={() => handleChangeCategoryById(item.id)}
           >
             <Image
-              source={item.icon}
+              source={{
+                uri: item.icon,
+              }}
               style={{
-                marginTop: 5,
-                height: 50,
-                width: 50,
+                alignSelf: "center",
+                height: 35,
+                width: 35,
+                resizeMode: "contain",
               }}
             />
 
@@ -109,14 +138,14 @@ const Home = ({ navigation }) => {
     );
   }
 
-  function renderPopularSection() {
+  function renderPopularSection(restaurantByCategory) {
     return (
       <CardSection
         title={"Popular Items"}
         onPress={() => console.log("Show all popular")}
       >
         <FlatList
-          data={popular}
+          data={restaurantByCategory}
           keyExtractor={(item) => `${item.id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -127,7 +156,16 @@ const Home = ({ navigation }) => {
                 marginRight: index == popular.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
-              onPress={() => dispatch(navigate("RestaurantDetail"))}
+              onPress={() =>
+                dispatch(
+                  navigateWithProps({
+                    path: "RestaurantDetail",
+                    query: {
+                      id: item.id,
+                    },
+                  })
+                )
+              }
             />
           )}
         />
@@ -226,36 +264,37 @@ const Home = ({ navigation }) => {
             {/* {renderSelectedRestaurant()} */}
 
             {/* Render Food Categories  */}
-            {renderFoodCategories()}
+            {renderFoodCategories(RestaurantCategories)}
 
             {/* Popular  */}
-            {renderPopularSection()}
+            {renderPopularSection(restaurantByCategory)}
 
             {/* Recomended Section  */}
-            {renderRecomendedSection()}
+            {/* {renderRecomendedSection()} */}
 
             {/* Menu Headers  */}
-            {renderMenuTypes()}
+            {/* {renderMenuTypes()} */}
           </View>
         }
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => {
           return (
-            <HorizontalFoodCard
-              contentContainerStyle={{
-                height: 130,
-                alignItems: "center",
-                marginHorizontal: SIZES.padding,
-                marginBottom: SIZES.radius,
-              }}
-              imageStyle={{
-                marginTop: 20,
-                height: 110,
-                width: 110,
-              }}
-              item={item}
-              onPress={() => console.log("horizontal list tapped")}
-            />
+            <></>
+            // <HorizontalFoodCard
+            //   contentContainerStyle={{
+            //     height: 130,
+            //     alignItems: "center",
+            //     marginHorizontal: SIZES.padding,
+            //     marginBottom: SIZES.radius,
+            //   }}
+            //   imageStyle={{
+            //     marginTop: 20,
+            //     height: 110,
+            //     width: 110,
+            //   }}
+            //   item={item}
+            //   onPress={() => console.log("horizontal list tapped")}
+            // />
           );
         }}
       ></FlatList>

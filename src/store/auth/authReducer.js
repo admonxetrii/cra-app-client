@@ -72,6 +72,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         initialScreen: "CustomDrawer",
         isLoggedIn: true,
+        user: action.data,
         login: {
           ...state.login,
           inputData: {},

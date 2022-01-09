@@ -16,16 +16,28 @@ import {
   MenuButton,
   StepperInput,
 } from "../../components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { goBack, navigate } from "../../store/navigation/navigationAction";
 import dummyData from "../../../constants/dummyData";
 import { ScrollView } from "react-native-gesture-handler";
+import { useEffect } from "react";
+import { fetchRestaurantByCategoryReq } from "../../store/restaurant/restaurantAction";
 
 const RestaurantDetail = () => {
   const [restaurant, setRestaurant] = React.useState(dummyData.tropicalRest);
   const [category] = React.useState(dummyData.MenuList);
 
   const dispatch = useDispatch();
+
+  const categoryId = useSelector(
+    (state) => state.navigationRef.navigationQuery?.id
+  );
+
+  useEffect(() => {
+    if (categoryId) {
+      dispatch(fetchRestaurantByCategoryReq(categoryId));
+    }
+  }, []);
 
   function renderHeader() {
     return (

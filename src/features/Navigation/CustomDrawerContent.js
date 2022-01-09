@@ -17,7 +17,9 @@ export const CustomDrawerContent = ({
 }) => {
   const dispatch = useDispatch();
 
-  const userData = useSelector((state) => state.auth.user);
+  const userData = useSelector((state) => state.auth?.user);
+
+  console.log("userdata", userData);
 
   const handleLogout = () => {
     dispatch(logout());

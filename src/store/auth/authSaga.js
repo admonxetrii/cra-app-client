@@ -40,8 +40,7 @@ function* loginAPI(action) {
       //set current user details
       const userDetail = yield userService.getUserDetail(response.data.access);
       if (userDetail.status === 200) {
-        yield verifyTokenSuccess(userDetail.data);
-        yield put(loginSuccess());
+        yield put(loginSuccess(userDetail.data));
         yield Toast.success("Logged in successfully");
       } else {
         yield put(loginFailed(response.data));
@@ -63,7 +62,6 @@ function* verifyTokenAPI(action) {
       const userDetail = yield userService.getUserDetail(action.data);
       if (userDetail.status === 200) {
         yield put(verifyTokenSuccess(userDetail.data));
-        yield put(loginSuccess());
       } else {
         yield put(loginFailed(response.data));
         yield Toast.error(response.data.message);
