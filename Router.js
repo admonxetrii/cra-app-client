@@ -13,6 +13,8 @@ import {
   RestaurantDetail,
   CartTab,
   ScanTable,
+  Profile,
+  ChangePassword,
 } from "./src/features";
 
 import {
@@ -119,6 +121,8 @@ const Router = () => {
               />
               <Stack.Screen name="MyCart" component={CartTab} />
               <Stack.Screen name="ScanTable" component={ScanTable} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="ChangePassword" component={ChangePassword} />
             </>
           ) : (
             <>

@@ -68,7 +68,7 @@ export const CustomDrawerContent = ({
             marginTop: 12,
             alignItems: "center",
           }}
-          onPress={() => console.log("Profile")}
+          onPress={() => navigation.navigate("Profile")}
         >
           <Image
             source={images.profile}

@@ -26,4 +26,10 @@ export default {
   resendOtp: async (username) => {
     return await axios.patch("/auth/verify-otp/", { username });
   },
+  forgotPassword: async (requestData) => {
+    return await axios.post("/auth/forgot-password/", requestData);
+  },
+  changePassword: async (requestData) => {
+    return await axios.post("/auth/change-password/", requestData);
+  },
 };

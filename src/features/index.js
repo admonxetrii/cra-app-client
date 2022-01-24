@@ -14,6 +14,8 @@ import OnBoarding from "./OnBoarding/OnBoarding";
 import RestaurantDetail from "./Restaurant/RestaurantDetail";
 import CustomDrawer from "./Navigation/CustomDrawer";
 import ScanTable from "./Restaurant/ScanTable";
+import Profile from "./Profile/Profile";
+import ChangePassword from "./Profile/ChangePassword";
 
 export {
   MainLayout,
@@ -32,4 +34,6 @@ export {
   Header,
   RestaurantDetail,
   ScanTable,
+  Profile,
+  ChangePassword,
 };

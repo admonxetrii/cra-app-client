@@ -31,7 +31,6 @@ function* fetchRestaurantByCategoryAPI() {
     const response = yield restaurantsService.fetchRestaurantByCategory(
       categoryId
     );
-    console.log(response.data, "-------------<<<<<<");
     if (response.status === 200) {
       yield put(fetchRestaurantByCategorySuccess(response.data));
     } else {

@@ -35,6 +35,9 @@ const qr = require("../assets/icons/qr.png");
 const table = require("../assets/icons/table.png");
 const plus = require("../assets/icons/plus.png");
 const minus = require("../assets/icons/minus.png");
+const info = require("../assets/icons/info.png");
+const lock = require("../assets/icons/lock.png");
+const privacy = require("../assets/icons/privacy.png");
 
 export default {
   coupon,
@@ -74,4 +77,7 @@ export default {
   table,
   minus,
   plus,
+  info,
+  lock,
+  privacy,
 };

@@ -214,6 +214,10 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
               justifyContent: "center",
               borderRadius: SIZES.radius,
             }}
+            onPress={() => {
+              navigation.navigate("Profile");
+              // console.log("profile");
+            }}
           >
             <Image
               source={images.profile}

@@ -2,6 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, Text, Image } from "react-native";
 
 import { COLORS, FONTS, SIZES, icons } from "../../../constants";
+import { theme } from "../../infrastructure/theme";
 
 const VerticalFoodCard = ({ contentContainerStyle, item, onPress }) => {
   return (
@@ -41,11 +42,16 @@ const VerticalFoodCard = ({ contentContainerStyle, item, onPress }) => {
       <View
         style={{
           alignItems: "center",
-          marginTop: -20,
+          marginTop: 5,
         }}
       >
         {/* Name  */}
-        <Text style={{ ...FONTS.h3, fontSize: 17 }}>{item.name}</Text>
+        <Text style={{ ...FONTS.h2, fontSize: 20 }}>{item.name}</Text>
+
+        {/* Address  */}
+        <Text style={{ ...FONTS.body4, color: COLORS.darkGray2 }}>
+          {item.address}
+        </Text>
 
         {/* Description  */}
         <Text
@@ -59,9 +65,50 @@ const VerticalFoodCard = ({ contentContainerStyle, item, onPress }) => {
         </Text>
 
         {/* Price  */}
-        <Text style={{ marginTop: SIZES.radius, ...FONTS.h2 }}>
-          Rs. {item.price}/-
-        </Text>
+        <View
+          style={{
+            width: 150,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Open or Closed  */}
+          <Text
+            style={{
+              ...FONTS.body4,
+              color: item.isOpenNow ? COLORS.green : COLORS.red,
+            }}
+          >
+            {item.isOpenNow ? "OPEN" : "CLOSED"}
+          </Text>
+
+          {/* Ratings  */}
+          <View
+            style={{
+              backgroundColor: theme.colors.brand.secondaryMuted,
+              height: 30,
+              width: 50,
+              borderRadius: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Text style={{ ...FONTS.h3, color: theme.colors.brand.primary }}>
+              {item.rating}
+            </Text>
+            <Image
+              source={icons.star}
+              style={{
+                height: 15,
+                width: 15,
+                tintColor: theme.colors.brand.primary,
+                marginLeft: 5,
+              }}
+            />
+          </View>
+        </View>
       </View>
     </TouchableOpacity>
   );

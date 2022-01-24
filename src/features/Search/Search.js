@@ -11,7 +11,6 @@ import { Card } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import { COLORS, FONTS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
-import { Restaurant } from "../../API/RestaurantAPI/restaurant.services";
 
 import { FilterModal } from "../../components";
 

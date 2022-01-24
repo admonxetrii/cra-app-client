@@ -13,6 +13,7 @@ import CartQuantityButton from "./buttons/CartQuantityButton";
 import MenuButton from "./buttons/MenuButton";
 import StepperInput from "./buttons/Stepper";
 import FooterTotal from "./footer/FooterTotal";
+import ProfileButton from "./buttons/ProfileButtons";
 
 export {
   TextButton,
@@ -30,4 +31,5 @@ export {
   MenuButton,
   StepperInput,
   FooterTotal,
+  ProfileButton,
 };

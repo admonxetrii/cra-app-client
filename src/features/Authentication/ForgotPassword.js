@@ -4,6 +4,8 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import { AuthLayout } from "..";
 import { FONTS, SIZES, COLORS, icons, svg } from "../../../constants";
 import { FormInput, PrimaryButton } from "../../components";
+import { forgotPasswordReq } from "../../store/auth/authAction";
+import { useDispatch, useSelector } from "react-redux";
 import { utils } from "../../utils";
 
 const ForgotPassword = ({ navigation }) => {
@@ -12,6 +14,14 @@ const ForgotPassword = ({ navigation }) => {
 
   function isEmailCorrect() {
     return email != "" && emailError == "";
+  }
+
+  const dispatch = useDispatch();
+
+  function handleForgotPass() {
+    if (email) {
+      dispatch(forgotPasswordReq(email));
+    }
   }
 
   return (
@@ -91,7 +101,7 @@ const ForgotPassword = ({ navigation }) => {
         }}
         label={"RESET PASSWORD"}
         labelStyle={{ color: "white", ...FONTS.h2 }}
-        onPress={() => navigation.goBack()}
+        onPress={handleForgotPass}
       />
     </AuthLayout>
   );
