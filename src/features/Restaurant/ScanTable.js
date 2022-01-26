@@ -28,6 +28,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <BarCodeScanner
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />

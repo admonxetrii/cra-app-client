@@ -11,6 +11,7 @@ import { Card } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import { COLORS, FONTS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
+import { useDispatch, useSelector } from "react-redux";
 
 import { FilterModal } from "../../components";
 

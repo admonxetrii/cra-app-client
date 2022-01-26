@@ -3,13 +3,11 @@ import { View, TouchableOpacity, Image, Text } from "react-native";
 
 import { FONTS, COLORS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
+import { connect } from "react-redux";
 
-const CartQuantityButton = ({
-  containerStyle,
-  iconStyle,
-  quantity = 0,
-  onPress,
-}) => {
+const CartQuantityButton = ({ containerStyle, iconStyle, onPress }) => {
+  const quantity = 0;
+
   return (
     <TouchableOpacity
       style={{

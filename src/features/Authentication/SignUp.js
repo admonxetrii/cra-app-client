@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import { RadioButton } from "react-native-paper";
 import { utils } from "../../utils";
 import { AuthLayout, AuthContext } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../../constants";
@@ -27,6 +28,7 @@ const SignUp = ({ navigation }) => {
   const [showPass, setShowPass] = React.useState(false);
   const [showConfirmPass, setShowConfirmPass] = React.useState(false);
   const [saveMe, setSaveMe] = React.useState(false);
+  const [checked, setChecked] = React.useState("male");
 
   const dispatch = useDispatch();
 
@@ -51,6 +53,7 @@ const SignUp = ({ navigation }) => {
       phone_number: phone,
       password,
       confirm_password: confirmPassword,
+      gender: checked,
     };
     dispatch(signupReq(signupData));
   };
@@ -287,9 +290,56 @@ const SignUp = ({ navigation }) => {
           }
           icon={icons.password}
         />
+        <Text
+          style={{
+            ...FONTS.body4,
+            color: COLORS.gray,
+          }}
+        >
+          Gender
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <RadioButton
+            value="male"
+            color={theme.colors.brand.primary}
+            label="First item"
+            status={checked === "male" ? "checked" : "unchecked"}
+            onPress={() => setChecked("male")}
+          />
+          <Text
+            style={{
+              marginRight: "25%",
+              ...FONTS.body4,
+              color: COLORS.darkGray,
+            }}
+            onPress={() => setChecked("male")}
+          >
+            Male
+          </Text>
+          <RadioButton
+            value="female"
+            color={theme.colors.brand.primary}
+            status={checked === "female" ? "checked" : "unchecked"}
+            onPress={() => setChecked("female")}
+          />
+          <Text
+            style={{
+              ...FONTS.body4,
+              color: COLORS.darkGray,
+            }}
+            onPress={() => setChecked("female")}
+          >
+            Female
+          </Text>
+        </View>
         <PrimaryButton
           icon={icons.profile}
-          disabled={isRegisterEnable() ? false : true}
+          disabled={isRegisterEnable() && signup?.buttonEnabled ? false : true}
           onPress={handleSignup}
           buttonContainerStyle={{
             height: 55,

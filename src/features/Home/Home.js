@@ -156,7 +156,7 @@ const Home = ({ navigation }) => {
                 marginRight: index == popular.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
-              onPress={() =>
+              onPress={() => {
                 dispatch(
                   navigateWithProps({
                     path: "RestaurantDetail",
@@ -164,8 +164,9 @@ const Home = ({ navigation }) => {
                       id: item.id,
                     },
                   })
-                )
-              }
+                );
+                console.log(`${item.id} Pressed`);
+              }}
             />
           )}
         />

@@ -21,6 +21,18 @@ const Profile = () => {
 
   const userData = useSelector((state) => state.auth?.user);
 
+  // console.log("userdata", userData);
+
+  const userImage = () => {
+    if (userData?.profile_picture != null) {
+      return userData?.profile_picture;
+    } else if (userData?.gender == "male") {
+      return images.male;
+    } else {
+      return images.female;
+    }
+  };
+
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -71,7 +83,7 @@ const Profile = () => {
               height: 20,
               tintColor: theme.colors.brand.primary,
             }}
-            onPress={() => dispatch(goBack())}
+            onPress={() => dispatch(navigate("EditProfile"))}
           />
         }
       />
@@ -106,7 +118,7 @@ const Profile = () => {
           icon={icons.edit}
           label={"Edit Profile"}
           line={true}
-          onPress={() => dispatch(goBack())}
+          onPress={() => dispatch(navigate("EditProfile"))}
         />
 
         {/* About Us  */}
@@ -161,10 +173,14 @@ const Profile = () => {
             alignItems: "center",
           }}
         >
-          <Avatar.Image size={100} source={images.profile} />
-          <Text
-            style={{ ...FONTS.h2 }}
-          >{`${userData?.first_name} ${userData?.last_name}`}</Text>
+          <Avatar.Image
+            size={100}
+            source={userImage()}
+            style={{ backgroundColor: theme.colors.brand.primary }}
+          />
+          <Text style={{ ...FONTS.h2 }}>{`${
+            userData?.first_name != "" ? userData?.first_name : "Anonymous"
+          } ${userData?.last_name != "" ? userData?.last_name : ""}`}</Text>
           <Text
             style={{ ...FONTS.body4, color: COLORS.darkGray2 }}
           >{`@${userData?.username}`}</Text>

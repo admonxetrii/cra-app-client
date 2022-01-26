@@ -89,13 +89,19 @@ function* signupAPI() {
   try {
     const inputData = yield select((state) => state.auth.signup.inputData);
     const response = yield usersServices.signup(inputData);
+    console.log(response.data);
     if (response.data.status === 201) {
-      yield Toast.success("User registered successfully.");
+      // console.log("here");
+      console.log(response.data);
       yield put(navigate("Otp"));
+      yield Toast.success("User registered successfully.");
       yield put(signupSuccess(response.data));
+    } else if (response.data.status === 406) {
+      yield put(signupFailed(response.data.error));
+      yield Toast.error(response.data.error);
     } else {
-      yield put(signupFailed(response.data));
-      yield Toast.error("invalid data");
+      yield put(signupFailed(response.data.error[0]));
+      yield Toast.error("Invalid Data");
     }
   } catch (error) {
     yield put(signupFailed(error?.response?.data));

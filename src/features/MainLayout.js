@@ -37,6 +37,20 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   const notificationTabFlex = useSharedValue(1);
   const notificationTabColor = useSharedValue(theme.colors.bg.primary);
 
+  const userData = useSelector((state) => state.auth?.user);
+
+  // console.log("userdata", userData);
+
+  const userImage = () => {
+    if (userData?.profile_picture != null) {
+      return userData?.profile_picture;
+    } else if (userData?.gender == "male") {
+      return images.male;
+    } else {
+      return images.female;
+    }
+  };
+
   const homeFlexStyle = useAnimatedStyle(() => {
     return {
       flex: homeTabFlex.value,
@@ -220,11 +234,12 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
             }}
           >
             <Image
-              source={images.profile}
+              source={userImage()}
               style={{
                 width: 40,
                 height: 40,
                 borderRadius: SIZES.radius,
+                backgroundColor: theme.colors.brand.primary,
               }}
             />
           </TouchableOpacity>

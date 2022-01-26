@@ -21,4 +21,20 @@ export default {
       },
     });
   },
+  fetchRestaurantById: async (id) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/restaurant/${id}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  fetchRestaurantMenusByRestaurantId: async (id) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/restaurant/${id}/menuList`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
 };

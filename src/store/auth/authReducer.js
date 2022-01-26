@@ -40,6 +40,7 @@ const initialState = {
   signup: {
     username: null,
     loading: false,
+    buttonEnabled: true,
     error: null,
     inputData: {},
     data: {},
@@ -221,11 +222,13 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         signup: {
+          ...state.signup,
           username: null,
           loading: true,
           error: null,
           data: {},
-          loadingButtonContent: "please wait...",
+          loadingButtonContent: "Please wait...",
+          buttonEnabled: false,
           inputData: action.data,
         },
       };
@@ -234,10 +237,12 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         signup: {
+          ...state.signup,
           inputData: {},
           username: action.data.username,
           loading: false,
           error: null,
+          buttonEnabled: false,
           data: action.data,
           loadingButtonContent: "Signup",
         },
@@ -246,8 +251,10 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         signup: {
+          ...state.signup,
           email: null,
           loading: false,
+          buttonEnabled: true,
           error: action.error,
           data: {},
           loadingButtonContent: "Signup",

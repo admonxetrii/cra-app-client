@@ -8,12 +8,21 @@ import {
   FETCH_RESTAURANT_BY_CATEGORY_FAILED,
   FETCH_RESTAURANT_BY_CATEGORY_REQ,
   FETCH_RESTAURANT_BY_CATEGORY_SUC,
+  FETCH_RESTAURANT_BY_ID_REQ,
+  FETCH_RESTAURANT_BY_ID_SUCCESS,
+  FETCH_RESTAURANT_BY_ID_FAILED,
+  FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ,
+  FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_SUCCESS,
+  FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_FAILED,
+  CLEAR_RESTAURANT_BY_ID,
 } from "../actionConstant";
 
 const initialState = {
   restaurants: [],
   restaurantCategories: [],
   restaurantByCategory: [],
+  restaurantById: null,
+  restaurantMenusByRestaurantId: [],
   fetchAllRestaurant: {
     loading: false,
     error: false,
@@ -27,6 +36,18 @@ const initialState = {
   fetchRestaurantByCategory: {
     categoryId: null,
     loading: false,
+    error: false,
+    data: {},
+  },
+  fetchRestaurantById: {
+    restaurantId: null,
+    loading: true,
+    error: false,
+    data: {},
+  },
+  fetchRestaurantMenusByRestaurantId: {
+    restaurantId: null,
+    loading: true,
     error: false,
     data: {},
   },
@@ -128,9 +149,86 @@ const restaurantReducer = (state = initialState, action) => {
         },
       };
 
+    case FETCH_RESTAURANT_BY_ID_REQ:
+      return {
+        ...state,
+        restaurantById: null,
+        fetchRestaurantById: {
+          restaurantId: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case FETCH_RESTAURANT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        restaurantById: action.data,
+        fetchRestaurantById: {
+          restaurantId: null,
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_RESTAURANT_BY_ID_FAILED:
+      return {
+        ...state,
+        restaurantById: null,
+        fetchRestaurantById: {
+          restaurantId: null,
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+
+    case FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ:
+      return {
+        ...state,
+        restaurantMenusByRestaurantId: [],
+        fetchRestaurantMenusByRestaurantId: {
+          restaurantId: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_SUCCESS:
+      return {
+        ...state,
+        restaurantMenusByRestaurantId: action.data,
+        fetchRestaurantMenusByRestaurantId: {
+          restaurantId: null,
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_FAILED:
+      return {
+        ...state,
+        restaurantMenusByRestaurantId: [],
+        fetchRestaurantMenusByRestaurantId: {
+          restaurantId: null,
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+
+    case CLEAR_RESTAURANT_BY_ID:
+      return {
+        ...state,
+        restaurantById: null,
+        restaurantMenusByRestaurantId: [],
+      };
+
     default:
       return {
         ...state,
+        restaurantById: null,
+        restaurantMenusByRestaurantId: [],
       };
   }
 };

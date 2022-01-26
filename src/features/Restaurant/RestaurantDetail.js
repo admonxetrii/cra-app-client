@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  FlatList,
-} from "react-native";
+import { View, Text, Image, ActivityIndicator } from "react-native";
 import { FONTS, COLORS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
 import { Header } from "..";
@@ -21,23 +14,43 @@ import { goBack, navigate } from "../../store/navigation/navigationAction";
 import dummyData from "../../../constants/dummyData";
 import { ScrollView } from "react-native-gesture-handler";
 import { useEffect } from "react";
-import { fetchRestaurantByCategoryReq } from "../../store/restaurant/restaurantAction";
+import {
+  clearRestaurantById,
+  fetchRestaurantByIdReq,
+  fetchRestaurantMenusByRestaurantIdReq,
+} from "../../store/restaurant/restaurantAction";
 
 const RestaurantDetail = () => {
-  const [restaurant, setRestaurant] = React.useState(dummyData.tropicalRest);
-  const [category] = React.useState(dummyData.MenuList);
-
   const dispatch = useDispatch();
 
-  const categoryId = useSelector(
+  const restaurantId = useSelector(
     (state) => state.navigationRef.navigationQuery?.id
   );
 
+  const restaurantLoading = useSelector(
+    (state) => state.restaurant.fetchRestaurantById?.loading
+  );
+  const restaurantMenuLoading = useSelector(
+    (state) => state.restaurant.fetchRestaurantMenusByRestaurantId?.loading
+  );
+
   useEffect(() => {
-    if (categoryId) {
-      dispatch(fetchRestaurantByCategoryReq(categoryId));
+    if (restaurantId) {
+      dispatch(fetchRestaurantByIdReq(restaurantId));
+      dispatch(fetchRestaurantMenusByRestaurantIdReq(restaurantId));
     }
+    return () => {
+      dispatch(clearRestaurantById());
+    };
   }, []);
+
+  const RestaurantDetail = useSelector(
+    (state) => state.restaurant?.restaurantById
+  );
+
+  const RestaurantMenuList = useSelector(
+    (state) => state.restaurant?.restaurantMenusByRestaurantId
+  );
 
   function renderHeader() {
     return (
@@ -69,10 +82,7 @@ const RestaurantDetail = () => {
           />
         }
         rightComponent={
-          <CartQuantityButton
-            quantity={3}
-            onPress={() => dispatch(navigate("MyCart"))}
-          />
+          <CartQuantityButton onPress={() => dispatch(navigate("MyCart"))} />
         }
       />
     );
@@ -90,7 +100,7 @@ const RestaurantDetail = () => {
       >
         {/* Cover Image */}
         <Image
-          source={{ uri: restaurant.image }}
+          source={{ uri: RestaurantDetail?.image }}
           style={{
             height: 250,
             borderRadius: 15,
@@ -121,7 +131,7 @@ const RestaurantDetail = () => {
               }}
             >
               {/* Title  */}
-              <Text style={{ ...FONTS.h2 }}>{restaurant.name}</Text>
+              <Text style={{ ...FONTS.h2 }}>{RestaurantDetail?.name}</Text>
 
               {/* Ratings  */}
               <View
@@ -138,7 +148,7 @@ const RestaurantDetail = () => {
                 <Text
                   style={{ ...FONTS.h3, color: theme.colors.brand.primary }}
                 >
-                  {restaurant.rating}
+                  {RestaurantDetail?.rating}
                 </Text>
                 <Image
                   source={icons.star}
@@ -159,7 +169,7 @@ const RestaurantDetail = () => {
                 ...FONTS.body5,
               }}
             >
-              {restaurant.address}
+              {RestaurantDetail?.address}
             </Text>
 
             {/* Menus  */}
@@ -204,7 +214,7 @@ const RestaurantDetail = () => {
   function renderMenu() {
     return (
       <>
-        {category.map((item, index) => (
+        {RestaurantMenuList.map((item, index) => (
           <>
             <View
               key={`CATE-${item.id}`}
@@ -263,27 +273,41 @@ const RestaurantDetail = () => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: COLORS.white,
-      }}
-    >
-      {/* Header  */}
-      {renderHeader()}
+    <>
+      {restaurantLoading || restaurantMenuLoading ? (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color="#ff5353" />
+        </View>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: COLORS.white,
+          }}
+        >
+          {/* Header  */}
+          {RestaurantMenuList.length ? renderHeader() : null}
 
-      {/* Body  */}
-      <ScrollView>
-        {/* Restaurant Detail */}
-        {renderRestaurantDetail()}
+          {/* Body  */}
+          <ScrollView>
+            {/* Restaurant Detail */}
+            {renderRestaurantDetail()}
 
-        {/* Menu list */}
-        {renderMenu()}
+            {/* Menu list */}
+            {renderMenu()}
 
-        {/* Scan a table button */}
-      </ScrollView>
-      {/* Footer  */}
-    </View>
+            {/* Scan a table button */}
+          </ScrollView>
+          {/* Footer  */}
+        </View>
+      )}
+    </>
   );
 };
 

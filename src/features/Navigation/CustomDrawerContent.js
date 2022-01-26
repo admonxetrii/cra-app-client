@@ -19,7 +19,17 @@ export const CustomDrawerContent = ({
 
   const userData = useSelector((state) => state.auth?.user);
 
-  console.log("userdata", userData);
+  // console.log("userdata", userData);
+
+  const userImage = () => {
+    if (userData?.profile_picture != null) {
+      return userData?.profile_picture;
+    } else if (userData?.gender == "male") {
+      return images.male;
+    } else {
+      return images.female;
+    }
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -71,7 +81,7 @@ export const CustomDrawerContent = ({
           onPress={() => navigation.navigate("Profile")}
         >
           <Image
-            source={images.profile}
+            source={userImage()}
             style={{ width: 50, height: 50, borderRadius: 12 }}
           />
           <View style={{ marginLeft: 12 }}>
@@ -83,7 +93,9 @@ export const CustomDrawerContent = ({
                 lineHeight: 22,
               }}
             >
-              {`${userData?.first_name} ${userData?.last_name}`}
+              {`${
+                userData?.first_name != "" ? userData?.first_name : "Anonymous"
+              } ${userData?.last_name != "" ? userData?.last_name : ""}`}
             </Text>
             <Text
               style={{

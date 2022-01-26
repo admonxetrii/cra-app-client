@@ -16,6 +16,7 @@ import CustomDrawer from "./Navigation/CustomDrawer";
 import ScanTable from "./Restaurant/ScanTable";
 import Profile from "./Profile/Profile";
 import ChangePassword from "./Profile/ChangePassword";
+import EditProfile from "./Profile/EditProfile";
 
 export {
   MainLayout,
@@ -36,4 +37,5 @@ export {
   ScanTable,
   Profile,
   ChangePassword,
+  EditProfile,
 };

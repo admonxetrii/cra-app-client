@@ -4,11 +4,12 @@
     "slug": "cra-app-client",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/craIcon.png",
     "splash": {
       "image": "./assets/splash.png",
+      "width": "100%",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

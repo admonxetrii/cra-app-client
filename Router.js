@@ -15,6 +15,7 @@ import {
   ScanTable,
   Profile,
   ChangePassword,
+  EditProfile,
 } from "./src/features";
 
 import {
@@ -122,6 +123,7 @@ const Router = () => {
               <Stack.Screen name="MyCart" component={CartTab} />
               <Stack.Screen name="ScanTable" component={ScanTable} />
               <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="ChangePassword" component={ChangePassword} />
             </>
           ) : (
