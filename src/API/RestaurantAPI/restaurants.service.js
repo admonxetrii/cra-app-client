@@ -37,4 +37,12 @@ export default {
       },
     });
   },
+  fetchSimilarRestaurantById: async (id) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/restaurant-similarities/${id}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
 };

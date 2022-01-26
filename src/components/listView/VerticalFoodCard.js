@@ -41,20 +41,29 @@ const VerticalFoodCard = ({ contentContainerStyle, item, onPress }) => {
       {/* Info  */}
       <View
         style={{
+          flex: 1,
           alignItems: "center",
-          marginTop: 5,
+          marginTop: 10,
         }}
       >
         {/* Name  */}
-        <Text style={{ ...FONTS.h2, fontSize: 20 }}>{item.name}</Text>
+        <Text style={{ ...FONTS.h2, fontSize: 20, textAlign: "center" }}>
+          {item.name}
+        </Text>
 
         {/* Address  */}
-        <Text style={{ ...FONTS.body4, color: COLORS.darkGray2 }}>
+        <Text
+          style={{
+            ...FONTS.body4,
+            color: COLORS.darkGray2,
+            textAlign: "center",
+          }}
+        >
           {item.address}
         </Text>
 
         {/* Description  */}
-        <Text
+        {/* <Text
           style={{
             ...FONTS.body5,
             textAlign: "center",
@@ -62,52 +71,50 @@ const VerticalFoodCard = ({ contentContainerStyle, item, onPress }) => {
           }}
         >
           {item.description}
-        </Text>
-
-        {/* Price  */}
-        <View
+        </Text> */}
+      </View>
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        {/* Open or Closed  */}
+        <Text
           style={{
-            width: 150,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
+            ...FONTS.body4,
+            color: item.isOpenNow ? COLORS.green : COLORS.red,
           }}
         >
-          {/* Open or Closed  */}
-          <Text
-            style={{
-              ...FONTS.body4,
-              color: item.isOpenNow ? COLORS.green : COLORS.red,
-            }}
-          >
-            {item.isOpenNow ? "OPEN" : "CLOSED"}
-          </Text>
+          {item.isOpenNow ? "OPEN" : "CLOSED"}
+        </Text>
 
-          {/* Ratings  */}
-          <View
+        {/* Ratings  */}
+        <View
+          style={{
+            backgroundColor: theme.colors.brand.secondaryMuted,
+            height: 30,
+            width: 50,
+            borderRadius: 50,
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "row",
+          }}
+        >
+          <Text style={{ ...FONTS.h3, color: theme.colors.brand.primary }}>
+            {item.rating}
+          </Text>
+          <Image
+            source={icons.star}
             style={{
-              backgroundColor: theme.colors.brand.secondaryMuted,
-              height: 30,
-              width: 50,
-              borderRadius: 50,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
+              height: 15,
+              width: 15,
+              tintColor: theme.colors.brand.primary,
+              marginLeft: 5,
             }}
-          >
-            <Text style={{ ...FONTS.h3, color: theme.colors.brand.primary }}>
-              {item.rating}
-            </Text>
-            <Image
-              source={icons.star}
-              style={{
-                height: 15,
-                width: 15,
-                tintColor: theme.colors.brand.primary,
-                marginLeft: 5,
-              }}
-            />
-          </View>
+          />
         </View>
       </View>
     </TouchableOpacity>

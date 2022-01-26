@@ -5,6 +5,7 @@ import {
   FETCH_RESTAURANT_BY_CATEGORY_REQ,
   FETCH_RESTAURANT_BY_ID_REQ,
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ,
+  FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
 } from "../actionConstant";
 import { navigate } from "../navigation/navigationAction";
 import {
@@ -16,6 +17,8 @@ import {
   fetchRestaurantByIdSuccess,
   fetchRestaurantMenusByRestaurantIdFailed,
   fetchRestaurantMenusByRestaurantIdSuccess,
+  fetchSimilarRestaurantByIdSuccess,
+  fetchSimilarRestaurantByIdFailed,
 } from "./restaurantAction";
 
 function* fetchRestaurantCategoryAPI() {
@@ -88,6 +91,27 @@ function* fetchRestaurantMenusByRestaurantIdAPI() {
   }
 }
 
+function* fetchSimilarRestaurantByIdAPI() {
+  try {
+    const restaurantId = yield select(
+      (state) => state.restaurant.fetchSimilarRestaurantById.restaurantId
+    );
+    const response = yield restaurantsService.fetchSimilarRestaurantById(
+      restaurantId
+    );
+
+    if (response.status === 200) {
+      // console.log(response.data);
+      yield put(fetchSimilarRestaurantByIdSuccess(response.data));
+    } else {
+      yield put(fetchSimilarRestaurantByIdFailed(response.data.error));
+      yield put(navigate("Home"));
+    }
+  } catch (error) {
+    yield put(fetchSimilarRestaurantByIdFailed(error?.response?.data));
+  }
+}
+
 export default function* restaurantSaga() {
   yield all([
     yield takeLatest(
@@ -108,6 +132,12 @@ export default function* restaurantSaga() {
     yield takeLatest(
       FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ,
       fetchRestaurantMenusByRestaurantIdAPI
+    ),
+  ]);
+  yield all([
+    yield takeLatest(
+      FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
+      fetchSimilarRestaurantByIdAPI
     ),
   ]);
 }

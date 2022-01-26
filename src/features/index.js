@@ -17,6 +17,8 @@ import ScanTable from "./Restaurant/ScanTable";
 import Profile from "./Profile/Profile";
 import ChangePassword from "./Profile/ChangePassword";
 import EditProfile from "./Profile/EditProfile";
+import RestaurantComponent from "./Restaurant/RestaurantComponent";
+import RestaurantMenu from "./Restaurant/RestaurantMenu";
 
 export {
   MainLayout,
@@ -38,4 +40,6 @@ export {
   Profile,
   ChangePassword,
   EditProfile,
+  RestaurantComponent,
+  RestaurantMenu,
 };

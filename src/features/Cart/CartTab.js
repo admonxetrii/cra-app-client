@@ -57,7 +57,7 @@ const CartTab = () => {
               height: 20,
               tintColor: theme.colors.brand.primary,
             }}
-            onPress={() => dispatch(goBack())}
+            onPress={() => dispatch(navigate("RestaurantDetail"))}
           />
         }
       />

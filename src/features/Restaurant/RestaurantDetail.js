@@ -1,55 +1,64 @@
 import React from "react";
-import { View, Text, Image, ActivityIndicator } from "react-native";
-import { FONTS, COLORS, SIZES, icons } from "../../../constants";
+import { View, Text, ActivityIndicator, FlatList } from "react-native";
+import { COLORS, SIZES, icons, FONTS } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
-import { Header } from "..";
+import { Header, RestaurantComponent, RestaurantMenu } from "..";
 import {
   IconButton,
   CartQuantityButton,
-  MenuButton,
-  StepperInput,
+  CardSection,
+  HorizontalFoodCard,
 } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { goBack, navigate } from "../../store/navigation/navigationAction";
-import dummyData from "../../../constants/dummyData";
 import { ScrollView } from "react-native-gesture-handler";
-import { useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   clearRestaurantById,
   fetchRestaurantByIdReq,
   fetchRestaurantMenusByRestaurantIdReq,
+  fetchSimilarRestaurantByIdReq,
 } from "../../store/restaurant/restaurantAction";
 
 const RestaurantDetail = () => {
   const dispatch = useDispatch();
 
-  const restaurantId = useSelector(
-    (state) => state.navigationRef.navigationQuery?.id
-  );
-
   const restaurantLoading = useSelector(
     (state) => state.restaurant.fetchRestaurantById?.loading
   );
+
   const restaurantMenuLoading = useSelector(
     (state) => state.restaurant.fetchRestaurantMenusByRestaurantId?.loading
   );
-
-  useEffect(() => {
-    if (restaurantId) {
-      dispatch(fetchRestaurantByIdReq(restaurantId));
-      dispatch(fetchRestaurantMenusByRestaurantIdReq(restaurantId));
-    }
-    return () => {
-      dispatch(clearRestaurantById());
-    };
-  }, []);
-
-  const RestaurantDetail = useSelector(
-    (state) => state.restaurant?.restaurantById
+  const similarRestaurantLoading = useSelector(
+    (state) => state.restaurant.fetchSimilarRestaurantById?.loading
   );
 
-  const RestaurantMenuList = useSelector(
-    (state) => state.restaurant?.restaurantMenusByRestaurantId
+  const stateRestaurantId = useSelector(
+    (state) => state.navigationRef.navigationQuery?.id
+  );
+
+  const [restaurantId, setRestaurantId] = React.useState(stateRestaurantId);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (restaurantId) {
+        dispatch(fetchRestaurantByIdReq(restaurantId));
+        dispatch(fetchRestaurantMenusByRestaurantIdReq(restaurantId));
+        dispatch(fetchSimilarRestaurantByIdReq(restaurantId));
+      }
+      return () => {
+        dispatch(clearRestaurantById());
+      };
+    }, [restaurantId])
+  );
+
+  const SimilarRestaurantList = useSelector(
+    (state) => state.restaurant?.similarRestaurantById
+  );
+
+  const restaurantDescription = useSelector(
+    (state) => state.restaurant?.restaurantById?.description
   );
 
   function renderHeader() {
@@ -88,193 +97,11 @@ const RestaurantDetail = () => {
     );
   }
 
-  function renderRestaurantDetail() {
-    return (
-      <View
-        style={{
-          height: SIZES.height * 0.45,
-          marginTop: SIZES.base,
-          marginBottom: SIZES.padding,
-          paddingHorizontal: SIZES.padding,
-        }}
-      >
-        {/* Cover Image */}
-        <Image
-          source={{ uri: RestaurantDetail?.image }}
-          style={{
-            height: 250,
-            borderRadius: 15,
-          }}
-        />
-
-        {/* card In between  */}
-        <View>
-          {/* Card Detail  */}
-          <View
-            style={{
-              height: 150,
-              width: "80%",
-              backgroundColor: COLORS.lightGray2,
-              position: "absolute",
-              top: -75,
-              borderRadius: 15,
-              alignSelf: "center",
-            }}
-          >
-            {/* Restaurant Title Header  */}
-            <View
-              style={{
-                paddingHorizontal: SIZES.padding,
-                paddingTop: SIZES.radius,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              {/* Title  */}
-              <Text style={{ ...FONTS.h2 }}>{RestaurantDetail?.name}</Text>
-
-              {/* Ratings  */}
-              <View
-                style={{
-                  backgroundColor: theme.colors.brand.secondaryMuted,
-                  height: 30,
-                  width: 50,
-                  borderRadius: 50,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "row",
-                }}
-              >
-                <Text
-                  style={{ ...FONTS.h3, color: theme.colors.brand.primary }}
-                >
-                  {RestaurantDetail?.rating}
-                </Text>
-                <Image
-                  source={icons.star}
-                  style={{
-                    height: 15,
-                    width: 15,
-                    tintColor: theme.colors.brand.primary,
-                    marginLeft: 5,
-                  }}
-                />
-              </View>
-            </View>
-            {/* Address  */}
-
-            <Text
-              style={{
-                paddingHorizontal: SIZES.padding,
-                ...FONTS.body5,
-              }}
-            >
-              {RestaurantDetail?.address}
-            </Text>
-
-            {/* Menus  */}
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                flexDirection: "row",
-              }}
-            >
-              {/* Book a Table  */}
-              <MenuButton
-                containerStyle={{ height: 45, width: 45 }}
-                label="Book Table"
-                labelStyle={{ color: theme.colors.brand.primary }}
-                icon={icons.table}
-                iconStyle={{ height: 28, resizeMode: "contain" }}
-              />
-              {/* Scan a Table  */}
-              <MenuButton
-                containerStyle={{ height: 45, width: 45 }}
-                label="Scan a table"
-                labelStyle={{ color: theme.colors.brand.primary }}
-                icon={icons.qr}
-                iconStyle={{ height: 28, resizeMode: "contain" }}
-                onPress={() => dispatch(navigate("ScanTable"))}
-              />
-              <MenuButton
-                containerStyle={{ height: 45, width: 45 }}
-                label="Pay bills"
-                labelStyle={{ color: theme.colors.brand.primary }}
-                icon={icons.coupon}
-                iconStyle={{ height: 28, resizeMode: "contain" }}
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  }
-
-  function renderMenu() {
-    return (
-      <>
-        {RestaurantMenuList.map((item, index) => (
-          <>
-            <View
-              key={`CATE-${item.id}`}
-              style={{
-                height: 55,
-                justifyContent: "center",
-                borderRadius: SIZES.radius,
-                marginHorizontal: SIZES.padding,
-                marginVertical: SIZES.radius,
-              }}
-            >
-              <Text style={{ ...FONTS.h3 }}>{item.title}</Text>
-              <View
-                style={{
-                  borderBottomColor: COLORS.lightGray1,
-                  marginTop: 5,
-                  borderBottomWidth: 1,
-                }}
-              />
-            </View>
-            {item.menus.map((listItem, index) => (
-              <View
-                key={`MENU-${listItem.id}`}
-                style={{
-                  backgroundColor: COLORS.lightGray2,
-                  marginHorizontal: SIZES.padding,
-                  marginVertical: SIZES.base,
-                  borderRadius: SIZES.radius,
-                  padding: SIZES.padding,
-                  flexDirection: "row",
-                }}
-              >
-                <View>
-                  <Text style={{ ...FONTS.body3 }}>{listItem.title}</Text>
-                  <Text
-                    style={{ ...FONTS.h4, color: theme.colors.brand.primary }}
-                  >
-                    Rs. {listItem.price}/-
-                  </Text>
-                </View>
-                {/* <View
-                  style={{
-                    position: "absolute",
-                    alignSelf: "center",
-                    right: SIZES.base / 1.5,
-                  }}
-                >
-                  <StepperInput value={0} />
-                </View> */}
-              </View>
-            ))}
-          </>
-        ))}
-      </>
-    );
-  }
-
   return (
     <>
-      {restaurantLoading || restaurantMenuLoading ? (
+      {restaurantLoading ||
+      restaurantMenuLoading ||
+      similarRestaurantLoading ? (
         <View
           style={{
             flex: 1,
@@ -292,19 +119,92 @@ const RestaurantDetail = () => {
           }}
         >
           {/* Header  */}
-          {RestaurantMenuList.length ? renderHeader() : null}
-
-          {/* Body  */}
+          {renderHeader()}
           <ScrollView>
-            {/* Restaurant Detail */}
-            {renderRestaurantDetail()}
+            {/* Restaurant Details  */}
+            <RestaurantComponent />
+
+            {/* Restaurant Description  */}
+            <View
+              style={{
+                flex: 1,
+                paddingHorizontal: SIZES.padding,
+              }}
+            >
+              <Text
+                style={{
+                  ...FONTS.h3,
+                  textAlign: "center",
+                  fontSize: 20,
+                }}
+              >
+                Description
+              </Text>
+              <Text
+                style={{
+                  ...FONTS.body4,
+                  paddingHorizontal: 30,
+                  marginTop: 10,
+                  textAlign: "center",
+                  color: COLORS.darkGray2,
+                }}
+              >
+                {restaurantDescription}
+              </Text>
+
+              <Text
+                style={{
+                  ...FONTS.h1,
+                  fontSize: 20,
+                  marginTop: SIZES.padding,
+                  marginBottom: -20,
+                }}
+              >
+                MENU LISTS
+              </Text>
+            </View>
 
             {/* Menu list */}
-            {renderMenu()}
+            <RestaurantMenu />
 
-            {/* Scan a table button */}
+            {/* Body  */}
+            <CardSection
+              title={"Similar Restaurant"}
+              onPress={() => console.log("Show all")}
+            >
+              <FlatList
+                data={SimilarRestaurantList}
+                keyExtractor={(item) => `${item.id}`}
+                horizontal
+                style={{
+                  marginBottom: SIZES.padding,
+                }}
+                showsHorizontalScrollIndicator={false}
+                nestedScrollEnabled
+                renderItem={({ item, index }) => (
+                  <HorizontalFoodCard
+                    contentContainerStyle={{
+                      width: SIZES.width * 0.85,
+                      marginLeft: index == 0 ? SIZES.padding : 18,
+                      marginRight:
+                        index == SimilarRestaurantList.length - 1
+                          ? SIZES.padding
+                          : 0,
+                    }}
+                    imageStyle={{
+                      height: 150,
+                      width: 150,
+                    }}
+                    item={item}
+                    onPress={() => {
+                      dispatch(clearRestaurantById());
+                      setRestaurantId(item.id);
+                    }}
+                  />
+                )}
+              />
+            </CardSection>
           </ScrollView>
-          {/* Footer  */}
         </View>
       )}
     </>

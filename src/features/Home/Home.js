@@ -99,7 +99,7 @@ const Home = ({ navigation }) => {
               height: 55,
               marginTop: SIZES.padding,
               marginLeft: index == 0 ? SIZES.padding : 0,
-              marginRight: dummyData.categories.length - 1 ? SIZES.padding : 0,
+              marginRight: data.length - 1 ? SIZES.padding : 0,
               paddingHorizontal: 8,
               borderRadius: SIZES.radius,
               backgroundColor:
@@ -141,7 +141,7 @@ const Home = ({ navigation }) => {
   function renderPopularSection(restaurantByCategory) {
     return (
       <CardSection
-        title={"Popular Items"}
+        title={"Popular Restaurant"}
         onPress={() => console.log("Show all popular")}
       >
         <FlatList
@@ -153,7 +153,8 @@ const Home = ({ navigation }) => {
             <VerticalFoodCard
               contentContainerStyle={{
                 marginLeft: index == 0 ? SIZES.padding : 18,
-                marginRight: index == popular.length - 1 ? SIZES.padding : 0,
+                marginRight:
+                  index == restaurantByCategory.length - 1 ? SIZES.padding : 0,
               }}
               item={item}
               onPress={() => {
@@ -165,7 +166,6 @@ const Home = ({ navigation }) => {
                     },
                   })
                 );
-                console.log(`${item.id} Pressed`);
               }}
             />
           )}
@@ -298,7 +298,7 @@ const Home = ({ navigation }) => {
             // />
           );
         }}
-      ></FlatList>
+      />
     </View>
   );
 };

@@ -11,6 +11,9 @@ import {
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ,
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_SUCCESS,
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_FAILED,
+  FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
+  FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS,
+  FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
   CLEAR_RESTAURANT_BY_ID,
 } from "../actionConstant";
 
@@ -93,6 +96,25 @@ export function fetchRestaurantMenusByRestaurantIdFailed(error) {
   return {
     type: FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_FAILED,
     error,
+  };
+}
+
+export function fetchSimilarRestaurantByIdReq(data) {
+  return {
+    type: FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
+    data,
+  };
+}
+export function fetchSimilarRestaurantByIdSuccess(data) {
+  return {
+    type: FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS,
+    data,
+  };
+}
+export function fetchSimilarRestaurantByIdFailed(data) {
+  return {
+    type: FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
+    data,
   };
 }
 

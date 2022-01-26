@@ -14,6 +14,9 @@ import {
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ,
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_SUCCESS,
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_FAILED,
+  FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
+  FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS,
+  FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
   CLEAR_RESTAURANT_BY_ID,
 } from "../actionConstant";
 
@@ -23,6 +26,7 @@ const initialState = {
   restaurantByCategory: [],
   restaurantById: null,
   restaurantMenusByRestaurantId: [],
+  similarRestaurantById: [],
   fetchAllRestaurant: {
     loading: false,
     error: false,
@@ -46,6 +50,12 @@ const initialState = {
     data: {},
   },
   fetchRestaurantMenusByRestaurantId: {
+    restaurantId: null,
+    loading: true,
+    error: false,
+    data: {},
+  },
+  fetchSimilarRestaurantById: {
     restaurantId: null,
     loading: true,
     error: false,
@@ -217,11 +227,59 @@ const restaurantReducer = (state = initialState, action) => {
         },
       };
 
+    case FETCH_SIMILAR_RESTAURANT_BY_ID_REQ:
+      return {
+        ...state,
+        similarRestaurantById: [],
+        fetchSimilarRestaurantById: {
+          restaurantId: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+
+    case FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        similarRestaurantById: action.data,
+        fetchSimilarRestaurantById: {
+          restaurantId: null,
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED:
+      return {
+        ...state,
+        similarRestaurantById: [],
+        fetchSimilarRestaurantById: {
+          restaurantId: null,
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+
     case CLEAR_RESTAURANT_BY_ID:
       return {
         ...state,
         restaurantById: null,
         restaurantMenusByRestaurantId: [],
+        similarRestaurantById: [],
+        fetchRestaurantById: {
+          ...state.fetchRestaurantById,
+          loading: true,
+        },
+        fetchRestaurantMenusByRestaurantId: {
+          ...state.fetchRestaurantMenusByRestaurantId,
+          loading: true,
+        },
+        fetchSimilarRestaurantById: {
+          ...state.fetchSimilarRestaurantById,
+          loading: true,
+        },
       };
 
     default:
