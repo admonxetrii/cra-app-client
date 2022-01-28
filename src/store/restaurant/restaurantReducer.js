@@ -26,6 +26,7 @@ const initialState = {
   restaurantByCategory: [],
   restaurantById: null,
   restaurantMenusByRestaurantId: [],
+  restaurantId: null,
   similarRestaurantById: [],
   fetchAllRestaurant: {
     loading: false,
@@ -163,6 +164,7 @@ const restaurantReducer = (state = initialState, action) => {
       return {
         ...state,
         restaurantById: null,
+        restaurantId: action.data,
         fetchRestaurantById: {
           restaurantId: action.data,
           loading: true,

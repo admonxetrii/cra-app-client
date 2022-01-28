@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 
 import { COLORS, FONTS, SIZES, svg, icons } from "../../../constants";
@@ -112,7 +112,10 @@ const Otp = () => {
             Didn't receive code?
           </Text>
           <TextButton
-            onPress={resendOtpHandler}
+            onPress={() => {
+              resendOtpHandler;
+              setTimer(60);
+            }}
             buttonContainerStyle={{
               marginLeft: SIZES.base,
               backgroundColor: null,

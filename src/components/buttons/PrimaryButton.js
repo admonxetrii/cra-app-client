@@ -1,5 +1,11 @@
 import React from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { theme } from "../../infrastructure/theme";
 
@@ -10,6 +16,7 @@ const PrimaryButton = ({
   onPress,
   icon,
   disabled,
+  loader,
 }) => {
   return (
     <TouchableOpacity
@@ -58,6 +65,13 @@ const PrimaryButton = ({
           >
             {label}
           </Text>
+          {loader && (
+            <ActivityIndicator
+              size="small"
+              color="white"
+              style={{ marginLeft: 5 }}
+            />
+          )}
           <View
             style={{
               position: "absolute",

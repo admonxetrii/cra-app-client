@@ -29,6 +29,7 @@ const initialState = {
   user: null,
   login: {
     loading: false,
+    buttonEnabled: true,
     inputData: {},
     error: null,
     loadingButtonContent: "Login",
@@ -84,6 +85,7 @@ const authReducer = (state = initialState, action) => {
         login: {
           ...state.login,
           loading: true,
+          buttonEnabled: false,
           inputData: action.data,
           loadingButtonContent: "Loggin in..",
         },
@@ -96,8 +98,10 @@ const authReducer = (state = initialState, action) => {
         user: action.data,
         login: {
           ...state.login,
-          inputData: {},
           loading: false,
+          buttonEnabled: false,
+          inputData: {},
+          loadingButtonContent: "Login",
         },
       };
     case LOGIN_FAILED:
@@ -106,7 +110,9 @@ const authReducer = (state = initialState, action) => {
         initialScreen: "OnBoarding",
         isLoggedIn: false,
         login: {
+          ...state.login,
           loading: false,
+          buttonEnabled: true,
           inputData: {},
           loadingButtonContent: "Login",
           error: action.error,

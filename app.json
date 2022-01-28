@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Pycemon Order",
+    "name": "Pycemon Order Beta",
     "slug": "cra-app-client",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/craIcon.png",
     "splash": {
@@ -21,13 +21,13 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSExceptionDomains": {
-          "http://192.168.0.112:8000/api": "NSTemporaryExceptionAllowsInsecureHTTPLoads"
+          "https://thejoyfuljwells.com/api": "NSTemporaryExceptionAllowsInsecureHTTPLoads"
         }
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.admonxetrii.craappclient"

@@ -16,6 +16,7 @@ import {
   Profile,
   ChangePassword,
   EditProfile,
+  ReserveTableStage,
 } from "./src/features";
 
 import {
@@ -125,6 +126,10 @@ const Router = () => {
               <Stack.Screen name="Profile" component={Profile} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="ChangePassword" component={ChangePassword} />
+              <Stack.Screen
+                name="ReserveTableStage"
+                component={ReserveTableStage}
+              />
             </>
           ) : (
             <>

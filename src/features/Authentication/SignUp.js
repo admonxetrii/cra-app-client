@@ -86,8 +86,8 @@ const SignUp = ({ navigation }) => {
           label={"Username"}
           onChange={(text) => {
             // validate username
-            utils.validateUsername(text, setUsernameError);
-            setUsername(text);
+            utils.validateUsername(text.trim(), setUsernameError);
+            setUsername(text.trim());
           }}
           errorMsg={usernameError}
           placeholder={"Enter your username here..."}
@@ -127,8 +127,8 @@ const SignUp = ({ navigation }) => {
           label={"Email"}
           onChange={(text) => {
             // validate email
-            utils.validateEmail(text, setEmailError);
-            setEmail(text);
+            utils.validateEmail(text.trim(), setEmailError);
+            setEmail(text.trim());
           }}
           containerStyle={{
             marginTop: SIZES.radius,
@@ -174,6 +174,7 @@ const SignUp = ({ navigation }) => {
             utils.validatePhone(text, setPhoneError);
             setPhone(text);
           }}
+          keyboardType="numeric"
           containerStyle={{
             marginTop: SIZES.radius,
           }}
@@ -347,6 +348,7 @@ const SignUp = ({ navigation }) => {
             borderRadius: 50,
             marginTop: SIZES.radius,
           }}
+          loader={signup?.loading}
           label={signup?.loadingButtonContent}
           labelStyle={{ color: "white", ...FONTS.h2 }}
         />

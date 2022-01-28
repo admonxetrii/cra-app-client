@@ -38,6 +38,7 @@ const minus = require("../assets/icons/minus.png");
 const info = require("../assets/icons/info.png");
 const lock = require("../assets/icons/lock.png");
 const privacy = require("../assets/icons/privacy.png");
+const group = require("../assets/icons/group.png");
 
 export default {
   coupon,
@@ -80,4 +81,5 @@ export default {
   info,
   lock,
   privacy,
+  group,
 };

@@ -109,6 +109,7 @@ const RestaurantComponent = () => {
               labelStyle={{ color: theme.colors.brand.primary }}
               icon={icons.table}
               iconStyle={{ height: 28, resizeMode: "contain" }}
+              onPress={() => dispatch(navigate("ReserveTableStage"))}
             />
             {/* Scan a Table  */}
             <MenuButton

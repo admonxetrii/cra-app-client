@@ -19,6 +19,7 @@ import ChangePassword from "./Profile/ChangePassword";
 import EditProfile from "./Profile/EditProfile";
 import RestaurantComponent from "./Restaurant/RestaurantComponent";
 import RestaurantMenu from "./Restaurant/RestaurantMenu";
+import ReserveTableStage from "./Restaurant/ReservationModule/ReserveTableStage";
 
 export {
   MainLayout,
@@ -42,4 +43,5 @@ export {
   EditProfile,
   RestaurantComponent,
   RestaurantMenu,
+  ReserveTableStage,
 };
