@@ -118,7 +118,16 @@ const RestaurantComponent = () => {
               labelStyle={{ color: theme.colors.brand.primary }}
               icon={icons.qr}
               iconStyle={{ height: 28, resizeMode: "contain" }}
-              onPress={() => dispatch(navigate("ScanTable"))}
+              onPress={() => {
+                dispatch(
+                  navigateWithProps({
+                    path: "ReserveTableStage",
+                    query: {
+                      restaurant: RestaurantDetail,
+                    },
+                  })
+                );
+              }}
             />
             <MenuButton
               containerStyle={{ height: 45, width: 45 }}

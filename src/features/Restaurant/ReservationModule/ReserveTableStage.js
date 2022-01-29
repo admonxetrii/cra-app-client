@@ -14,10 +14,14 @@ import { Header } from "../..";
 import { IconButton, PrimaryButton } from "../../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRestaurantByIdReq } from "../../../store/restaurant/restaurantAction";
-import { goBack } from "../../../store/navigation/navigationAction";
+import {
+  goBack,
+  navigateWithProps,
+} from "../../../store/navigation/navigationAction";
 import DateObject from "react-date-object";
 import moment from "moment";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ReserveTableStage = () => {
   const [groupSize, setGroupSize] = React.useState(0);
@@ -31,12 +35,14 @@ const ReserveTableStage = () => {
 
   let arrayIndex = 1;
 
-  React.useEffect(() => {
-    if (restaurantId) {
-      dispatch(fetchRestaurantByIdReq(restaurantId));
-      arrayIndex = 1;
-    }
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      if (restaurantId) {
+        dispatch(fetchRestaurantByIdReq(restaurantId));
+        arrayIndex = 1;
+      }
+    }, [])
+  );
 
   const restaurant = useSelector((state) => state.restaurant?.restaurantById);
   const restaurantLoading = useSelector(
@@ -453,7 +459,7 @@ const ReserveTableStage = () => {
                       paddingBottom: SIZES.padding,
                     }}
                   >
-                    Reserve Your Table
+                    Select Date and Time For Reservation.
                   </Text>
                 </View>
               )}
@@ -518,7 +524,11 @@ const ReserveTableStage = () => {
                       color: theme.colors.brand.primary,
                     }}
                   >
-                    {time.format("dddd, DD MMMM, YYYY  hh:mm A")}
+                    {`${time.format("DD MMMM, YYYY")} at ${time.format(
+                      " hh:mm A"
+                    )} for ${groupSize} ${
+                      groupSize > 1 ? "People" : "Person"
+                    }.`}
                   </Text>
                 </View>
               )}
@@ -535,6 +545,19 @@ const ReserveTableStage = () => {
                 disabled={!buttonActive || groupSize == 0}
                 label={"Reserve"}
                 labelStyle={{ color: "white", ...FONTS.h2 }}
+                onPress={() => {
+                  dispatch(
+                    navigateWithProps({
+                      path: "TableReservation",
+                      query: {
+                        id: restaurantId,
+                        restaurant: restaurant,
+                        time: time,
+                        groupSize: groupSize,
+                      },
+                    })
+                  );
+                }}
               />
             </View>
           </View>
