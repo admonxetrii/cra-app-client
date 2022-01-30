@@ -2,6 +2,7 @@ import {
   GOBACK,
   NAVIGATE,
   NAVIGATE_WITH_PROPS,
+  PUSH,
   REPLACE,
   SET_NAVIGATION_REF,
 } from "../actionConstant";
@@ -30,6 +31,12 @@ export function replace(data) {
 export function goBack() {
   return {
     type: GOBACK,
+  };
+}
+
+export function push() {
+  return {
+    type: PUSH,
   };
 }
 

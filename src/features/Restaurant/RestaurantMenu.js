@@ -16,7 +16,7 @@ const RestaurantMenu = () => {
           {RestaurantMenuList.map((item, index) => (
             <>
               <View
-                key={`CATE-${item.id}`}
+                keyExtractor={`CATE-${item.id}`}
                 style={{
                   height: 55,
                   justifyContent: "center",
@@ -36,7 +36,7 @@ const RestaurantMenu = () => {
               </View>
               {item.menus.map((listItem, index) => (
                 <View
-                  key={`MENU-${listItem.id}`}
+                  keyExtractor={`MENU-${listItem.id}`}
                   style={{
                     backgroundColor: COLORS.lightGray2,
                     marginHorizontal: SIZES.padding,

@@ -17,7 +17,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { TabButton } from "./Tabs/TabButton";
 
 // Views
-import { Header, Home, CartTab, Favourite, Notification, Search } from ".";
+import {
+  Header,
+  Home,
+  CartTab,
+  Favourite,
+  Notification,
+  Search,
+  MyReservationPage,
+} from ".";
 
 // data
 import { setSelectedTab } from "../store/tab/tabActions";

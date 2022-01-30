@@ -14,7 +14,20 @@ import {
   FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
   FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS,
   FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
+  FETCH_TABLE_BY_RESTAURANT_REQ,
+  FETCH_TABLE_BY_RESTAURANT_SUC,
+  FETCH_TABLE_BY_RESTAURANT_FAILED,
+  CONFIRM_TABLE_BOOKIN_REQ,
+  CONFIRM_TABLE_BOOKIN_SUC,
+  CONFIRM_TABLE_BOOKIN_FAILED,
   CLEAR_RESTAURANT_BY_ID,
+  CLEAR_BOOKING_STATUS,
+  FETCH_MY_RESERVATION_SUC,
+  FETCH_MY_RESERVATION_REQ,
+  FETCH_MY_RESERVATION_FAILED,
+  CANCEL_RESERVATION_SUC,
+  CANCEL_RESERVATION_REQ,
+  CANCEL_RESERVATION_FAILED,
 } from "../actionConstant";
 
 export function fetchRestaurantCategoryReq() {
@@ -111,15 +124,93 @@ export function fetchSimilarRestaurantByIdSuccess(data) {
     data,
   };
 }
-export function fetchSimilarRestaurantByIdFailed(data) {
+export function fetchSimilarRestaurantByIdFailed(error) {
   return {
     type: FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
+    error,
+  };
+}
+export function fetchTableByRestaurantReq(data) {
+  return {
+    type: FETCH_TABLE_BY_RESTAURANT_REQ,
     data,
+  };
+}
+export function fetchTableByRestaurantSuccess(data) {
+  return {
+    type: FETCH_TABLE_BY_RESTAURANT_SUC,
+    data,
+  };
+}
+export function fetchTableByRestaurantFailed(error) {
+  return {
+    type: FETCH_TABLE_BY_RESTAURANT_FAILED,
+    error,
+  };
+}
+
+export function confirmTableBookingReq(data) {
+  return {
+    type: CONFIRM_TABLE_BOOKIN_REQ,
+    data,
+  };
+}
+export function confirmTableBookingSuccess(data) {
+  return {
+    type: CONFIRM_TABLE_BOOKIN_SUC,
+    data,
+  };
+}
+export function confirmTableBookingFailed(error) {
+  return {
+    type: CONFIRM_TABLE_BOOKIN_FAILED,
+    error,
+  };
+}
+export function fetchMyReservationsReq(data) {
+  return {
+    type: FETCH_MY_RESERVATION_REQ,
+    data,
+  };
+}
+export function fetchMyReservationsSuccess(data) {
+  return {
+    type: FETCH_MY_RESERVATION_SUC,
+    data,
+  };
+}
+export function fetchMyReservationsFailed(error) {
+  return {
+    type: FETCH_MY_RESERVATION_FAILED,
+    error,
+  };
+}
+export function cancelReservationsReq(data) {
+  return {
+    type: CANCEL_RESERVATION_REQ,
+    data,
+  };
+}
+export function cancelReservationSuccess(data) {
+  return {
+    type: CANCEL_RESERVATION_SUC,
+    data,
+  };
+}
+export function cancelReservationFailed(error) {
+  return {
+    type: CANCEL_RESERVATION_FAILED,
+    error,
   };
 }
 
 export function clearRestaurantById() {
   return {
     type: CLEAR_RESTAURANT_BY_ID,
+  };
+}
+export function clearBookingStatus() {
+  return {
+    type: CLEAR_BOOKING_STATUS,
   };
 }

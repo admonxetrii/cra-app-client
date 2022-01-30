@@ -18,6 +18,7 @@ import {
   EditProfile,
   ReserveTableStage,
   TableReservation,
+  MyReservationPage,
 } from "./src/features";
 
 import {
@@ -130,6 +131,10 @@ const Router = () => {
               <Stack.Screen
                 name="ReserveTableStage"
                 component={ReserveTableStage}
+              />
+              <Stack.Screen
+                name="MyReservationPage"
+                component={MyReservationPage}
               />
               <Stack.Screen
                 name="TableReservation"

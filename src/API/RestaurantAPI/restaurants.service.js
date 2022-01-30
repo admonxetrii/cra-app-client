@@ -45,4 +45,28 @@ export default {
       },
     });
   },
+  fetchTableByRestaurant: async (id) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/restaurant/${id}/tableList`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  confirmTableBooking: async (requestData) => {
+    console.log(requestData);
+    return await axios.post("/restaurant-booking/", requestData);
+  },
+  cancelReservation: async (requestData) => {
+    console.log(requestData);
+    return await axios.patch("/restaurant-booking/", requestData);
+  },
+  fetchMyReservations: async (id) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/my-reservations/${id}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
 };

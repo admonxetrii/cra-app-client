@@ -492,7 +492,7 @@ const ReserveTableStage = () => {
                 borderTopRightRadius: 15,
               }}
             />
-            {/* Order Detail  */}
+            {/* Reserve Detail  */}
             <View
               style={{
                 padding: SIZES.padding,

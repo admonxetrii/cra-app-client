@@ -4,6 +4,7 @@ import {
   NAVIGATE_WITH_PROPS,
   REPLACE,
   SET_NAVIGATION_REF,
+  PUSH,
 } from "../actionConstant";
 
 const initialState = {
@@ -33,6 +34,13 @@ export default function (state = initialState, action) {
     case GOBACK:
       if (state.navigation) {
         state.navigation.goBack();
+      }
+      return {
+        ...state,
+      };
+    case PUSH:
+      if (state.navigation) {
+        state.navigation.push();
       }
       return {
         ...state,

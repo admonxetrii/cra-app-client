@@ -1,4 +1,4 @@
-import { put, takeLatest, all, select } from "redux-saga/effects";
+import { put, takeLatest, all, select, delay } from "redux-saga/effects";
 import restaurantsService from "../../API/RestaurantAPI/restaurants.service";
 import {
   FETCH_RESTAURANTS_CATEGORY_REQ,
@@ -6,8 +6,13 @@ import {
   FETCH_RESTAURANT_BY_ID_REQ,
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ,
   FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
+  FETCH_TABLE_BY_RESTAURANT_REQ,
+  CONFIRM_TABLE_BOOKIN_REQ,
+  FETCH_MY_RESERVATION_REQ,
+  CANCEL_RESERVATION_REQ,
 } from "../actionConstant";
-import { navigate } from "../navigation/navigationAction";
+import Toast from "../../Helper/toast";
+import { navigate, navigateWithProps } from "../navigation/navigationAction";
 import {
   fetchRestaurantByCategoryFailed,
   fetchRestaurantByCategorySuccess,
@@ -19,6 +24,14 @@ import {
   fetchRestaurantMenusByRestaurantIdSuccess,
   fetchSimilarRestaurantByIdSuccess,
   fetchSimilarRestaurantByIdFailed,
+  fetchTableByRestaurantSuccess,
+  fetchTableByRestaurantFailed,
+  confirmTableBookingSuccess,
+  confirmTableBookingFailed,
+  fetchMyReservationsSuccess,
+  fetchMyReservationsFailed,
+  cancelReservationSuccess,
+  cancelReservationFailed,
 } from "./restaurantAction";
 
 function* fetchRestaurantCategoryAPI() {
@@ -62,7 +75,6 @@ function* fetchRestaurantByIdAPI() {
       yield put(fetchRestaurantByIdSuccess(response.data));
     } else {
       yield put(fetchRestaurantByIdFailed(response.data.error));
-      yield put(navigate("Home"));
       yield Toast.error("Cannot fetch data.");
     }
   } catch (error) {
@@ -112,6 +124,81 @@ function* fetchSimilarRestaurantByIdAPI() {
   }
 }
 
+function* fetchTableByRestaurantAPI() {
+  try {
+    const restaurantId = yield select(
+      (state) => state.restaurant.fetchTableByRestaurantId.restaurantId
+    );
+    const response = yield restaurantsService.fetchTableByRestaurant(
+      restaurantId
+    );
+
+    if (response.status === 200) {
+      yield put(fetchTableByRestaurantSuccess(response.data));
+    } else {
+      yield put(fetchTableByRestaurantFailed(response.data.error));
+      yield put(navigate("ReserveTableStage"));
+    }
+  } catch (error) {
+    yield put(fetchTableByRestaurantFailed(error?.response?.data));
+  }
+}
+
+function* confirmTableBookingAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.restaurant.confirmTableBooking.inputData
+    );
+    const response = yield restaurantsService.confirmTableBooking(inputData);
+    if (response.data.status === 200) {
+      yield put(confirmTableBookingSuccess(response.data));
+      yield Toast.success(response.data.message);
+      yield delay(500);
+      yield put(navigate("MyReservationPage"));
+    } else {
+      yield put(confirmTableBookingFailed(response.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(confirmTableBookingFailed(error?.response?.data));
+  }
+}
+
+function* fetchMyReservationsAPI() {
+  try {
+    const user = yield select((state) => state.auth.user?.id);
+    const response = yield restaurantsService.fetchMyReservations(user);
+    if (response.status === 200) {
+      yield put(fetchMyReservationsSuccess(response.data));
+    } else {
+      yield put(fetchMyReservationsFailed(response.error));
+    }
+  } catch (error) {
+    yield put(fetchMyReservationsFailed(error));
+  }
+}
+
+function* cancelReservationAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.restaurant.cancelBooking?.inputData
+    );
+    console.log(inputData);
+    const response = yield restaurantsService.cancelReservation(inputData);
+    if (response.data.status === 200) {
+      yield put(cancelReservationSuccess(response.data));
+      yield Toast.success(response.data.message);
+    } else {
+      yield put(cancelReservationFailed(response.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(cancelReservationFailed(error?.response?.data));
+  }
+}
+
 export default function* restaurantSaga() {
   yield all([
     yield takeLatest(
@@ -140,4 +227,14 @@ export default function* restaurantSaga() {
       fetchSimilarRestaurantByIdAPI
     ),
   ]);
+  yield all([
+    yield takeLatest(FETCH_TABLE_BY_RESTAURANT_REQ, fetchTableByRestaurantAPI),
+  ]);
+  yield all([
+    yield takeLatest(CONFIRM_TABLE_BOOKIN_REQ, confirmTableBookingAPI),
+  ]);
+  yield all([
+    yield takeLatest(FETCH_MY_RESERVATION_REQ, fetchMyReservationsAPI),
+  ]);
+  yield all([yield takeLatest(CANCEL_RESERVATION_REQ, cancelReservationAPI)]);
 }

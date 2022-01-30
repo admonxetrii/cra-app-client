@@ -9,6 +9,10 @@ import { constants, icons, SIZES, images } from "../../../constants";
 import { CustomDrawerItem } from "./CustomDrawerItem";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth/authAction";
+import {
+  navigate,
+  navigateWithProps,
+} from "../../store/navigation/navigationAction";
 
 export const CustomDrawerContent = ({
   navigation,
@@ -138,7 +142,15 @@ export const CustomDrawerContent = ({
               navigation.navigate("Notification");
             }}
           />
-          <CustomDrawerItem label="Favourites" icon={icons.favourite} />
+          <CustomDrawerItem
+            label="Favourites"
+            icon={icons.favourite}
+            isFocused={selectedTab == "Favourite"}
+            onPress={() => {
+              setSelectedTab("Favourite");
+              navigation.navigate("Favourite");
+            }}
+          />
 
           {/* line divider  */}
 
@@ -152,8 +164,18 @@ export const CustomDrawerContent = ({
           ></View>
 
           <CustomDrawerItem
-            label="See Nearest Restaurant"
+            label="My Reservations"
             icon={icons.location}
+            onPress={() => {
+              dispatch(
+                navigateWithProps({
+                  path: "MyReservationPage",
+                  query: {
+                    id: userData.id,
+                  },
+                })
+              );
+            }}
           />
           <CustomDrawerItem label="Coupon" icon={icons.coupon} />
           <CustomDrawerItem label="Settings" icon={icons.setting} />

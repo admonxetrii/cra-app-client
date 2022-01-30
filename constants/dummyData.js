@@ -160,7 +160,52 @@ const MenuList = [
   },
 ];
 
+const tableList = [
+  {
+    id: 1,
+    floorName: "Ground Floor",
+    tables: [
+      {
+        id: 4,
+        tableName: "F1",
+        seatCapacity: 4,
+        isOccupied: false,
+        occHrs: null,
+        occMin: null,
+        reservationDate: {
+          date: null,
+        },
+        merged: null,
+      },
+      {
+        id: 5,
+        tableName: "F4",
+        seatCapacity: 8,
+        isOccupied: false,
+        occHrs: null,
+        occMin: null,
+        reservationDate: {
+          date: null,
+        },
+        merged: null,
+      },
+    ],
+  },
+];
+
 const myCart = [
+  {
+    ...hamburger,
+    qty: 1,
+  },
+  {
+    ...vegBiryani,
+    qty: 1,
+  },
+  {
+    ...hotTacos,
+    qty: 1,
+  },
   {
     ...hamburger,
     qty: 1,
@@ -182,4 +227,5 @@ export default {
   tropicalRest,
   MenuList,
   myCart,
+  tableList,
 };

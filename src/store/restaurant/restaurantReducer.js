@@ -17,7 +17,20 @@ import {
   FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
   FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS,
   FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
+  FETCH_TABLE_BY_RESTAURANT_REQ,
+  FETCH_TABLE_BY_RESTAURANT_SUC,
+  FETCH_TABLE_BY_RESTAURANT_FAILED,
+  CONFIRM_TABLE_BOOKIN_REQ,
+  CONFIRM_TABLE_BOOKIN_SUC,
+  CONFIRM_TABLE_BOOKIN_FAILED,
   CLEAR_RESTAURANT_BY_ID,
+  CLEAR_BOOKING_STATUS,
+  FETCH_MY_RESERVATION_REQ,
+  FETCH_MY_RESERVATION_SUC,
+  FETCH_MY_RESERVATION_FAILED,
+  CANCEL_RESERVATION_REQ,
+  CANCEL_RESERVATION_SUC,
+  CANCEL_RESERVATION_FAILED,
 } from "../actionConstant";
 
 const initialState = {
@@ -26,8 +39,10 @@ const initialState = {
   restaurantByCategory: [],
   restaurantById: null,
   restaurantMenusByRestaurantId: [],
+  tableByRestaurantId: [],
   restaurantId: null,
   similarRestaurantById: [],
+  myReservations: [],
   fetchAllRestaurant: {
     loading: false,
     error: false,
@@ -58,6 +73,31 @@ const initialState = {
   },
   fetchSimilarRestaurantById: {
     restaurantId: null,
+    loading: true,
+    error: false,
+    data: {},
+  },
+  fetchTableByRestaurantId: {
+    restaurantId: null,
+    loading: true,
+    error: false,
+    data: {},
+  },
+  confirmTableBooking: {
+    inputData: {},
+    loading: false,
+    loadingButtonContent: "Confirm Booking",
+    error: false,
+    data: {},
+  },
+  cancelBooking: {
+    inputData: {},
+    loading: false,
+    error: false,
+    data: {},
+  },
+  fetchMyReservations: {
+    userId: null,
     loading: true,
     error: false,
     data: {},
@@ -264,6 +304,140 @@ const restaurantReducer = (state = initialState, action) => {
         },
       };
 
+    case FETCH_TABLE_BY_RESTAURANT_REQ:
+      return {
+        ...state,
+        tableByRestaurantId: [],
+        fetchTableByRestaurantId: {
+          restaurantId: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case FETCH_TABLE_BY_RESTAURANT_SUC:
+      return {
+        ...state,
+        tableByRestaurantId: action.data,
+        fetchTableByRestaurantId: {
+          restaurantId: null,
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_TABLE_BY_RESTAURANT_FAILED:
+      return {
+        ...state,
+        tableByRestaurantId: [],
+        fetchTableByRestaurantId: {
+          restaurantId: null,
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+
+    case CONFIRM_TABLE_BOOKIN_REQ:
+      return {
+        ...state,
+        confirmTableBooking: {
+          inputData: action.data,
+          loading: true,
+          loadingButtonContent: "Booking...",
+          error: false,
+          data: {},
+        },
+      };
+    case CONFIRM_TABLE_BOOKIN_SUC:
+      return {
+        ...state,
+        confirmTableBooking: {
+          inputData: {},
+          loading: true,
+          loadingButtonContent: "Booked",
+          error: false,
+          data: action.data,
+        },
+      };
+    case CONFIRM_TABLE_BOOKIN_FAILED:
+      return {
+        ...state,
+        confirmTableBooking: {
+          inputData: {},
+          loading: false,
+          loadingButtonContent: "Error",
+          error: true,
+          data: {},
+        },
+      };
+    case FETCH_MY_RESERVATION_REQ:
+      return {
+        ...state,
+        myReservations: [],
+        fetchMyReservations: {
+          userId: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case FETCH_MY_RESERVATION_SUC:
+      return {
+        ...state,
+        myReservations: action.data,
+        fetchMyReservations: {
+          ...state.fetchMyReservations,
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_MY_RESERVATION_FAILED:
+      return {
+        ...state,
+        myReservations: [],
+        fetchMyReservations: {
+          ...state.fetchMyReservations,
+          loading: false,
+          error: true,
+          data: {},
+        },
+      };
+
+    case CANCEL_RESERVATION_REQ:
+      return {
+        ...state,
+        cancelBooking: {
+          inputData: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case CANCEL_RESERVATION_SUC:
+      return {
+        ...state,
+        myReservations: state.myReservations.filter(
+          (item) => item.id !== action.data.deletedId
+        ),
+        cancelBooking: {
+          inputData: {},
+          loading: true,
+          error: false,
+          data: action.data,
+        },
+      };
+    case CANCEL_RESERVATION_FAILED:
+      return {
+        ...state,
+        cancelBooking: {
+          inputData: {},
+          loading: false,
+          error: true,
+          data: {},
+        },
+      };
     case CLEAR_RESTAURANT_BY_ID:
       return {
         ...state,
@@ -281,6 +455,17 @@ const restaurantReducer = (state = initialState, action) => {
         fetchSimilarRestaurantById: {
           ...state.fetchSimilarRestaurantById,
           loading: true,
+        },
+      };
+    case CLEAR_BOOKING_STATUS:
+      return {
+        ...state,
+        confirmTableBooking: {
+          inputData: {},
+          loading: false,
+          loadingButtonContent: "Confirm Booking",
+          error: false,
+          data: {},
         },
       };
 

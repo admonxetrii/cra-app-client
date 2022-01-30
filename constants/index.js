@@ -3,7 +3,7 @@ import theme, { COLORS, SIZES, FONTS } from "./theme";
 import images from "./images";
 import icons from "./icons";
 import svg from "./svg";
-// import dummyData from "./dummyData"
+import dummyData from "./dummyData";
 
 export {
   constants,
@@ -14,5 +14,5 @@ export {
   images,
   icons,
   svg,
-  // dummyData,
+  dummyData,
 };
