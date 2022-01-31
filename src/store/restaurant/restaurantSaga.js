@@ -12,7 +12,7 @@ import {
   CANCEL_RESERVATION_REQ,
 } from "../actionConstant";
 import Toast from "../../Helper/toast";
-import { navigate, navigateWithProps } from "../navigation/navigationAction";
+import { navigate } from "../navigation/navigationAction";
 import {
   fetchRestaurantByCategoryFailed,
   fetchRestaurantByCategorySuccess,
@@ -151,17 +151,16 @@ function* confirmTableBookingAPI() {
     );
     const response = yield restaurantsService.confirmTableBooking(inputData);
     if (response.data.status === 200) {
-      yield put(confirmTableBookingSuccess(response.data));
+      // yield put(confirmTableBookingSuccess(response.data));
       yield Toast.success(response.data.message);
-      yield delay(500);
       yield put(navigate("MyReservationPage"));
     } else {
-      yield put(confirmTableBookingFailed(response.error));
+      // yield put(confirmTableBookingFailed(response.error));
       yield Toast.error(response.data.message);
     }
   } catch (error) {
     console.log(error);
-    yield put(confirmTableBookingFailed(error?.response?.data));
+    // yield put(confirmTableBookingFailed(error?.response?.data));
   }
 }
 

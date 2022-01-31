@@ -4,7 +4,10 @@ import { MenuButton } from "../../components";
 import { SIZES, COLORS, icons, FONTS } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { navigate } from "../../store/navigation/navigationAction";
+import {
+  navigate,
+  navigateWithProps,
+} from "../../store/navigation/navigationAction";
 
 const RestaurantComponent = () => {
   const dispatch = useDispatch();

@@ -26,9 +26,7 @@ const MyReservationPage = () => {
   const userId = useSelector((state) => state.auth.user?.id);
 
   React.useEffect(() => {
-    if (userId) {
-      dispatch(fetchMyReservationsReq(userId));
-    }
+    dispatch(fetchMyReservationsReq(userId));
   }, []);
 
   const reservations = useSelector((state) => state.restaurant?.myReservations);
@@ -36,190 +34,6 @@ const MyReservationPage = () => {
   const reservationsLoading = useSelector(
     (state) => state.restaurant?.fetchMyReservations?.loading
   );
-
-  const RenderHeader = () => {
-    return (
-      <Header
-        title="TABLE RESERVATION"
-        containerStyle={{
-          height: 50,
-          marginHorizontal: SIZES.padding,
-          marginTop: 40,
-        }}
-        leftComponent={
-          <IconButton
-            icon={icons.back}
-            containerStyle={{
-              width: 40,
-              height: 40,
-              justifyContent: "center",
-              alignItems: "center",
-              borderWidth: 1,
-              borderRadius: SIZES.radius,
-              borderColor: theme.colors.brand.primary,
-            }}
-            iconStyle={{
-              width: 20,
-              height: 20,
-              tintColor: theme.colors.brand.primary,
-            }}
-            onPress={() => dispatch(goBack())}
-          />
-        }
-      />
-    );
-  };
-
-  function renderReservationList() {
-    return (
-      <SwipeListView
-        data={reservations}
-        keyExtractor={(item) => `${item.id}`}
-        contentContainerStyle={{
-          marginTop: SIZES.radius,
-          paddingHorizontal: SIZES.padding,
-          paddingBottom: SIZES.padding * 2,
-        }}
-        showsVerticalScrollIndicator={false}
-        rightOpenValue={-75}
-        leftOpenValue={75}
-        renderItem={(data, rowMap) => {
-          var datetime = new DateObject(new Date(data.item.date));
-          //   console.log(datetime);
-          return (
-            <View
-              style={{
-                height: 100,
-                backgroundColor: COLORS.lightGray2,
-                ...styles.ItemContainer,
-              }}
-            >
-              {/* Food Info  */}
-              <View
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingHorizontal: 10,
-                }}
-              >
-                <View>
-                  <Text
-                    style={{ ...FONTS.h3, fontSize: 18, textAlign: "left" }}
-                  >
-                    {data.item.table.floorLevel.restaurant.name}
-                  </Text>
-                  <Text
-                    style={{
-                      ...FONTS.body3,
-                      color: theme.colors.brand.primary,
-                    }}
-                  >
-                    {datetime.format("dddd, DD MMMM")}
-                  </Text>
-                </View>
-                <View>
-                  <Text
-                    style={{ ...FONTS.h3, fontSize: 18, textAlign: "center" }}
-                  >
-                    Pax
-                  </Text>
-                  <Text
-                    style={{
-                      ...FONTS.h2,
-                      textAlign: "center",
-                      color: theme.colors.brand.primary,
-                    }}
-                  >
-                    {data.item.groupSize}
-                  </Text>
-                </View>
-                <View>
-                  <Text
-                    style={{ ...FONTS.h3, fontSize: 18, textAlign: "right" }}
-                  >
-                    {data.item.table.tableName}
-                  </Text>
-                  <Text
-                    style={{
-                      ...FONTS.body3,
-                      color: theme.colors.brand.primary,
-                    }}
-                  >
-                    {datetime.format("hh:mm A")}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          );
-        }}
-        renderHiddenItem={(data, rowMap) => (
-          <View
-            style={{
-              flexDirection: "row",
-            }}
-          >
-            <IconButton
-              containerStyle={{
-                flex: 1,
-                height: 100,
-                justifyContent: "flex-start",
-                backgroundColor: COLORS.blue,
-                ...styles.ItemContainer,
-                borderTopRightRadius: 0,
-                borderBottomRightRadius: 0,
-              }}
-              icon={icons.edit}
-              iconStyle={{
-                marginLeft: 10,
-              }}
-              // onPress={() => removeCartHandler(data.item.id)}
-            />
-            <IconButton
-              containerStyle={{
-                flex: 1,
-                height: 100,
-                justifyContent: "flex-end",
-                backgroundColor: theme.colors.brand.primary,
-                ...styles.ItemContainer,
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0,
-              }}
-              icon={icons.wrong}
-              iconStyle={{
-                marginRight: 10,
-              }}
-              onPress={() => {
-                Alert.alert(
-                  "Cancel Reservation",
-                  "Are you sure you want to cancel your resevation?.",
-                  [
-                    {
-                      text: "Cancel",
-                      onPress: () => {
-                        console.log("Cancel Pressed");
-                      },
-                      style: "cancel",
-                    },
-                    {
-                      text: "OK",
-                      onPress: () => {
-                        console.log(data.item.id);
-                        dispatch(
-                          cancelReservationsReq({ reservationId: data.item.id })
-                        );
-                      },
-                    },
-                  ]
-                );
-              }}
-            />
-          </View>
-        )}
-      />
-    );
-  }
 
   return (
     <>
@@ -269,7 +83,7 @@ const MyReservationPage = () => {
             {reservations.length != 0 ? (
               <>
                 {/* Lists  */}
-                {renderReservationList()}
+                <RenderReservationList />
               </>
             ) : (
               <View
@@ -298,6 +112,186 @@ const MyReservationPage = () => {
     </>
   );
 };
+
+function RenderHeader() {
+  return (
+    <Header
+      title="TABLE RESERVATION"
+      containerStyle={{
+        height: 50,
+        marginHorizontal: SIZES.padding,
+        marginTop: 40,
+      }}
+      leftComponent={
+        <IconButton
+          icon={icons.back}
+          containerStyle={{
+            width: 40,
+            height: 40,
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 1,
+            borderRadius: SIZES.radius,
+            borderColor: theme.colors.brand.primary,
+          }}
+          iconStyle={{
+            width: 20,
+            height: 20,
+            tintColor: theme.colors.brand.primary,
+          }}
+          onPress={() => dispatch(goBack())}
+        />
+      }
+    />
+  );
+}
+
+function RenderReservationList() {
+  return (
+    <SwipeListView
+      data={reservations}
+      keyExtractor={(item) => `${item.id}`}
+      contentContainerStyle={{
+        marginTop: SIZES.radius,
+        paddingHorizontal: SIZES.padding,
+        paddingBottom: SIZES.padding * 2,
+      }}
+      showsVerticalScrollIndicator={false}
+      rightOpenValue={-75}
+      leftOpenValue={75}
+      renderItem={(data, rowMap) => {
+        var datetime = new DateObject(new Date(data.item.date));
+        //   console.log(datetime);
+        return (
+          <View
+            style={{
+              height: 100,
+              backgroundColor: COLORS.lightGray2,
+              ...styles.ItemContainer,
+            }}
+          >
+            {/* Food Info  */}
+            <View
+              style={{
+                flex: 1,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingHorizontal: 10,
+              }}
+            >
+              <View>
+                <Text style={{ ...FONTS.h3, fontSize: 18, textAlign: "left" }}>
+                  {data.item.table.floorLevel.restaurant.name}
+                </Text>
+                <Text
+                  style={{
+                    ...FONTS.body3,
+                    color: theme.colors.brand.primary,
+                  }}
+                >
+                  {datetime.format("dddd, DD MMMM")}
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{ ...FONTS.h3, fontSize: 18, textAlign: "center" }}
+                >
+                  Pax
+                </Text>
+                <Text
+                  style={{
+                    ...FONTS.h2,
+                    textAlign: "center",
+                    color: theme.colors.brand.primary,
+                  }}
+                >
+                  {data.item.groupSize}
+                </Text>
+              </View>
+              <View>
+                <Text style={{ ...FONTS.h3, fontSize: 18, textAlign: "right" }}>
+                  {data.item.table.tableName}
+                </Text>
+                <Text
+                  style={{
+                    ...FONTS.body3,
+                    color: theme.colors.brand.primary,
+                  }}
+                >
+                  {datetime.format("hh:mm A")}
+                </Text>
+              </View>
+            </View>
+          </View>
+        );
+      }}
+      renderHiddenItem={(data, rowMap) => (
+        <View
+          style={{
+            flexDirection: "row",
+          }}
+        >
+          <IconButton
+            containerStyle={{
+              flex: 1,
+              height: 100,
+              justifyContent: "flex-start",
+              backgroundColor: COLORS.blue,
+              ...styles.ItemContainer,
+              borderTopRightRadius: 0,
+              borderBottomRightRadius: 0,
+            }}
+            icon={icons.edit}
+            iconStyle={{
+              marginLeft: 10,
+            }}
+            // onPress={() => removeCartHandler(data.item.id)}
+          />
+          <IconButton
+            containerStyle={{
+              flex: 1,
+              height: 100,
+              justifyContent: "flex-end",
+              backgroundColor: theme.colors.brand.primary,
+              ...styles.ItemContainer,
+              borderTopLeftRadius: 0,
+              borderBottomLeftRadius: 0,
+            }}
+            icon={icons.wrong}
+            iconStyle={{
+              marginRight: 10,
+            }}
+            onPress={() => {
+              Alert.alert(
+                "Cancel Reservation",
+                "Are you sure you want to cancel your resevation?.",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => {
+                      console.log("Cancel Pressed");
+                    },
+                    style: "cancel",
+                  },
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      console.log(data.item.id);
+                      dispatch(
+                        cancelReservationsReq({ reservationId: data.item.id })
+                      );
+                    },
+                  },
+                ]
+              );
+            }}
+          />
+        </View>
+      )}
+    />
+  );
+}
 
 const styles = StyleSheet.create({
   ItemContainer: {

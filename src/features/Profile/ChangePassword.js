@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity } from "react-native";
 import { SIZES, FONTS, icons, svg, COLORS } from "../../../constants";
 import { Header, AuthLayout } from "..";
 import { IconButton, FormInput, PrimaryButton } from "../../components";

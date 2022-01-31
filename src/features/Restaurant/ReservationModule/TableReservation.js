@@ -24,11 +24,11 @@ import { useFocusEffect } from "@react-navigation/native";
 import TableComponent from "./TableComponent";
 import DateObject from "react-date-object";
 const TableReservation = () => {
+  const [buttonActive, setButtonActive] = React.useState(false);
   const [selectedTable, setSelectedTable] = React.useState({
     id: null,
     tableName: null,
   });
-  const [buttonActive, setButtonActive] = React.useState(false);
 
   const dispatch = useDispatch();
 
@@ -38,7 +38,6 @@ const TableReservation = () => {
 
   React.useEffect(() => {
     if (restaurantId) {
-      // dispatch(clearBookingStatus());
       dispatch(fetchTableByRestaurantReq(restaurantId));
     }
   }, []);
@@ -82,221 +81,6 @@ const TableReservation = () => {
     }
   };
 
-  function renderHeader() {
-    return (
-      <Header
-        title="TABLE RESERVATION"
-        containerStyle={{
-          height: 50,
-          marginHorizontal: SIZES.padding,
-          marginTop: 40,
-        }}
-        leftComponent={
-          <IconButton
-            icon={icons.back}
-            containerStyle={{
-              width: 40,
-              height: 40,
-              justifyContent: "center",
-              alignItems: "center",
-              borderWidth: 1,
-              borderRadius: SIZES.radius,
-              borderColor: theme.colors.brand.primary,
-            }}
-            iconStyle={{
-              width: 20,
-              height: 20,
-              tintColor: theme.colors.brand.primary,
-            }}
-            onPress={() => dispatch(goBack())}
-          />
-        }
-      />
-    );
-  }
-
-  function renderTables() {
-    console.log();
-    return (
-      <View
-        style={{
-          flex: 1,
-          marginBottom: 150,
-        }}
-      >
-        {tableDetails.length != 0 ? (
-          <>
-            {tableDetails.map((tableFloor, index) => (
-              <View
-                keyExtractor={(tableFloor) => {
-                  `FLOOR_${tableFloor.id}_${index}`;
-                }}
-              >
-                {/* Floor Section  */}
-                <View
-                  style={{
-                    paddingHorizontal: SIZES.padding,
-                    marginVertical: SIZES.padding,
-                  }}
-                >
-                  <Text style={{ ...FONTS.h2, color: COLORS.black }}>
-                    {tableFloor.floorName}:
-                  </Text>
-                </View>
-
-                <View>
-                  <FlatList
-                    data={tableFloor.tables}
-                    horizontal
-                    keyExtractor={(item) => `TABLE_${item.id}`}
-                    showsHorizontalScrollIndicator={false}
-                    nestedScrollEnabled
-                    renderItem={({ item, index }) => {
-                      let booked = false;
-                      item.reservation_dates.map((date) => {
-                        var dateObj = new DateObject(new Date(date.date));
-                        if (
-                          reservationTime.format("MM/DD hh A") ==
-                          dateObj.format("MM/DD hh A")
-                        ) {
-                          console.log(item.tableName + " is booked");
-                          booked = true;
-                        }
-                      });
-
-                      if (groupSize <= 2) {
-                        if (item.seatCapacity <= 3 && !booked) {
-                          return (
-                            <TableComponent
-                              item={item}
-                              index={index}
-                              selectedTable={selectedTable}
-                              tableFloor={tableFloor}
-                              onPress={() => {
-                                setSelectedTable(item);
-                                setButtonActive(true);
-                              }}
-                            />
-                          );
-                        } else {
-                          return (
-                            <TableComponent
-                              item={item}
-                              index={index}
-                              selectedTable={selectedTable}
-                              disabled={true}
-                              booked={booked}
-                              tableFloor={tableFloor}
-                              onPress={() => {
-                                setSelectedTable(item);
-                                setButtonActive(true);
-                              }}
-                            />
-                          );
-                        }
-                      } else if (groupSize > 2 && groupSize <= 6 && !booked) {
-                        if (item.seatCapacity > 2 && item.seatCapacity <= 6) {
-                          return (
-                            <TableComponent
-                              item={item}
-                              index={index}
-                              selectedTable={selectedTable}
-                              tableFloor={tableFloor}
-                              onPress={() => {
-                                setSelectedTable(item);
-                                setButtonActive(true);
-                              }}
-                            />
-                          );
-                        } else {
-                          return (
-                            <TableComponent
-                              item={item}
-                              index={index}
-                              selectedTable={selectedTable}
-                              disabled={true}
-                              booked={booked}
-                              tableFloor={tableFloor}
-                              onPress={() => {
-                                setSelectedTable(item);
-                                setButtonActive(true);
-                              }}
-                            />
-                          );
-                        }
-                      } else {
-                        if (item.seatCapacity > 6 && !booked) {
-                          return (
-                            <TableComponent
-                              item={item}
-                              index={index}
-                              selectedTable={selectedTable}
-                              tableFloor={tableFloor}
-                              onPress={() => {
-                                setSelectedTable(item);
-                                setButtonActive(true);
-                              }}
-                            />
-                          );
-                        } else {
-                          return (
-                            <TableComponent
-                              item={item}
-                              index={index}
-                              selectedTable={selectedTable}
-                              disabled={true}
-                              booked={booked}
-                              tableFloor={tableFloor}
-                              onPress={() => {
-                                setSelectedTable(item);
-                                setButtonActive(true);
-                              }}
-                            />
-                          );
-                        }
-                      }
-                    }}
-                  />
-                </View>
-              </View>
-            ))}
-          </>
-        ) : (
-          <View
-            style={{
-              flex: 1,
-              padding: SIZES.padding,
-              alignItems: "center",
-            }}
-          >
-            <Image
-              source={icons.cross}
-              style={{
-                tintColor: theme.colors.brand.primary,
-              }}
-            ></Image>
-            <Text
-              style={{
-                ...FONTS.h3,
-                color: theme.colors.brand.primary,
-              }}
-            >
-              Sorry, No Table Found !!!
-            </Text>
-            <View
-              style={{
-                width: "100%",
-                borderBottomColor: COLORS.lightGray1,
-                marginTop: SIZES.padding + 10,
-                borderBottomWidth: 2,
-              }}
-            />
-          </View>
-        )}
-      </View>
-    );
-  }
-
   return (
     <>
       {isLoading ? (
@@ -317,7 +101,7 @@ const TableReservation = () => {
           }}
         >
           {/* Header  */}
-          {renderHeader()}
+          <RenderHeader />
 
           {/* Title  */}
           <ScrollView>
@@ -425,7 +209,14 @@ const TableReservation = () => {
               />
 
               {/* Tables  */}
-              {renderTables()}
+              <RenderTables
+                tableDetails={tableDetails}
+                reservationTime={reservationTime}
+                groupSize={groupSize}
+                setButtonActive={setButtonActive}
+                setSelectedTable={setSelectedTable}
+                selectedTable={selectedTable}
+              />
             </View>
           </ScrollView>
           <View
@@ -496,9 +287,6 @@ const TableReservation = () => {
                   borderRadius: 50,
                   marginTop: SIZES.radius,
                 }}
-                disabled={
-                  !buttonActive || groupSize == 0 || confirmBooking?.loading
-                }
                 label={confirmBooking?.loadingButtonContent}
                 labelStyle={{ color: "white", ...FONTS.h2 }}
                 onPress={() => handleConfirmBooking()}
@@ -510,5 +298,228 @@ const TableReservation = () => {
     </>
   );
 };
+
+function RenderHeader() {
+  const dispatch = useDispatch();
+  return (
+    <Header
+      title="TABLE RESERVATION"
+      containerStyle={{
+        height: 50,
+        marginHorizontal: SIZES.padding,
+        marginTop: 40,
+      }}
+      leftComponent={
+        <IconButton
+          icon={icons.back}
+          containerStyle={{
+            width: 40,
+            height: 40,
+            justifyContent: "center",
+            alignItems: "center",
+            borderWidth: 1,
+            borderRadius: SIZES.radius,
+            borderColor: theme.colors.brand.primary,
+          }}
+          iconStyle={{
+            width: 20,
+            height: 20,
+            tintColor: theme.colors.brand.primary,
+          }}
+          onPress={() => dispatch(goBack())}
+        />
+      }
+    />
+  );
+}
+
+function RenderTables({
+  tableDetails,
+  reservationTime,
+  groupSize,
+  setButtonActive,
+  setSelectedTable,
+  selectedTable,
+}) {
+  return (
+    <View
+      style={{
+        flex: 1,
+        marginBottom: 150,
+      }}
+    >
+      {tableDetails.length != 0 ? (
+        <>
+          {tableDetails.map((tableFloor, index) => (
+            <View
+              key={index}
+              keyExtractor={(tableFloor) => {
+                `FLOOR_${tableFloor.id}_${index}`;
+              }}
+            >
+              {/* Floor Section  */}
+              <View
+                style={{
+                  paddingHorizontal: SIZES.padding,
+                  marginVertical: SIZES.padding,
+                }}
+              >
+                <Text style={{ ...FONTS.h2, color: COLORS.black }}>
+                  {tableFloor.floorName}:
+                </Text>
+              </View>
+
+              <View>
+                <FlatList
+                  data={tableFloor.tables}
+                  horizontal
+                  keyExtractor={(item) => `TABLE_${item.id}`}
+                  showsHorizontalScrollIndicator={false}
+                  nestedScrollEnabled
+                  renderItem={({ item, index }) => {
+                    let booked = false;
+                    item.reservation_dates.map((date) => {
+                      var dateObj = new DateObject(new Date(date.date));
+                      if (
+                        reservationTime.format("MM/DD hh A") ==
+                        dateObj.format("MM/DD hh A")
+                      ) {
+                        console.log(item.tableName + " is booked");
+                        booked = true;
+                      }
+                    });
+
+                    if (groupSize <= 2) {
+                      if (item.seatCapacity <= 3 && !booked) {
+                        return (
+                          <TableComponent
+                            item={item}
+                            index={index}
+                            selectedTable={selectedTable}
+                            tableFloor={tableFloor}
+                            onPress={() => {
+                              setSelectedTable(item);
+                              setButtonActive(true);
+                            }}
+                          />
+                        );
+                      } else {
+                        return (
+                          <TableComponent
+                            item={item}
+                            index={index}
+                            selectedTable={selectedTable}
+                            disabled={true}
+                            booked={booked}
+                            tableFloor={tableFloor}
+                            onPress={() => {
+                              setSelectedTable(item);
+                              setButtonActive(true);
+                            }}
+                          />
+                        );
+                      }
+                    } else if (groupSize > 2 && groupSize <= 6 && !booked) {
+                      if (item.seatCapacity > 2 && item.seatCapacity <= 6) {
+                        return (
+                          <TableComponent
+                            item={item}
+                            index={index}
+                            selectedTable={selectedTable}
+                            tableFloor={tableFloor}
+                            onPress={() => {
+                              setSelectedTable(item);
+                              setButtonActive(true);
+                            }}
+                          />
+                        );
+                      } else {
+                        return (
+                          <TableComponent
+                            item={item}
+                            index={index}
+                            selectedTable={selectedTable}
+                            disabled={true}
+                            booked={booked}
+                            tableFloor={tableFloor}
+                            onPress={() => {
+                              setSelectedTable(item);
+                              setButtonActive(true);
+                            }}
+                          />
+                        );
+                      }
+                    } else {
+                      if (item.seatCapacity > 6 && !booked) {
+                        return (
+                          <TableComponent
+                            item={item}
+                            index={index}
+                            selectedTable={selectedTable}
+                            tableFloor={tableFloor}
+                            onPress={() => {
+                              setSelectedTable(item);
+                              setButtonActive(true);
+                            }}
+                          />
+                        );
+                      } else {
+                        return (
+                          <TableComponent
+                            item={item}
+                            index={index}
+                            selectedTable={selectedTable}
+                            disabled={true}
+                            booked={booked}
+                            tableFloor={tableFloor}
+                            onPress={() => {
+                              setSelectedTable(item);
+                              setButtonActive(true);
+                            }}
+                          />
+                        );
+                      }
+                    }
+                  }}
+                />
+              </View>
+            </View>
+          ))}
+        </>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            padding: SIZES.padding,
+            alignItems: "center",
+          }}
+        >
+          <Image
+            source={icons.cross}
+            style={{
+              tintColor: theme.colors.brand.primary,
+            }}
+          ></Image>
+          <Text
+            style={{
+              ...FONTS.h3,
+              color: theme.colors.brand.primary,
+            }}
+          >
+            Sorry, No Table Found !!!
+          </Text>
+          <View
+            style={{
+              width: "100%",
+              borderBottomColor: COLORS.lightGray1,
+              marginTop: SIZES.padding + 10,
+              borderBottomWidth: 2,
+            }}
+          />
+        </View>
+      )}
+    </View>
+  );
+}
 
 export default TableReservation;
