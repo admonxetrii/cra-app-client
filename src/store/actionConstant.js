@@ -25,7 +25,7 @@ export const SIGNUP_FAILED = "SIGNUP_FAILED";
 export const NAVIGATE = "NAVIGATE";
 export const GOBACK = "GOBACK";
 export const SET_NAVIGATION_REF = "SET_NAVIGATION_REF";
-export const PUSH = "PUSH";
+export const NAV_DISPATCH = "NAV_DISPATCH";
 export const REPLACE = "REPLACE";
 
 export const SET_TOAST_REF = "SET_TOAST_REF";

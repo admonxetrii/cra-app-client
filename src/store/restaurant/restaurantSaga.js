@@ -151,11 +151,11 @@ function* confirmTableBookingAPI() {
     );
     const response = yield restaurantsService.confirmTableBooking(inputData);
     if (response.data.status === 200) {
-      // yield put(confirmTableBookingSuccess(response.data));
+      yield put(confirmTableBookingSuccess(response.data));
       yield Toast.success(response.data.message);
-      yield put(navigate("MyReservationPage"));
+      // yield put(navigate("MyReservationPage"));
     } else {
-      // yield put(confirmTableBookingFailed(response.error));
+      yield put(confirmTableBookingFailed(response.error));
       yield Toast.error(response.data.message);
     }
   } catch (error) {

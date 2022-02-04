@@ -354,7 +354,7 @@ const restaurantReducer = (state = initialState, action) => {
         ...state,
         confirmTableBooking: {
           inputData: {},
-          loading: false,
+          loading: true,
           loadingButtonContent: "Booked",
           error: false,
           data: action.data,

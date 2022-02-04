@@ -288,6 +288,7 @@ const TableReservation = () => {
                   marginTop: SIZES.radius,
                 }}
                 label={confirmBooking?.loadingButtonContent}
+                disabled={confirmBooking?.loading}
                 labelStyle={{ color: "white", ...FONTS.h2 }}
                 onPress={() => handleConfirmBooking()}
               />
@@ -326,7 +327,10 @@ function RenderHeader() {
             height: 20,
             tintColor: theme.colors.brand.primary,
           }}
-          onPress={() => dispatch(goBack())}
+          onPress={() => {
+            dispatch(clearBookingStatus());
+            dispatch(goBack());
+          }}
         />
       }
     />

@@ -2,7 +2,7 @@ import {
   GOBACK,
   NAVIGATE,
   NAVIGATE_WITH_PROPS,
-  PUSH,
+  NAV_DISPATCH,
   REPLACE,
   SET_NAVIGATION_REF,
 } from "../actionConstant";
@@ -34,9 +34,10 @@ export function goBack() {
   };
 }
 
-export function push() {
+export function navDispatch(data) {
   return {
-    type: PUSH,
+    type: NAV_DISPATCH,
+    data,
   };
 }
 

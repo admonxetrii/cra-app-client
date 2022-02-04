@@ -4,7 +4,7 @@ import {
   NAVIGATE_WITH_PROPS,
   REPLACE,
   SET_NAVIGATION_REF,
-  PUSH,
+  NAV_DISPATCH,
 } from "../actionConstant";
 
 const initialState = {
@@ -38,9 +38,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
-    case PUSH:
+    case NAV_DISPATCH:
       if (state.navigation) {
-        state.navigation.push();
+        state.navigation.dispatch(action.data);
       }
       return {
         ...state,

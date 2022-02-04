@@ -2,5 +2,5 @@ import Axios from "axios";
 import Storage from "../Helper/Storage";
 
 export default Axios.create({
-  baseURL: "https://thejoyfuljwells.com/api/",
+  baseURL: "http://192.168.0.108:8000/api/",
 });

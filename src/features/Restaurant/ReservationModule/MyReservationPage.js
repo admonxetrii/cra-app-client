@@ -18,7 +18,11 @@ import { theme } from "../../../infrastructure/theme";
 import { IconButton } from "../../../components";
 import DateObject from "react-date-object";
 import { Header } from "../..";
-import { goBack } from "../../../store/navigation/navigationAction";
+import {
+  goBack,
+  navDispatch,
+} from "../../../store/navigation/navigationAction";
+import { DrawerActions } from "@react-navigation/native";
 
 const MyReservationPage = () => {
   const dispatch = useDispatch();
@@ -55,7 +59,7 @@ const MyReservationPage = () => {
           }}
         >
           {/* Header  */}
-          <RenderHeader />
+          <RenderHeader dispatch={dispatch} />
 
           <Text
             style={{
@@ -73,7 +77,7 @@ const MyReservationPage = () => {
             }}
           >
             Note: If you cannot see your reservation listed below, it means that
-            the reservation is cancelled.
+            the reservation has been cancelled.
           </Text>
           <View
             style={{
@@ -83,7 +87,10 @@ const MyReservationPage = () => {
             {reservations.length != 0 ? (
               <>
                 {/* Lists  */}
-                <RenderReservationList />
+                <RenderReservationList
+                  reservations={reservations}
+                  dispatch={dispatch}
+                />
               </>
             ) : (
               <View
@@ -113,7 +120,7 @@ const MyReservationPage = () => {
   );
 };
 
-function RenderHeader() {
+function RenderHeader({ dispatch }) {
   return (
     <Header
       title="TABLE RESERVATION"
@@ -139,14 +146,17 @@ function RenderHeader() {
             height: 20,
             tintColor: theme.colors.brand.primary,
           }}
-          onPress={() => dispatch(goBack())}
+          onPress={() => {
+            dispatch(goBack());
+            dispatch(navDispatch(DrawerActions.closeDrawer()));
+          }}
         />
       }
     />
   );
 }
 
-function RenderReservationList() {
+function RenderReservationList({ reservations, dispatch }) {
   return (
     <SwipeListView
       data={reservations}
