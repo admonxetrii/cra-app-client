@@ -15,6 +15,12 @@ import {
   VERIFY_TOKEN_FAILED,
   VERIFY_TOKEN_REQ,
   VERIFY_TOKEN_SUCCESS,
+  FORGOT_PASSWORD_FAILED,
+  FORGOT_PASSWORD_REQ,
+  FORGOT_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_FAILED,
+  CHANGE_PASSWORD_REQ,
+  CHANGE_PASSWORD_SUCCESS,
 } from "../actionConstant";
 
 const initialState = {
@@ -23,6 +29,7 @@ const initialState = {
   user: null,
   login: {
     loading: false,
+    buttonEnabled: true,
     inputData: {},
     error: null,
     loadingButtonContent: "Login",
@@ -34,6 +41,7 @@ const initialState = {
   signup: {
     username: null,
     loading: false,
+    buttonEnabled: true,
     error: null,
     inputData: {},
     data: {},
@@ -53,6 +61,20 @@ const initialState = {
     data: {},
     loadingButtonContent: "Resend OTP",
   },
+  forgotPassword: {
+    loading: false,
+    error: null,
+    inputData: {},
+    data: {},
+    loadingButtonContent: "Reset Password",
+  },
+  changePassword: {
+    loading: false,
+    error: null,
+    inputData: {},
+    data: {},
+    loadingButtonContent: "Change Password",
+  },
 };
 
 const authReducer = (state = initialState, action) => {
@@ -63,6 +85,7 @@ const authReducer = (state = initialState, action) => {
         login: {
           ...state.login,
           loading: true,
+          buttonEnabled: false,
           inputData: action.data,
           loadingButtonContent: "Loggin in..",
         },
@@ -72,10 +95,13 @@ const authReducer = (state = initialState, action) => {
         ...state,
         initialScreen: "CustomDrawer",
         isLoggedIn: true,
+        user: action.data,
         login: {
           ...state.login,
-          inputData: {},
           loading: false,
+          buttonEnabled: false,
+          inputData: {},
+          loadingButtonContent: "Login",
         },
       };
     case LOGIN_FAILED:
@@ -84,7 +110,9 @@ const authReducer = (state = initialState, action) => {
         initialScreen: "OnBoarding",
         isLoggedIn: false,
         login: {
+          ...state.login,
           loading: false,
+          buttonEnabled: true,
           inputData: {},
           loadingButtonContent: "Login",
           error: action.error,
@@ -120,6 +148,65 @@ const authReducer = (state = initialState, action) => {
           error: action.error,
         },
       };
+    case FORGOT_PASSWORD_REQ:
+      return {
+        ...state,
+        forgotPassword: {
+          ...state.forgotPassword,
+          inputData: action.data,
+          loading: true,
+        },
+      };
+    case FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        initialScreen: "SignIn",
+        isLoggedIn: false,
+        forgotPassword: {
+          ...state.forgotPassword,
+          loading: false,
+          error: null,
+        },
+      };
+    case FORGOT_PASSWORD_FAILED:
+      return {
+        ...state,
+        initialScreen: "ForgotPassword",
+        forgotPassword: {
+          ...state.forgotPassword,
+          loading: false,
+          error: action.error,
+        },
+      };
+
+    case CHANGE_PASSWORD_REQ:
+      return {
+        ...state,
+        changePassword: {
+          ...state.changePassword,
+          inputData: action.data,
+          loading: true,
+        },
+      };
+    case CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        changePassword: {
+          ...state.changePassword,
+          loading: false,
+          error: null,
+        },
+      };
+    case CHANGE_PASSWORD_FAILED:
+      return {
+        ...state,
+        initialScreen: "ChangePassword",
+        changePassword: {
+          ...state.changePassword,
+          loading: false,
+          error: action.error,
+        },
+      };
     case LOGOUT:
       return {
         ...state,
@@ -130,6 +217,7 @@ const authReducer = (state = initialState, action) => {
           loading: false,
           inputData: {},
           error: null,
+          buttonEnabled: true,
           loadingButtonContent: "Login",
         },
         verify: {
@@ -141,11 +229,13 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         signup: {
+          ...state.signup,
           username: null,
           loading: true,
           error: null,
           data: {},
-          loadingButtonContent: "please wait...",
+          loadingButtonContent: "Please wait...",
+          buttonEnabled: false,
           inputData: action.data,
         },
       };
@@ -154,10 +244,12 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         signup: {
+          ...state.signup,
           inputData: {},
           username: action.data.username,
           loading: false,
           error: null,
+          buttonEnabled: false,
           data: action.data,
           loadingButtonContent: "Signup",
         },
@@ -166,8 +258,10 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         signup: {
+          ...state.signup,
           email: null,
           loading: false,
+          buttonEnabled: true,
           error: action.error,
           data: {},
           loadingButtonContent: "Signup",

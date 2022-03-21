@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { utils } from "../../utils";
 import { AuthLayout, AuthContext } from "../";
 import { FONTS, SIZES, COLORS, icons } from "../../../constants";
+import { useSelector } from "react-redux";
 import {
   FormInput,
   CustomSwitch,
@@ -24,6 +25,8 @@ const SignIn = ({ navigation }) => {
   function isLoginEnable() {
     return username != "" && password != "" && usernameOrEmailError == "";
   }
+
+  const login = useSelector((state) => state.auth.login);
 
   const dispatch = useDispatch();
 
@@ -62,8 +65,11 @@ const SignIn = ({ navigation }) => {
             label={"Username"}
             onChange={(text) => {
               // validate email
-              utils.validateUsernameOrEmail(text, setUsernameOrEmailError);
-              setUsername(text);
+              utils.validateUsernameOrEmail(
+                text.trim(),
+                setUsernameOrEmailError
+              );
+              setUsername(text.trim());
             }}
             errorMsg={usernameOrEmailError}
             placeholder={"Enter your username or email here..."}
@@ -146,14 +152,15 @@ const SignIn = ({ navigation }) => {
 
           <PrimaryButton
             icon={icons.login}
-            disabled={isLoginEnable() ? false : true}
+            disabled={isLoginEnable() && login?.buttonEnabled ? false : true}
             buttonContainerStyle={{
               height: 55,
               width: "100%",
               borderRadius: 50,
               marginTop: SIZES.radius,
             }}
-            label={"LOGIN"}
+            loader={login?.loading}
+            label={login?.loadingButtonContent}
             labelStyle={{ color: "white", ...FONTS.h2 }}
             onPress={() => {
               loginHandler(username, password);

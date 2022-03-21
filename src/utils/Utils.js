@@ -7,6 +7,10 @@ function isValidUsername(value) {
   const re = /^(?:[A-Z\d][A-Z\d_-]{4,10})$/i;
   return re.test(String(value).toLowerCase());
 }
+function isValidFullName(value) {
+  const re = /^[a-zA-Z]{3,}(?: [a-zA-Z]+){1,3}$$/i;
+  return re.test(String(value).toLowerCase());
+}
 function isValidEmail(value) {
   const re = /^(?:[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})$/i;
   return re.test(String(value).toLowerCase());
@@ -68,6 +72,16 @@ function validatePhone(value, setPhoneError) {
   }
 }
 
+function validateFullName(value, setFullNameError) {
+  if (value == "") {
+    setFullNameError("");
+  } else if (isValidFullName(value)) {
+    setFullNameError("");
+  } else {
+    setFullNameError("Invalid FullName");
+  }
+}
+
 const utils = {
   validateUsernameOrEmail,
   validateEmail,
@@ -75,6 +89,7 @@ const utils = {
   validatePassword,
   validateConfirmPassword,
   validatePhone,
+  validateFullName,
 };
 
 export default utils;

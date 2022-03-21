@@ -17,7 +17,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { TabButton } from "./Tabs/TabButton";
 
 // Views
-import { Header, Home, CartTab, Favourite, Notification, Search } from ".";
+import {
+  Header,
+  Home,
+  CartTab,
+  Favourite,
+  Notification,
+  Search,
+  MyReservationPage,
+} from ".";
 
 // data
 import { setSelectedTab } from "../store/tab/tabActions";
@@ -30,12 +38,26 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
   const homeTabColor = useSharedValue(theme.colors.brand.primary);
   const searchTabFlex = useSharedValue(1);
   const searchTabColor = useSharedValue(theme.colors.bg.primary);
-  const cartTabFlex = useSharedValue(1);
-  const cartTabColor = useSharedValue(theme.colors.bg.primary);
+  // const cartTabFlex = useSharedValue(1);
+  // const cartTabColor = useSharedValue(theme.colors.bg.primary);
   const favouriteTabFlex = useSharedValue(1);
   const favouriteTabColor = useSharedValue(theme.colors.bg.primary);
   const notificationTabFlex = useSharedValue(1);
   const notificationTabColor = useSharedValue(theme.colors.bg.primary);
+
+  const userData = useSelector((state) => state.auth?.user);
+
+  // console.log("userdata", userData);
+
+  const userImage = () => {
+    if (userData?.profile_picture != null) {
+      return userData?.profile_picture;
+    } else if (userData?.gender == "male") {
+      return images.male;
+    } else {
+      return images.female;
+    }
+  };
 
   const homeFlexStyle = useAnimatedStyle(() => {
     return {
@@ -61,17 +83,17 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
     };
   });
 
-  const cartFlexStyle = useAnimatedStyle(() => {
-    return {
-      flex: cartTabFlex.value,
-    };
-  });
+  // const cartFlexStyle = useAnimatedStyle(() => {
+  //   return {
+  //     flex: cartTabFlex.value,
+  //   };
+  // });
 
-  const cartColorStyle = useAnimatedStyle(() => {
-    return {
-      backgroundColor: cartTabColor.value,
-    };
-  });
+  // const cartColorStyle = useAnimatedStyle(() => {
+  //   return {
+  //     backgroundColor: cartTabColor.value,
+  //   };
+  // });
 
   const notificationFlexStyle = useAnimatedStyle(() => {
     return {
@@ -130,17 +152,17 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
         duration: 500,
       });
     }
-    if (selectedTab === constants.screens.cart) {
-      cartTabFlex.value = withTiming(3, { duration: 300 });
-      cartTabColor.value = withTiming(theme.colors.brand.primary, {
-        duration: 500,
-      });
-    } else {
-      cartTabFlex.value = withTiming(1, { duration: 500 });
-      cartTabColor.value = withTiming(theme.colors.bg.primary, {
-        duration: 500,
-      });
-    }
+    // if (selectedTab === constants.screens.cart) {
+    //   cartTabFlex.value = withTiming(3, { duration: 300 });
+    //   cartTabColor.value = withTiming(theme.colors.brand.primary, {
+    //     duration: 500,
+    //   });
+    // } else {
+    //   cartTabFlex.value = withTiming(1, { duration: 500 });
+    //   cartTabColor.value = withTiming(theme.colors.bg.primary, {
+    //     duration: 500,
+    //   });
+    // }
     if (selectedTab === constants.screens.favourite) {
       favouriteTabFlex.value = withTiming(3, { duration: 300 });
       favouriteTabColor.value = withTiming(theme.colors.brand.primary, {
@@ -214,13 +236,18 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
               justifyContent: "center",
               borderRadius: SIZES.radius,
             }}
+            onPress={() => {
+              navigation.navigate("Profile");
+              // console.log("profile");
+            }}
           >
             <Image
-              source={images.profile}
+              source={userImage()}
               style={{
                 width: 40,
                 height: 40,
                 borderRadius: SIZES.radius,
+                backgroundColor: theme.colors.brand.primary,
               }}
             />
           </TouchableOpacity>
@@ -235,7 +262,7 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
       >
         {selectedTab == constants.screens.home && <Home />}
         {selectedTab == constants.screens.search && <Search />}
-        {selectedTab == constants.screens.cart && <CartTab />}
+        {/* {selectedTab == constants.screens.cart && <CartTab />} */}
         {selectedTab == constants.screens.notification && <Notification />}
         {selectedTab == constants.screens.favourite && <Favourite />}
       </View>
@@ -292,14 +319,14 @@ const MainLayout = ({ drawerAnimationStyle, navigation }) => {
             isFocused={selectedTab == constants.screens.search}
             onPress={() => handleSelectedTab(constants.screens.search)}
           />
-          <TabButton
+          {/* <TabButton
             label={constants.screens.cart}
             icon={icons.cart}
             outerContainerStyle={cartFlexStyle}
             innerContainerStyle={cartColorStyle}
             isFocused={selectedTab == constants.screens.cart}
             onPress={() => handleSelectedTab(constants.screens.cart)}
-          />
+          /> */}
           <TabButton
             label={constants.screens.notification}
             icon={icons.notification}

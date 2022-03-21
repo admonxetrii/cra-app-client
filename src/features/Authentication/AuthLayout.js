@@ -16,11 +16,12 @@ const AuthLayout = ({
   children,
 }) => {
   return (
-    <KeyboardAvoidingWrapper>
+    <KeyboardAvoidingWrapper flex={1}>
       <View
         style={{
           flex: 1,
           padding: SIZES.padding,
+          backgroundColor: COLORS.white,
         }}
       >
         {/* App Icon  */}

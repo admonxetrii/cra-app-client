@@ -11,6 +11,14 @@ import {
   ForgotPassword,
   CustomDrawer,
   RestaurantDetail,
+  CartTab,
+  ScanTable,
+  Profile,
+  ChangePassword,
+  EditProfile,
+  ReserveTableStage,
+  TableReservation,
+  MyReservationPage,
 } from "./src/features";
 
 import {
@@ -77,7 +85,6 @@ const Router = () => {
   React.useEffect(async () => {
     const token = await Storage.getToken("access");
     if (token) {
-      // console.log(token);
       dispatch(verifyTokenRequest(token));
     }
   }, []);
@@ -114,6 +121,23 @@ const Router = () => {
               <Stack.Screen
                 name="RestaurantDetail"
                 component={RestaurantDetail}
+              />
+              <Stack.Screen name="MyCart" component={CartTab} />
+              <Stack.Screen name="ScanTable" component={ScanTable} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="EditProfile" component={EditProfile} />
+              <Stack.Screen name="ChangePassword" component={ChangePassword} />
+              <Stack.Screen
+                name="ReserveTableStage"
+                component={ReserveTableStage}
+              />
+              <Stack.Screen
+                name="MyReservationPage"
+                component={MyReservationPage}
+              />
+              <Stack.Screen
+                name="TableReservation"
+                component={TableReservation}
               />
             </>
           ) : (

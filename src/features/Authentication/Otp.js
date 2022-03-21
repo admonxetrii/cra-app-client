@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 
 import { COLORS, FONTS, SIZES, svg, icons } from "../../../constants";
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resendOtpReq, signupVerifyReq } from "../../store/auth/authAction";
 
 const Otp = () => {
-  const [timer, setTimer] = React.useState(1);
+  const [timer, setTimer] = React.useState(60);
 
   const [otp, setOtp] = useState(null);
 
@@ -112,7 +112,10 @@ const Otp = () => {
             Didn't receive code?
           </Text>
           <TextButton
-            onPress={resendOtpHandler}
+            onPress={() => {
+              resendOtpHandler;
+              setTimer(60);
+            }}
             buttonContainerStyle={{
               marginLeft: SIZES.base,
               backgroundColor: null,

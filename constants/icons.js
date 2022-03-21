@@ -30,6 +30,17 @@ const wrong = require("../assets/icons/wrong.png");
 const check = require("../assets/icons/check.png");
 const mobile = require("../assets/icons/mobile.png");
 const user = require("../assets/icons/user.png");
+const back = require("../assets/icons/back.png");
+const qr = require("../assets/icons/qr.png");
+const table = require("../assets/icons/table.png");
+const plus = require("../assets/icons/plus.png");
+const minus = require("../assets/icons/minus.png");
+const info = require("../assets/icons/info.png");
+const lock = require("../assets/icons/lock.png");
+const privacy = require("../assets/icons/privacy.png");
+const group = require("../assets/icons/group.png");
+const camera = require("../assets/icons/camera.png");
+const gallary = require("../assets/icons/gallary.png");
 
 export default {
   coupon,
@@ -64,4 +75,15 @@ export default {
   check,
   mobile,
   user,
+  back,
+  qr,
+  table,
+  minus,
+  plus,
+  info,
+  lock,
+  privacy,
+  group,
+  camera,
+  gallary,
 };

@@ -6,16 +6,33 @@ import {
   Text,
   TextInput,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { Card } from "react-native-paper";
 import Animated from "react-native-reanimated";
 import { COLORS, FONTS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
-import { Restaurant } from "../../API/RestaurantAPI/restaurant.services";
+import { useDispatch, useSelector } from "react-redux";
 
-import { FilterModal } from "../../components";
+import { FilterModal, HorizontalFoodCard } from "../../components";
+import {
+  fetchAllRestaurantsReq,
+  fetchRestaurantsBySearchReq,
+} from "../../store/restaurant/restaurantAction";
+import { navigateWithProps } from "../../store/navigation/navigationAction";
 
 const Search = () => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchAllRestaurantsReq());
+  }, []);
+
+  const restaurants = useSelector((state) => state.restaurant?.restaurants);
+  const restaurantsLoading = useSelector(
+    (state) => state.restaurant.fetchAllRestaurant?.loading
+  );
+
   const [showFilterModal, setShowFilterModal] = React.useState(false);
 
   function renderSearch() {
@@ -49,6 +66,9 @@ const Search = () => {
             marginLeft: SIZES.radius,
             ...FONTS.body3,
           }}
+          onChangeText={(text) => {
+            dispatch(fetchRestaurantsBySearchReq(text));
+          }}
           placeholder="Search Restaurants..."
         />
 
@@ -66,6 +86,21 @@ const Search = () => {
       </View>
     );
   }
+
+  if (restaurantsLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size="large" color="#ff5353" />
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
@@ -83,93 +118,70 @@ const Search = () => {
         />
       )}
 
-      {/* Restaurant Card  */}
-      <FlatList
-        data={[
-          {
-            id: 1,
-            name: "Tropical Rest",
-            icon: null,
-            image:
-              "http://192.168.0.110:8000/media/uploads/restaurants/astrou.png",
-            address: "Halchowk, Kathmandu",
-            isOpenNow: true,
-            rating: 4.0,
-            isClosedTemporarily: false,
-            addedDate: "2022-01-03T15:41:13.308559Z",
-            modifiedDate: "2022-01-03T15:41:13.308559Z",
-            modifiedBy: 1,
-          },
-          {
-            id: 2,
-            name: "Momento",
-            icon: null,
-            image:
-              "http://192.168.0.110:8000/media/uploads/restaurants/f15b8adbccd5472bbbbc98e6111ba96d-0001.jpg",
-            address: "Gwarko",
-            isOpenNow: true,
-            rating: 3.0,
-            isClosedTemporarily: true,
-            addedDate: "2022-01-03T15:42:10.215569Z",
-            modifiedDate: "2022-01-03T15:42:10.215569Z",
-            modifiedBy: 1,
-          },
-        ]}
-        showsVerticalScrollIndicator={false}
-        style={{}}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              marginTop: SIZES.padding,
-              marginHorizontal: SIZES.padding,
-              marginVertical: SIZES.base,
-              paddingHorizontal: SIZES.radius,
-              shadowColor: "#000",
-              shadowOpacity: 0.5,
-              shadowRadius: 5,
-              elevation: 10,
-            }}
-          >
-            {/* <TouchableOpacity> */}
-            <Card key={item.id}>
-              <Card.Cover
-                source={{ uri: item.image }}
-                style={{
-                  padding: 16,
-                  backgroundColor: theme.colors.bg.primary,
-                }}
-              />
+      {restaurants.length != 0 ? (
+        <View>
+          {/* Restaurant Card  */}
+          <FlatList
+            data={restaurants}
+            showsVerticalScrollIndicator={false}
+            style={{}}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item, index }) => (
               <View
                 style={{
-                  padding: 16,
+                  marginTop: index == 0 ? SIZES.padding : 18,
+                  marginBottom: index == restaurants.length - 1 ? 80 : 0,
+                  paddingHorizontal: SIZES.padding,
                 }}
               >
-                <Text
-                  style={{
-                    fontFamily: theme.fonts.body,
-                    fontSize: theme.fontSizes.body,
-                    color: theme.colors.text.primary,
+                {/* <TouchableOpacity> */}
+                <HorizontalFoodCard
+                  item={item}
+                  contentContainerStyle={{
+                    shadowColor: "#000",
+                    shadowOpacity: 0.5,
+                    shadowRadius: 5,
+                    elevation: 10,
                   }}
-                >
-                  {item.name}
-                </Text>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: theme.fontSizes.caption,
-                      color: theme.colors.text.secondary,
-                    }}
-                  >
-                    {item.address}
-                  </Text>
-                </View>
+                  imageStyle={{
+                    height: 150,
+                    width: 150,
+                  }}
+                  onPress={() => {
+                    dispatch(
+                      navigateWithProps({
+                        path: "RestaurantDetail",
+                        query: {
+                          id: item.id,
+                        },
+                      })
+                    );
+                  }}
+                />
+                {/* </TouchableOpacity> */}
               </View>
-            </Card>
-            {/* </TouchableOpacity> */}
-          </View>
-        )}
-      />
+            )}
+          />
+        </View>
+      ) : (
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "30%",
+          }}
+        >
+          <Image
+            source={icons.cross}
+            style={{
+              tintColor: theme.colors.brand.primary,
+            }}
+          />
+          <Text style={{ ...FONTS.h2, color: theme.colors.brand.primary }}>
+            No Restaurant found!!
+          </Text>
+        </View>
+      )}
     </View>
   );
 };

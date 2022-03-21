@@ -11,8 +11,18 @@ import Otp from "./Authentication/Otp";
 import ForgotPassword from "./Authentication/ForgotPassword";
 import Header from "./Header/Header";
 import OnBoarding from "./OnBoarding/OnBoarding";
-import RestaurantDetail from "../components/Restaurants/RestaurantDetail";
+import RestaurantDetail from "./Restaurant/RestaurantDetail";
 import CustomDrawer from "./Navigation/CustomDrawer";
+import ScanTable from "./Restaurant/ScanTable";
+import Profile from "./Profile/Profile";
+import ChangePassword from "./Profile/ChangePassword";
+import EditProfile from "./Profile/EditProfile";
+import RestaurantComponent from "./Restaurant/RestaurantComponent";
+import RestaurantMenu from "./Restaurant/RestaurantMenu";
+import ReserveTableStage from "./Restaurant/ReservationModule/ReserveTableStage";
+import TableReservation from "./Restaurant/ReservationModule/TableReservation";
+import MyReservationPage from "./Restaurant/ReservationModule/MyReservationPage";
+import EditProfileComponents from "./Profile/EditProfileComponents";
 
 export {
   MainLayout,
@@ -30,4 +40,14 @@ export {
   CustomDrawer,
   Header,
   RestaurantDetail,
+  ScanTable,
+  Profile,
+  ChangePassword,
+  EditProfile,
+  RestaurantComponent,
+  RestaurantMenu,
+  ReserveTableStage,
+  TableReservation,
+  MyReservationPage,
+  EditProfileComponents,
 };

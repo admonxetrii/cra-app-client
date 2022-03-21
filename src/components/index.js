@@ -9,6 +9,12 @@ import VerticalFoodCard from "./listView/VerticalFoodCard";
 import FilterModal from "./modals/FilterModal";
 import IconButton from "./buttons/IconButton";
 import TextButtonWithIcon from "./buttons/TextButtonWithIcon";
+import CartQuantityButton from "./buttons/CartQuantityButton";
+import MenuButton from "./buttons/MenuButton";
+import StepperInput from "./buttons/Stepper";
+import FooterTotal from "./footer/FooterTotal";
+import ProfileButton from "./buttons/ProfileButtons";
+import ImageChooseModal from "./modals/ImageChooseModal";
 
 export {
   TextButton,
@@ -22,4 +28,10 @@ export {
   FilterModal,
   IconButton,
   TextButtonWithIcon,
+  CartQuantityButton,
+  MenuButton,
+  StepperInput,
+  FooterTotal,
+  ProfileButton,
+  ImageChooseModal,
 };

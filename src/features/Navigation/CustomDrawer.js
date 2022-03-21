@@ -91,6 +91,11 @@ const CustomDrawer = () => {
             <MainLayout {...props} drawerAnimationStyle={animatedStyle} />
           )}
         </Drawer.Screen>
+        <Drawer.Screen name="Favourite">
+          {(props) => (
+            <MainLayout {...props} drawerAnimationStyle={animatedStyle} />
+          )}
+        </Drawer.Screen>
       </Drawer.Navigator>
     </View>
   );

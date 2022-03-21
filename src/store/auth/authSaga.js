@@ -10,6 +10,8 @@ import {
   SIGNUP_REQ,
   SIGNUP_VERIFY_REQ,
   VERIFY_TOKEN_REQ,
+  FORGOT_PASSWORD_REQ,
+  CHANGE_PASSWORD_REQ,
 } from "../actionConstant";
 import { navigate, replace } from "../navigation/navigationAction";
 import {
@@ -24,6 +26,10 @@ import {
   verifyTokenFailed,
   verifyTokenRequest,
   verifyTokenSuccess,
+  forgotPasswordSuccess,
+  forgotPasswordFailed,
+  changePasswordSuccess,
+  changePasswordFailed,
 } from "./authAction";
 
 function* loginAPI(action) {
@@ -34,15 +40,13 @@ function* loginAPI(action) {
       return yield put(navigate("Otp"));
     }
     if (response.status === 200 && response.data.is_verified) {
-      console.log(response.data);
       yield Storage.setAccessToken(response.data.access);
       yield Storage.setRefreshToken(response.data.refresh);
 
       //set current user details
       const userDetail = yield userService.getUserDetail(response.data.access);
       if (userDetail.status === 200) {
-        yield verifyTokenSuccess(userDetail.data);
-        yield put(loginSuccess());
+        yield put(loginSuccess(userDetail.data));
         yield Toast.success("Logged in successfully");
       } else {
         yield put(loginFailed(response.data));
@@ -64,7 +68,6 @@ function* verifyTokenAPI(action) {
       const userDetail = yield userService.getUserDetail(action.data);
       if (userDetail.status === 200) {
         yield put(verifyTokenSuccess(userDetail.data));
-        yield put(loginSuccess());
       } else {
         yield put(loginFailed(response.data));
         yield Toast.error(response.data.message);
@@ -86,13 +89,19 @@ function* signupAPI() {
   try {
     const inputData = yield select((state) => state.auth.signup.inputData);
     const response = yield usersServices.signup(inputData);
+    console.log(response.data);
     if (response.data.status === 201) {
-      yield Toast.success("User registered successfully.");
+      // console.log("here");
+      console.log(response.data);
       yield put(navigate("Otp"));
+      yield Toast.success("User registered successfully.");
       yield put(signupSuccess(response.data));
+    } else if (response.data.status === 406) {
+      yield put(signupFailed(response.data.error));
+      yield Toast.error(response.data.error);
     } else {
-      yield put(signupFailed(response.data));
-      yield Toast.error("invalid data");
+      yield put(signupFailed(response.data.error[0]));
+      yield Toast.error("Invalid Data");
     }
   } catch (error) {
     yield put(signupFailed(error?.response?.data));
@@ -130,11 +139,9 @@ function* signupVerificationAPI() {
 
 function* resendOTPAPI() {
   try {
-    console.log("here");
     const username = yield select((state) => state.auth.signup.username);
-    console.log(username);
     const response = yield usersServices.resendOtp(username);
-    if (response.data.status == 200) {
+    if (response.data.status === 200) {
       yield put(resendOtpSuccess(response.data));
       yield Toast.success(response.data.message);
     } else {
@@ -147,6 +154,48 @@ function* resendOTPAPI() {
   }
 }
 
+function* forgotPasswordAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.auth.forgotPassword.inputData
+    );
+    const response = yield usersServices.forgotPassword({
+      email: inputData,
+    });
+    if (response.status === 200) {
+      yield Toast.success(response.data.message);
+      yield put(navigate("SignIn"));
+      yield put(forgotPasswordSuccess(response.data));
+    } else {
+      yield put(forgotPasswordFailed(response.data.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    yield put(forgotPasswordFailed(error));
+    yield Toast.error("Something went wrong");
+  }
+}
+
+function* changePasswordAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.auth.changePassword.inputData
+    );
+    const response = yield usersServices.changePassword(inputData);
+    if (response.data.status === 200) {
+      yield Toast.success(response.data.message);
+      yield put(navigate("Profile"));
+      yield put(changePasswordSuccess(response.data));
+    } else {
+      yield put(changePasswordFailed(response.data.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    yield put(changePasswordFailed(error));
+    yield Toast.error("Something went wrong");
+  }
+}
+
 export default function* authSaga() {
   yield all([yield takeLatest(LOGIN_REQ, loginAPI)]);
   yield all([yield takeLatest(VERIFY_TOKEN_REQ, verifyTokenAPI)]);
@@ -154,4 +203,6 @@ export default function* authSaga() {
   yield all([yield takeLatest(LOGOUT, logout)]);
   yield all([yield takeLatest(SIGNUP_VERIFY_REQ, signupVerificationAPI)]);
   yield all([yield takeLatest(RESEND_OTP_REQ, resendOTPAPI)]);
+  yield all([yield takeLatest(FORGOT_PASSWORD_REQ, forgotPasswordAPI)]);
+  yield all([yield takeLatest(CHANGE_PASSWORD_REQ, changePasswordAPI)]);
 }

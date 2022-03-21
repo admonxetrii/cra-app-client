@@ -6,6 +6,20 @@ const myProfile = {
   address: "Gwarko , Lalitpur",
 };
 
+const tropicalRest = {
+  id: 1,
+  name: "Tropical Rest",
+  icon: null,
+  image: "http://192.168.0.108:8000/media/uploads/restaurants/astrou.png",
+  address: "Halchowk, Kathmandu",
+  isOpenNow: true,
+  rating: 4.0,
+  isClosedTemporarily: false,
+  addedDate: "2022-01-03T15:41:13.308559Z",
+  modifiedDate: "2022-01-03T15:41:13.308559Z",
+  modifiedBy: 1,
+};
+
 const categories = [
   {
     id: 1,
@@ -87,8 +101,131 @@ const menu = [
   },
 ];
 
+const MenuList = [
+  {
+    id: 1,
+    title: "Breakfast",
+    icon: null,
+    menus: [
+      {
+        id: 1,
+        title: "English Breakfast",
+        price: 585.0,
+      },
+      {
+        id: 2,
+        title: "TROPICAL HOUSE BREAKFAST",
+        price: 565.0,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Burger / Sandwich",
+    icon: null,
+    menus: [
+      {
+        id: 3,
+        title: "VEG BURGER",
+        price: 255.0,
+      },
+      {
+        id: 4,
+        title: "CHICKEN BURGER",
+        price: 295.0,
+      },
+      {
+        id: 5,
+        title: "TROPICAL SANDWICH",
+        price: 395.0,
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Pizza",
+    icon: null,
+    menus: [
+      {
+        id: 7,
+        title: "MARGHERITA - MEDIUM",
+        price: 385.0,
+      },
+      {
+        id: 8,
+        title: "GRILLED MUSHROOM - LARGE",
+        price: 515.0,
+      },
+    ],
+  },
+];
+
+const tableList = [
+  {
+    id: 1,
+    floorName: "Ground Floor",
+    tables: [
+      {
+        id: 4,
+        tableName: "F1",
+        seatCapacity: 4,
+        isOccupied: false,
+        occHrs: null,
+        occMin: null,
+        reservationDate: {
+          date: null,
+        },
+        merged: null,
+      },
+      {
+        id: 5,
+        tableName: "F4",
+        seatCapacity: 8,
+        isOccupied: false,
+        occHrs: null,
+        occMin: null,
+        reservationDate: {
+          date: null,
+        },
+        merged: null,
+      },
+    ],
+  },
+];
+
+const myCart = [
+  {
+    ...hamburger,
+    qty: 1,
+  },
+  {
+    ...vegBiryani,
+    qty: 1,
+  },
+  {
+    ...hotTacos,
+    qty: 1,
+  },
+  {
+    ...hamburger,
+    qty: 1,
+  },
+  {
+    ...vegBiryani,
+    qty: 1,
+  },
+  {
+    ...hotTacos,
+    qty: 1,
+  },
+];
+
 export default {
   myProfile,
   categories,
   menu,
+  tropicalRest,
+  MenuList,
+  myCart,
+  tableList,
 };

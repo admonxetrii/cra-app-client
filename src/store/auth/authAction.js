@@ -15,6 +15,12 @@ import {
   VERIFY_TOKEN_FAILED,
   VERIFY_TOKEN_REQ,
   VERIFY_TOKEN_SUCCESS,
+  FORGOT_PASSWORD_FAILED,
+  FORGOT_PASSWORD_REQ,
+  FORGOT_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_FAILED,
+  CHANGE_PASSWORD_REQ,
+  CHANGE_PASSWORD_SUCCESS,
 } from "../actionConstant";
 
 export function loginRequest(data) {
@@ -106,6 +112,48 @@ export function signupVerifySuccess(data) {
 export function signupVerifyFailed(error) {
   return {
     type: SIGNUP_VERIFY_FAILED,
+    error,
+  };
+}
+
+// Forgot Password
+
+export function forgotPasswordReq(data) {
+  return {
+    type: FORGOT_PASSWORD_REQ,
+    data,
+  };
+}
+export function forgotPasswordSuccess(data) {
+  return {
+    type: FORGOT_PASSWORD_SUCCESS,
+    data,
+  };
+}
+export function forgotPasswordFailed(error) {
+  return {
+    type: FORGOT_PASSWORD_FAILED,
+    error,
+  };
+}
+
+// Change Password
+
+export function changePasswordReq(data) {
+  return {
+    type: CHANGE_PASSWORD_REQ,
+    data,
+  };
+}
+export function changePasswordSuccess(data) {
+  return {
+    type: CHANGE_PASSWORD_SUCCESS,
+    data,
+  };
+}
+export function changePasswordFailed(error) {
+  return {
+    type: CHANGE_PASSWORD_FAILED,
     error,
   };
 }
