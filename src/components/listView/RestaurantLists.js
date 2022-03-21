@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image, Touchable } from "react-native";
 import { theme } from "../../infrastructure/theme";
 import { COLORS, FONTS, SIZES, icons } from "../../../constants";
 
-const HorizontalFoodCard = ({
+const RestaurantLists = ({
   contentContainerStyle,
   imageStyle,
   item,
@@ -136,4 +136,4 @@ const HorizontalFoodCard = ({
   );
 };
 
-export default HorizontalFoodCard;
+export default RestaurantLists;

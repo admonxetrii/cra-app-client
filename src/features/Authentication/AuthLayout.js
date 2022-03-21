@@ -16,7 +16,7 @@ const AuthLayout = ({
   children,
 }) => {
   return (
-    <KeyboardAvoidingWrapper>
+    <KeyboardAvoidingWrapper flex={1}>
       <View
         style={{
           flex: 1,

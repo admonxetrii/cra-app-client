@@ -1,19 +1,29 @@
 import { put, takeLatest, all, select, delay } from "redux-saga/effects";
 import restaurantsService from "../../API/RestaurantAPI/restaurants.service";
 import {
+  FETCH_ALL_RESTAURANTS_REQ,
+  FETCH_RESTAURANT_BY_SEARCH_REQ,
   FETCH_RESTAURANTS_CATEGORY_REQ,
   FETCH_RESTAURANT_BY_CATEGORY_REQ,
   FETCH_RESTAURANT_BY_ID_REQ,
   FETCH_RESTAURANT_MENUS_BY_RESTAURANT_ID_REQ,
   FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
+  FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_REQ,
   FETCH_TABLE_BY_RESTAURANT_REQ,
   CONFIRM_TABLE_BOOKIN_REQ,
   FETCH_MY_RESERVATION_REQ,
   CANCEL_RESERVATION_REQ,
+  FETCH_FAVOURITE_RESTAURANTS_REQ,
 } from "../actionConstant";
 import Toast from "../../Helper/toast";
 import { navigate } from "../navigation/navigationAction";
 import {
+  fetchAllRestaurantsFailed,
+  fetchAllRestaurantsSuccess,
+  fetchFavouriteRestaurantsSuccess,
+  fetchFavouriteRestaurantsFailed,
+  fetchRestaurantsBySearchSuccess,
+  fetchRestaurantsBySearchFailed,
   fetchRestaurantByCategoryFailed,
   fetchRestaurantByCategorySuccess,
   fetchRestaurantCategoryFailed,
@@ -24,6 +34,8 @@ import {
   fetchRestaurantMenusByRestaurantIdSuccess,
   fetchSimilarRestaurantByIdSuccess,
   fetchSimilarRestaurantByIdFailed,
+  fetchSimilarPercentRestaurantByIdSuccess,
+  fetchSimilarPercentRestaurantByIdFailed,
   fetchTableByRestaurantSuccess,
   fetchTableByRestaurantFailed,
   confirmTableBookingSuccess,
@@ -34,6 +46,48 @@ import {
   cancelReservationFailed,
 } from "./restaurantAction";
 
+function* fetchAllRestaurantsAPI() {
+  try {
+    const response = yield restaurantsService.fetchAllRestaurant();
+    if (response.status === 200) {
+      yield put(fetchAllRestaurantsSuccess(response.data));
+    } else {
+      yield put(fetchAllRestaurantsFailed(response.data.error));
+    }
+  } catch (error) {
+    yield put(fetchAllRestaurantsFailed(error));
+  }
+}
+function* fetchFavouriteRestaurantsAPI() {
+  try {
+    const user = yield select((state) => state.auth.user?.username);
+    const response = yield restaurantsService.fetchFavouriteRestaurant(user);
+    if (response.status === 200) {
+      yield put(fetchFavouriteRestaurantsSuccess(response.data));
+    } else {
+      yield put(fetchFavouriteRestaurantsFailed(response.data.error));
+    }
+  } catch (error) {
+    yield put(fetchFavouriteRestaurantsFailed(error));
+  }
+}
+function* fetchRestaurantsBySearchAPI() {
+  try {
+    const searchQuery = yield select(
+      (state) => state.restaurant.fetchAllRestaurant.searchQuery
+    );
+    const response = yield restaurantsService.fetchRestaurantsBySearch(
+      searchQuery
+    );
+    if (response.status === 200) {
+      yield put(fetchRestaurantsBySearchSuccess(response.data));
+    } else {
+      yield put(fetchRestaurantsBySearchFailed(response.data.error));
+    }
+  } catch (error) {
+    yield put(fetchRestaurantsBySearchFailed(error));
+  }
+}
 function* fetchRestaurantCategoryAPI() {
   try {
     const response = yield restaurantsService.fetchRestaurantCategories();
@@ -113,7 +167,7 @@ function* fetchSimilarRestaurantByIdAPI() {
     );
 
     if (response.status === 200) {
-      // console.log(response.data);
+      console.log(response.data);
       yield put(fetchSimilarRestaurantByIdSuccess(response.data));
     } else {
       yield put(fetchSimilarRestaurantByIdFailed(response.data.error));
@@ -121,6 +175,26 @@ function* fetchSimilarRestaurantByIdAPI() {
     }
   } catch (error) {
     yield put(fetchSimilarRestaurantByIdFailed(error?.response?.data));
+  }
+}
+function* fetchSimilarPercentRestaurantByIdAPI() {
+  try {
+    const restaurantId = yield select(
+      (state) => state.restaurant.fetchSimilarPercentRestaurantById.restaurantId
+    );
+    const response = yield restaurantsService.fetchSimilarPercentRestaurantById(
+      restaurantId
+    );
+
+    if (response.status === 200) {
+      // console.log(response.data);
+      yield put(fetchSimilarPercentRestaurantByIdSuccess(response.data));
+    } else {
+      yield put(fetchSimilarPercentRestaurantByIdFailed(response.data.error));
+      yield put(navigate("Home"));
+    }
+  } catch (error) {
+    yield put(fetchSimilarPercentRestaurantByIdFailed(error?.response?.data));
   }
 }
 
@@ -200,6 +274,16 @@ function* cancelReservationAPI() {
 
 export default function* restaurantSaga() {
   yield all([
+    yield takeLatest(FETCH_ALL_RESTAURANTS_REQ, fetchAllRestaurantsAPI),
+  ]);
+  yield all([
+    yield takeLatest(
+      FETCH_RESTAURANT_BY_SEARCH_REQ,
+      fetchRestaurantsBySearchAPI
+    ),
+  ]);
+
+  yield all([
     yield takeLatest(
       FETCH_RESTAURANTS_CATEGORY_REQ,
       fetchRestaurantCategoryAPI
@@ -224,6 +308,18 @@ export default function* restaurantSaga() {
     yield takeLatest(
       FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
       fetchSimilarRestaurantByIdAPI
+    ),
+  ]);
+  yield all([
+    yield takeLatest(
+      FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_REQ,
+      fetchSimilarPercentRestaurantByIdAPI
+    ),
+  ]);
+  yield all([
+    yield takeLatest(
+      FETCH_FAVOURITE_RESTAURANTS_REQ,
+      fetchFavouriteRestaurantsAPI
     ),
   ]);
   yield all([

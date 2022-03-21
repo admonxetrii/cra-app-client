@@ -2,6 +2,12 @@ import {
   FETCH_ALL_RESTAURANTS_FAILED,
   FETCH_ALL_RESTAURANTS_REQ,
   FETCH_ALL_RESTAURANTS_SUC,
+  FETCH_FAVOURITE_RESTAURANTS_FAILED,
+  FETCH_FAVOURITE_RESTAURANTS_REQ,
+  FETCH_FAVOURITE_RESTAURANTS_SUC,
+  FETCH_RESTAURANT_BY_SEARCH_REQ,
+  FETCH_RESTAURANT_BY_SEARCH_SUCCESS,
+  FETCH_RESTAURANT_BY_SEARCH_FAILED,
   FETCH_RESTAURANTS_CATEGORY_FAILED,
   FETCH_RESTAURANTS_CATEGORY_REQ,
   FETCH_RESTAURANTS_CATEGORY_SUC,
@@ -17,6 +23,9 @@ import {
   FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
   FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS,
   FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
+  FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_REQ,
+  FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_SUCCESS,
+  FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_FAILED,
   FETCH_TABLE_BY_RESTAURANT_REQ,
   FETCH_TABLE_BY_RESTAURANT_SUC,
   FETCH_TABLE_BY_RESTAURANT_FAILED,
@@ -42,8 +51,16 @@ const initialState = {
   tableByRestaurantId: [],
   restaurantId: null,
   similarRestaurantById: [],
+  similarPercentRestaurantById: [],
   myReservations: [],
+  favouriteRestaurant: [],
   fetchAllRestaurant: {
+    searchQuery: {},
+    loading: false,
+    error: false,
+    data: {},
+  },
+  fetchFavouriteRestaurant: {
     loading: false,
     error: false,
     data: {},
@@ -72,6 +89,12 @@ const initialState = {
     data: {},
   },
   fetchSimilarRestaurantById: {
+    restaurantId: null,
+    loading: true,
+    error: false,
+    data: {},
+  },
+  fetchSimilarPercentRestaurantById: {
     restaurantId: null,
     loading: true,
     error: false,
@@ -136,6 +159,68 @@ const restaurantReducer = (state = initialState, action) => {
           data: {},
         },
       };
+    case FETCH_FAVOURITE_RESTAURANTS_REQ:
+      return {
+        ...state,
+        favouriteRestaurant: [],
+        fetchAllRestaurant: {
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case FETCH_FAVOURITE_RESTAURANTS_SUC:
+      return {
+        ...state,
+        favouriteRestaurant: action.data,
+        fetchAllRestaurant: {
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_FAVOURITE_RESTAURANTS_FAILED:
+      return {
+        ...state,
+        favouriteRestaurant: [],
+        fetchAllRestaurant: {
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+    case FETCH_RESTAURANT_BY_SEARCH_REQ:
+      return {
+        ...state,
+        restaurants: [],
+        fetchAllRestaurant: {
+          searchQuery: action.data,
+          loading: false,
+          error: false,
+          data: {},
+        },
+      };
+    case FETCH_RESTAURANT_BY_SEARCH_SUCCESS:
+      return {
+        ...state,
+        restaurants: action.data,
+        fetchAllRestaurant: {
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_RESTAURANT_BY_SEARCH_FAILED:
+      return {
+        ...state,
+        restaurants: [],
+        fetchAllRestaurant: {
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+
     case FETCH_RESTAURANTS_CATEGORY_REQ:
       return {
         ...state,
@@ -297,6 +382,40 @@ const restaurantReducer = (state = initialState, action) => {
         ...state,
         similarRestaurantById: [],
         fetchSimilarRestaurantById: {
+          restaurantId: null,
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+    case FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_REQ:
+      return {
+        ...state,
+        similarRestaurantById: [],
+        fetchSimilarPercentRestaurantById: {
+          restaurantId: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+
+    case FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_SUCCESS:
+      return {
+        ...state,
+        similarPercentRestaurantById: action.data,
+        fetchSimilarPercentRestaurantById: {
+          restaurantId: null,
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_FAILED:
+      return {
+        ...state,
+        similarRestaurantById: [],
+        fetchSimilarPercentRestaurantById: {
           restaurantId: null,
           loading: false,
           error: action.error,

@@ -1,36 +1,22 @@
 import React from "react";
 import { View, Image, TouchableOpacity } from "react-native";
-import {
-  Avatar,
-  Title,
-  Caption,
-  Text,
-  TouchableRipple,
-} from "react-native-paper";
 import { SIZES, icons, COLORS, FONTS, images } from "../../../constants";
-import { Header } from "..";
-import { IconButton } from "../../components";
+import { EditProfileComponents, Header } from "..";
+import { FormInput, IconButton } from "../../components";
 import { theme } from "../../infrastructure/theme";
 import { useDispatch, useSelector } from "react-redux";
-import { goBack, navigate } from "../../store/navigation/navigationAction";
+import {
+  goBack,
+  navigate,
+  replace,
+} from "../../store/navigation/navigationAction";
 import { logout } from "../../store/auth/authAction";
+import KeyboardAvoidingWrapper from "../../components/wrapper/keyboardAvoidingWapper";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.auth?.user);
-
-  // console.log("userdata", userData);
-
-  const userImage = () => {
-    if (userData?.profile_picture != null) {
-      return userData?.profile_picture;
-    } else if (userData?.gender == "male") {
-      return images.male;
-    } else {
-      return images.female;
-    }
-  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -65,6 +51,21 @@ const EditProfile = () => {
             onPress={() => dispatch(goBack())}
           />
         }
+        rightComponent={
+          <IconButton
+            icon={icons.home}
+            disabled={true}
+            containerStyle={{
+              width: 40,
+              height: 40,
+              justifyContent: "center",
+              alignItems: "center",
+              borderWidth: 1,
+              borderRadius: SIZES.radius,
+              borderColor: COLORS.white,
+            }}
+          />
+        }
       />
     );
   }
@@ -80,24 +81,17 @@ const EditProfile = () => {
       {renderHeader()}
 
       {/* Body */}
-      <View
-        style={{
-          paddingHorizontal: SIZES.padding,
-        }}
-      >
-        {/* Profile Details for Edit  */}
+      {/* Edit Profile Components */}
+      <KeyboardAvoidingWrapper flex={1}>
         <View
           style={{
-            alignItems: "center",
+            paddingHorizontal: SIZES.padding,
+            marginBottom: SIZES.padding,
           }}
         >
-          <Avatar.Image
-            size={100}
-            source={userImage()}
-            style={{ backgroundColor: theme.colors.brand.primary }}
-          />
+          {userData && <EditProfileComponents userData={userData} />}
         </View>
-      </View>
+      </KeyboardAvoidingWrapper>
     </View>
   );
 };

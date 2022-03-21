@@ -217,6 +217,7 @@ const authReducer = (state = initialState, action) => {
           loading: false,
           inputData: {},
           error: null,
+          buttonEnabled: true,
           loadingButtonContent: "Login",
         },
         verify: {

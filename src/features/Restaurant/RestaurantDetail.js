@@ -18,6 +18,7 @@ import {
   fetchRestaurantByIdReq,
   fetchRestaurantMenusByRestaurantIdReq,
   fetchSimilarRestaurantByIdReq,
+  fetchSimilarPercentRestaurantByIdReq,
 } from "../../store/restaurant/restaurantAction";
 
 const RestaurantDetail = () => {
@@ -33,6 +34,9 @@ const RestaurantDetail = () => {
   const similarRestaurantLoading = useSelector(
     (state) => state.restaurant.fetchSimilarRestaurantById?.loading
   );
+  const similarPercentRestaurantLoading = useSelector(
+    (state) => state.restaurant.fetchSimilarPercentRestaurantById?.loading
+  );
 
   const stateRestaurantId = useSelector(
     (state) => state.navigationRef.navigationQuery?.id
@@ -46,6 +50,7 @@ const RestaurantDetail = () => {
         dispatch(fetchRestaurantByIdReq(restaurantId));
         dispatch(fetchRestaurantMenusByRestaurantIdReq(restaurantId));
         dispatch(fetchSimilarRestaurantByIdReq(restaurantId));
+        dispatch(fetchSimilarPercentRestaurantByIdReq(restaurantId));
       }
       return () => {
         dispatch(clearRestaurantById());
@@ -55,6 +60,9 @@ const RestaurantDetail = () => {
 
   const SimilarRestaurantList = useSelector(
     (state) => state.restaurant?.similarRestaurantById
+  );
+  const SimilarPercentRestaurantList = useSelector(
+    (state) => state.restaurant?.similarPercentRestaurantById
   );
 
   const restaurantDescription = useSelector(
@@ -101,7 +109,8 @@ const RestaurantDetail = () => {
     <>
       {restaurantLoading ||
       restaurantMenuLoading ||
-      similarRestaurantLoading ? (
+      similarRestaurantLoading ||
+      similarPercentRestaurantLoading ? (
         <View
           style={{
             flex: 1,
@@ -181,27 +190,39 @@ const RestaurantDetail = () => {
                 }}
                 showsHorizontalScrollIndicator={false}
                 nestedScrollEnabled
-                renderItem={({ item, index }) => (
-                  <HorizontalFoodCard
-                    contentContainerStyle={{
-                      width: SIZES.width * 0.85,
-                      marginLeft: index == 0 ? SIZES.padding : 18,
-                      marginRight:
-                        index == SimilarRestaurantList.length - 1
-                          ? SIZES.padding
-                          : 0,
-                    }}
-                    imageStyle={{
-                      height: 150,
-                      width: 150,
-                    }}
-                    item={item}
-                    onPress={() => {
-                      dispatch(clearRestaurantById());
-                      setRestaurantId(item.id);
-                    }}
-                  />
-                )}
+                renderItem={({ item, index }) => {
+                  var similarityPercent;
+                  SimilarPercentRestaurantList.map((percent, index) => {
+                    if (
+                      item.id == percent.restaurantA ||
+                      item.id == percent.restaurantB
+                    ) {
+                      similarityPercent = percent.similarityPercent;
+                    }
+                  });
+                  return (
+                    <HorizontalFoodCard
+                      contentContainerStyle={{
+                        width: SIZES.width * 0.85,
+                        marginLeft: index == 0 ? SIZES.padding : 18,
+                        marginRight:
+                          index == SimilarRestaurantList.length - 1
+                            ? SIZES.padding
+                            : 0,
+                      }}
+                      imageStyle={{
+                        height: 150,
+                        width: 150,
+                      }}
+                      item={item}
+                      similarityPercent={similarityPercent}
+                      onPress={() => {
+                        dispatch(clearRestaurantById());
+                        setRestaurantId(item.id);
+                      }}
+                    />
+                  );
+                }}
               />
             </CardSection>
           </ScrollView>

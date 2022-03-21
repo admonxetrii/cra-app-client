@@ -1,4 +1,10 @@
 import {
+  FETCH_ALL_RESTAURANTS_REQ,
+  FETCH_ALL_RESTAURANTS_SUC,
+  FETCH_ALL_RESTAURANTS_FAILED,
+  FETCH_RESTAURANT_BY_SEARCH_REQ,
+  FETCH_RESTAURANT_BY_SEARCH_SUCCESS,
+  FETCH_RESTAURANT_BY_SEARCH_FAILED,
   FETCH_RESTAURANTS_CATEGORY_FAILED,
   FETCH_RESTAURANTS_CATEGORY_REQ,
   FETCH_RESTAURANTS_CATEGORY_SUC,
@@ -14,6 +20,9 @@ import {
   FETCH_SIMILAR_RESTAURANT_BY_ID_REQ,
   FETCH_SIMILAR_RESTAURANT_BY_ID_SUCCESS,
   FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
+  FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_REQ,
+  FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_SUCCESS,
+  FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_FAILED,
   FETCH_TABLE_BY_RESTAURANT_REQ,
   FETCH_TABLE_BY_RESTAURANT_SUC,
   FETCH_TABLE_BY_RESTAURANT_FAILED,
@@ -28,7 +37,68 @@ import {
   CANCEL_RESERVATION_SUC,
   CANCEL_RESERVATION_REQ,
   CANCEL_RESERVATION_FAILED,
+  FETCH_FAVOURITE_RESTAURANTS_REQ,
+  FETCH_FAVOURITE_RESTAURANTS_FAILED,
+  FETCH_FAVOURITE_RESTAURANTS_SUC,
 } from "../actionConstant";
+
+export function fetchAllRestaurantsReq() {
+  return {
+    type: FETCH_ALL_RESTAURANTS_REQ,
+  };
+}
+
+export function fetchAllRestaurantsSuccess(data) {
+  return {
+    type: FETCH_ALL_RESTAURANTS_SUC,
+    data,
+  };
+}
+export function fetchFavouriteRestaurantsFailed(error) {
+  return {
+    type: FETCH_FAVOURITE_RESTAURANTS_FAILED,
+    error,
+  };
+}
+
+export function fetchFavouriteRestaurantsReq() {
+  return {
+    type: FETCH_FAVOURITE_RESTAURANTS_REQ,
+  };
+}
+
+export function fetchFavouriteRestaurantsSuccess(data) {
+  return {
+    type: FETCH_FAVOURITE_RESTAURANTS_SUC,
+    data,
+  };
+}
+export function fetchAllRestaurantsFailed(error) {
+  return {
+    type: FETCH_ALL_RESTAURANTS_FAILED,
+    error,
+  };
+}
+
+export function fetchRestaurantsBySearchReq(data) {
+  return {
+    type: FETCH_RESTAURANT_BY_SEARCH_REQ,
+    data,
+  };
+}
+
+export function fetchRestaurantsBySearchSuccess(data) {
+  return {
+    type: FETCH_RESTAURANT_BY_SEARCH_SUCCESS,
+    data,
+  };
+}
+export function fetchRestaurantsBySearchFailed(error) {
+  return {
+    type: FETCH_RESTAURANT_BY_SEARCH_FAILED,
+    error,
+  };
+}
 
 export function fetchRestaurantCategoryReq() {
   return {
@@ -127,6 +197,24 @@ export function fetchSimilarRestaurantByIdSuccess(data) {
 export function fetchSimilarRestaurantByIdFailed(error) {
   return {
     type: FETCH_SIMILAR_RESTAURANT_BY_ID_FAILED,
+    error,
+  };
+}
+export function fetchSimilarPercentRestaurantByIdReq(data) {
+  return {
+    type: FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_REQ,
+    data,
+  };
+}
+export function fetchSimilarPercentRestaurantByIdSuccess(data) {
+  return {
+    type: FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_SUCCESS,
+    data,
+  };
+}
+export function fetchSimilarPercentRestaurantByIdFailed(error) {
+  return {
+    type: FETCH_SIMILAR_PERCENT_RESTAURANT_BY_ID_FAILED,
     error,
   };
 }

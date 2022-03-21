@@ -3,7 +3,29 @@ import Storage from "../../Helper/Storage";
 
 export default {
   fetchAllRestaurant: async () => {
-    return await axios.get("/restaurants/");
+    const token = await Storage.getToken("access");
+    return await axios.get("/restaurants/", {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  fetchFavouriteRestaurant: async (user) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/favourite-restaurants/${user}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+
+  fetchRestaurantsBySearch: async (query) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/restaurants/?q=${query}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
   },
   fetchRestaurantCategories: async () => {
     const token = await Storage.getToken("access");
@@ -40,6 +62,14 @@ export default {
   fetchSimilarRestaurantById: async (id) => {
     const token = await Storage.getToken("access");
     return await axios.get(`/restaurant-similarities/${id}`, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  fetchSimilarPercentRestaurantById: async (id) => {
+    const token = await Storage.getToken("access");
+    return await axios.get(`/restaurant-similarities-percent/${id}`, {
       headers: {
         Authorization: token ? `Bearer ${token}` : "",
       },

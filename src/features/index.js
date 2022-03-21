@@ -22,6 +22,7 @@ import RestaurantMenu from "./Restaurant/RestaurantMenu";
 import ReserveTableStage from "./Restaurant/ReservationModule/ReserveTableStage";
 import TableReservation from "./Restaurant/ReservationModule/TableReservation";
 import MyReservationPage from "./Restaurant/ReservationModule/MyReservationPage";
+import EditProfileComponents from "./Profile/EditProfileComponents";
 
 export {
   MainLayout,
@@ -48,4 +49,5 @@ export {
   ReserveTableStage,
   TableReservation,
   MyReservationPage,
+  EditProfileComponents,
 };

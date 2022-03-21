@@ -7,11 +7,11 @@ import {
 } from "react-native";
 import { SIZES } from "../../../constants";
 
-const KeyboardAvoidingWrapper = ({ children }) => {
+const KeyboardAvoidingWrapper = ({ children, flex }) => {
   return (
     <KeyboardAvoidingView
       style={{
-        flex: 1,
+        flex: flex,
         backgroundColor: "white",
       }}
     >

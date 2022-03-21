@@ -115,7 +115,7 @@ const RestaurantComponent = () => {
               onPress={() => dispatch(navigate("ReserveTableStage"))}
             />
             {/* Scan a Table  */}
-            <MenuButton
+            {/* <MenuButton
               containerStyle={{ height: 45, width: 45 }}
               label="Scan a table"
               labelStyle={{ color: theme.colors.brand.primary }}
@@ -131,12 +131,13 @@ const RestaurantComponent = () => {
                   })
                 );
               }}
-            />
+            /> */}
+
             <MenuButton
               containerStyle={{ height: 45, width: 45 }}
-              label="Pay bills"
+              label="Favourtie"
               labelStyle={{ color: theme.colors.brand.primary }}
-              icon={icons.coupon}
+              icon={icons.favourite}
               iconStyle={{ height: 28, resizeMode: "contain" }}
             />
           </View>

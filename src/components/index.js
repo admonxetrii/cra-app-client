@@ -14,6 +14,7 @@ import MenuButton from "./buttons/MenuButton";
 import StepperInput from "./buttons/Stepper";
 import FooterTotal from "./footer/FooterTotal";
 import ProfileButton from "./buttons/ProfileButtons";
+import ImageChooseModal from "./modals/ImageChooseModal";
 
 export {
   TextButton,
@@ -32,4 +33,5 @@ export {
   StepperInput,
   FooterTotal,
   ProfileButton,
+  ImageChooseModal,
 };

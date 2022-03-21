@@ -168,23 +168,28 @@ const Profile = () => {
         }}
       >
         {/* Profile Details  */}
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <Avatar.Image
-            size={100}
-            source={userImage()}
-            style={{ backgroundColor: theme.colors.brand.primary }}
-          />
-          <Text style={{ ...FONTS.h2 }}>{`${
-            userData?.first_name != "" ? userData?.first_name : "Anonymous"
-          } ${userData?.last_name != "" ? userData?.last_name : ""}`}</Text>
-          <Text
-            style={{ ...FONTS.body4, color: COLORS.darkGray2 }}
-          >{`@${userData?.username}`}</Text>
-        </View>
+        {userData && (
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <Avatar.Image
+              size={100}
+              source={userImage()}
+              style={{ backgroundColor: theme.colors.brand.primary }}
+            />
+            <Text style={{ ...FONTS.h2 }}>{`${
+              userData?.first_name != "" ? userData?.first_name : "Anonymous"
+            } ${userData?.last_name != "" ? userData?.last_name : ""}`}</Text>
+            <Text
+              style={{ ...FONTS.body4, color: COLORS.darkGray2 }}
+            >{`@${userData?.username}`}</Text>
+            <Text style={{ ...FONTS.body5, color: COLORS.darkGray2 }}>{`${
+              userData.email ? userData.email : ""
+            } | ${userData.phone_number ? userData.phone_number : ""}`}</Text>
+          </View>
+        )}
 
         {/* Content  */}
         {renderButtons()}
