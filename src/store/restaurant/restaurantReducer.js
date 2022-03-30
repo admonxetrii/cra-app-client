@@ -40,6 +40,9 @@ import {
   CANCEL_RESERVATION_REQ,
   CANCEL_RESERVATION_SUC,
   CANCEL_RESERVATION_FAILED,
+  FETCH_IS_FAVOURITE_RESTAURANTS_REQ,
+  FETCH_IS_FAVOURITE_RESTAURANTS_SUC,
+  FETCH_IS_FAVOURITE_RESTAURANTS_FAILED,
 } from "../actionConstant";
 
 const initialState = {
@@ -54,6 +57,13 @@ const initialState = {
   similarPercentRestaurantById: [],
   myReservations: [],
   favouriteRestaurant: [],
+  isFavourite: [],
+  fetchIsFavourite: {
+    requestData: {},
+    loading: false,
+    error: false,
+    data: {},
+  },
   fetchAllRestaurant: {
     searchQuery: {},
     loading: false,
@@ -184,6 +194,37 @@ const restaurantReducer = (state = initialState, action) => {
         ...state,
         favouriteRestaurant: [],
         fetchAllRestaurant: {
+          loading: false,
+          error: action.error,
+          data: {},
+        },
+      };
+    case FETCH_IS_FAVOURITE_RESTAURANTS_REQ:
+      return {
+        ...state,
+        isFavourite: [],
+        fetchIsFavourite: {
+          requestData: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case FETCH_IS_FAVOURITE_RESTAURANTS_SUC:
+      return {
+        ...state,
+        isFavourite: action.data,
+        fetchIsFavourite: {
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case FETCH_IS_FAVOURITE_RESTAURANTS_FAILED:
+      return {
+        ...state,
+        isFavourite: [],
+        fetchIsFavourite: {
           loading: false,
           error: action.error,
           data: {},

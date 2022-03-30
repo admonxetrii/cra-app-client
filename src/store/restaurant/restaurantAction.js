@@ -40,7 +40,30 @@ import {
   FETCH_FAVOURITE_RESTAURANTS_REQ,
   FETCH_FAVOURITE_RESTAURANTS_FAILED,
   FETCH_FAVOURITE_RESTAURANTS_SUC,
+  FETCH_IS_FAVOURITE_RESTAURANTS_REQ,
+  FETCH_IS_FAVOURITE_RESTAURANTS_SUC,
+  FETCH_IS_FAVOURITE_RESTAURANTS_FAILED,
 } from "../actionConstant";
+
+export function fetchIsFavouriteRestaurantsReq(data) {
+  return {
+    type: FETCH_IS_FAVOURITE_RESTAURANTS_REQ,
+    data,
+  };
+}
+
+export function fetchIsFavouriteRestaurantsSuccess(data) {
+  return {
+    type: FETCH_IS_FAVOURITE_RESTAURANTS_SUC,
+    data,
+  };
+}
+export function fetchIsFavouriteRestaurantsFailed(error) {
+  return {
+    type: FETCH_IS_FAVOURITE_RESTAURANTS_FAILED,
+    error,
+  };
+}
 
 export function fetchAllRestaurantsReq() {
   return {

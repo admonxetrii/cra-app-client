@@ -16,6 +16,10 @@ const RestaurantComponent = () => {
     (state) => state.restaurant?.restaurantById
   );
 
+  const isFavourite = useSelector(
+    (state) => state.restaurant?.isFavourite[0].is_favourite
+  );
+
   return (
     <View
       style={{
@@ -135,7 +139,7 @@ const RestaurantComponent = () => {
 
             <MenuButton
               containerStyle={{ height: 45, width: 45 }}
-              label="Favourtie"
+              label={isFavourite ? "Remove Favourite" : "Add Favourite"}
               labelStyle={{ color: theme.colors.brand.primary }}
               icon={icons.favourite}
               iconStyle={{ height: 28, resizeMode: "contain" }}

@@ -14,12 +14,15 @@ import {
   FETCH_MY_RESERVATION_REQ,
   CANCEL_RESERVATION_REQ,
   FETCH_FAVOURITE_RESTAURANTS_REQ,
+  FETCH_IS_FAVOURITE_RESTAURANTS_REQ,
 } from "../actionConstant";
 import Toast from "../../Helper/toast";
 import { navigate } from "../navigation/navigationAction";
 import {
   fetchAllRestaurantsFailed,
   fetchAllRestaurantsSuccess,
+  fetchIsFavouriteRestaurantsSuccess,
+  fetchIsFavouriteRestaurantsFailed,
   fetchFavouriteRestaurantsSuccess,
   fetchFavouriteRestaurantsFailed,
   fetchRestaurantsBySearchSuccess,
@@ -61,6 +64,7 @@ function* fetchAllRestaurantsAPI() {
 function* fetchFavouriteRestaurantsAPI() {
   try {
     const user = yield select((state) => state.auth.user?.username);
+    console.log(user);
     const response = yield restaurantsService.fetchFavouriteRestaurant(user);
     if (response.status === 200) {
       yield put(fetchFavouriteRestaurantsSuccess(response.data));
@@ -69,6 +73,21 @@ function* fetchFavouriteRestaurantsAPI() {
     }
   } catch (error) {
     yield put(fetchFavouriteRestaurantsFailed(error));
+  }
+}
+function* fetchIsFavouriteAPI() {
+  try {
+    const requestData = yield select(
+      (state) => state.restaurant.fetchIsFavourite?.requestData
+    );
+    const response = yield restaurantsService.fetchIsFavourite(requestData);
+    if (response.status === 200) {
+      yield put(fetchIsFavouriteRestaurantsSuccess(response.data));
+    } else {
+      yield put(fetchIsFavouriteRestaurantsSuccess(response.data.error));
+    }
+  } catch (error) {
+    yield put(fetchIsFavouriteRestaurantsFailed(error));
   }
 }
 function* fetchRestaurantsBySearchAPI() {
@@ -167,7 +186,6 @@ function* fetchSimilarRestaurantByIdAPI() {
     );
 
     if (response.status === 200) {
-      console.log(response.data);
       yield put(fetchSimilarRestaurantByIdSuccess(response.data));
     } else {
       yield put(fetchSimilarRestaurantByIdFailed(response.data.error));
@@ -257,7 +275,6 @@ function* cancelReservationAPI() {
     const inputData = yield select(
       (state) => state.restaurant.cancelBooking?.inputData
     );
-    console.log(inputData);
     const response = yield restaurantsService.cancelReservation(inputData);
     if (response.data.status === 200) {
       yield put(cancelReservationSuccess(response.data));
@@ -324,6 +341,9 @@ export default function* restaurantSaga() {
   ]);
   yield all([
     yield takeLatest(FETCH_TABLE_BY_RESTAURANT_REQ, fetchTableByRestaurantAPI),
+  ]);
+  yield all([
+    yield takeLatest(FETCH_IS_FAVOURITE_RESTAURANTS_REQ, fetchIsFavouriteAPI),
   ]);
   yield all([
     yield takeLatest(CONFIRM_TABLE_BOOKIN_REQ, confirmTableBookingAPI),

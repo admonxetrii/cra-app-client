@@ -19,6 +19,7 @@ import {
   fetchRestaurantMenusByRestaurantIdReq,
   fetchSimilarRestaurantByIdReq,
   fetchSimilarPercentRestaurantByIdReq,
+  fetchIsFavouriteRestaurantsReq,
 } from "../../store/restaurant/restaurantAction";
 
 const RestaurantDetail = () => {
@@ -42,8 +43,14 @@ const RestaurantDetail = () => {
     (state) => state.navigationRef.navigationQuery?.id
   );
 
+  const username = useSelector((state) => state.auth.user?.username);
+
   const [restaurantId, setRestaurantId] = React.useState(stateRestaurantId);
 
+  const isFavouriteData = {
+    username: username,
+    restaurant: restaurantId,
+  };
   useFocusEffect(
     React.useCallback(() => {
       if (restaurantId) {
@@ -51,6 +58,7 @@ const RestaurantDetail = () => {
         dispatch(fetchRestaurantMenusByRestaurantIdReq(restaurantId));
         dispatch(fetchSimilarRestaurantByIdReq(restaurantId));
         dispatch(fetchSimilarPercentRestaurantByIdReq(restaurantId));
+        dispatch(fetchIsFavouriteRestaurantsReq(isFavouriteData));
       }
       return () => {
         dispatch(clearRestaurantById());
@@ -67,6 +75,10 @@ const RestaurantDetail = () => {
 
   const restaurantDescription = useSelector(
     (state) => state.restaurant?.restaurantById?.description
+  );
+
+  const isFavouriteLoading = useSelector(
+    (state) => state.restaurant.fetchIsFavourite?.loading
   );
 
   function renderHeader() {
@@ -110,7 +122,8 @@ const RestaurantDetail = () => {
       {restaurantLoading ||
       restaurantMenuLoading ||
       similarRestaurantLoading ||
-      similarPercentRestaurantLoading ? (
+      similarPercentRestaurantLoading ||
+      isFavouriteLoading ? (
         <View
           style={{
             flex: 1,

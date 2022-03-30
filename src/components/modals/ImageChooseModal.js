@@ -62,7 +62,6 @@ const ImageChooseModal = ({ isVisible, onClose }) => {
     };
 
     launchCamera(options, (response) => {
-      console.log("Response = ", response);
       if (response.didCancel) {
         console.log("User cancelled image Picker");
       } else if (response.error) {

@@ -18,6 +18,18 @@ export default {
       },
     });
   },
+  fetchIsFavourite: async (requestData) => {
+    const token = await Storage.getToken("access");
+    return await axios.get("/is-favourite/", {
+      params: {
+        username: requestData.username,
+        restaurant: requestData.restaurant,
+      },
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
 
   fetchRestaurantsBySearch: async (query) => {
     const token = await Storage.getToken("access");
@@ -84,11 +96,9 @@ export default {
     });
   },
   confirmTableBooking: async (requestData) => {
-    console.log(requestData);
     return await axios.post("/restaurant-booking/", requestData);
   },
   cancelReservation: async (requestData) => {
-    console.log(requestData);
     return await axios.patch("/restaurant-booking/", requestData);
   },
   fetchMyReservations: async (id) => {
