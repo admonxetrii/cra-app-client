@@ -15,6 +15,8 @@ import {
   CANCEL_RESERVATION_REQ,
   FETCH_FAVOURITE_RESTAURANTS_REQ,
   FETCH_IS_FAVOURITE_RESTAURANTS_REQ,
+  ADD_RESTAURANT_TO_FAVOURITE_REQ,
+  REMOVE_RESTAURANT_FROM_FAVOURITE_REQ,
 } from "../actionConstant";
 import Toast from "../../Helper/toast";
 import { navigate } from "../navigation/navigationAction";
@@ -47,6 +49,10 @@ import {
   fetchMyReservationsFailed,
   cancelReservationSuccess,
   cancelReservationFailed,
+  addRestaurantToFavouriteSuccess,
+  addRestaurantToFavouriteFailed,
+  removeRestaurantFromFavouriteSuccess,
+  removeRestaurantFromFavouriteFailed,
 } from "./restaurantAction";
 
 function* fetchAllRestaurantsAPI() {
@@ -64,7 +70,6 @@ function* fetchAllRestaurantsAPI() {
 function* fetchFavouriteRestaurantsAPI() {
   try {
     const user = yield select((state) => state.auth.user?.username);
-    console.log(user);
     const response = yield restaurantsService.fetchFavouriteRestaurant(user);
     if (response.status === 200) {
       yield put(fetchFavouriteRestaurantsSuccess(response.data));
@@ -288,6 +293,44 @@ function* cancelReservationAPI() {
     yield put(cancelReservationFailed(error?.response?.data));
   }
 }
+function* addToFavAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.restaurant.addToFav?.requestData
+    );
+    const response = yield restaurantsService.addToFav(inputData);
+    if (response.data.status === 200) {
+      yield put(addRestaurantToFavouriteSuccess(response.data));
+      yield Toast.success(response.data.message);
+    } else {
+      yield put(addRestaurantToFavouriteFailed(response.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(addRestaurantToFavouriteFailed(error?.response?.data));
+  }
+}
+
+function* removeFromFavAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.restaurant.removeFromFav?.requestData
+    );
+    const response = yield restaurantsService.removeFromFav(inputData);
+    if (response.data.status === 200) {
+      console.log(response.data.deletedId);
+      yield put(removeRestaurantFromFavouriteSuccess(response.data));
+      yield Toast.success(response.data.message);
+    } else {
+      yield put(removeRestaurantFromFavouriteFailed(response.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+    yield put(removeRestaurantFromFavouriteFailed(error?.response?.data));
+  }
+}
 
 export default function* restaurantSaga() {
   yield all([
@@ -352,4 +395,8 @@ export default function* restaurantSaga() {
     yield takeLatest(FETCH_MY_RESERVATION_REQ, fetchMyReservationsAPI),
   ]);
   yield all([yield takeLatest(CANCEL_RESERVATION_REQ, cancelReservationAPI)]);
+  yield all([yield takeLatest(ADD_RESTAURANT_TO_FAVOURITE_REQ, addToFavAPI)]);
+  yield all([
+    yield takeLatest(REMOVE_RESTAURANT_FROM_FAVOURITE_REQ, removeFromFavAPI),
+  ]);
 }

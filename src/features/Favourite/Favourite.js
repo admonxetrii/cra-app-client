@@ -1,28 +1,23 @@
 import React from "react";
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
-import { Card } from "react-native-paper";
-import Animated from "react-native-reanimated";
-import { COLORS, FONTS, SIZES, icons } from "../../../constants";
+import { View, Image, Text, Alert, ActivityIndicator } from "react-native";
+import { SwipeListView } from "react-native-swipe-list-view";
+import { FONTS, SIZES, icons } from "../../../constants";
 import { theme } from "../../infrastructure/theme";
 import { useDispatch, useSelector } from "react-redux";
 
-import { HorizontalFoodCard } from "../../components";
-import { fetchFavouriteRestaurantsReq } from "../../store/restaurant/restaurantAction";
+import { HorizontalFoodCard, IconButton } from "../../components";
+import {
+  fetchFavouriteRestaurantsReq,
+  removeRestaurantFromFavouriteReq,
+} from "../../store/restaurant/restaurantAction";
 import { navigateWithProps } from "../../store/navigation/navigationAction";
 
 const Favourite = () => {
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(fetchFavouriteRestaurantsReq());
+  const user = useSelector((state) => state.auth.user?.username);
+  React.useEffect((user) => {
+    dispatch(fetchFavouriteRestaurantsReq(user));
   }, []);
 
   const restaurants = useSelector(
@@ -63,47 +58,10 @@ const Favourite = () => {
       </Text>
       {/* Restaurant Card  */}
       {restaurants.length != 0 ? (
-        <FlatList
-          data={restaurants}
-          showsVerticalScrollIndicator={false}
-          style={{}}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item, index }) => (
-            <View
-              style={{
-                marginTop: index == 0 ? SIZES.padding : 18,
-                marginBottom:
-                  index == restaurants.length - 1 ? SIZES.padding : 0,
-                paddingHorizontal: SIZES.padding,
-              }}
-            >
-              {/* <TouchableOpacity> */}
-              <HorizontalFoodCard
-                item={item}
-                contentContainerStyle={{
-                  shadowColor: "#000",
-                  shadowOpacity: 0.5,
-                  shadowRadius: 5,
-                  elevation: 10,
-                }}
-                imageStyle={{
-                  height: 150,
-                  width: 150,
-                }}
-                onPress={() => {
-                  dispatch(
-                    navigateWithProps({
-                      path: "RestaurantDetail",
-                      query: {
-                        id: item.id,
-                      },
-                    })
-                  );
-                }}
-              />
-              {/* </TouchableOpacity> */}
-            </View>
-          )}
+        <RenderReservationList
+          favourites={restaurants}
+          dispatch={dispatch}
+          user={user}
         />
       ) : (
         <View
@@ -127,5 +85,110 @@ const Favourite = () => {
     </View>
   );
 };
+
+function RenderReservationList({ favourites, dispatch, user }) {
+  return (
+    <SwipeListView
+      data={favourites}
+      keyExtractor={(item) => `${item.id}`}
+      contentContainerStyle={{
+        paddingHorizontal: SIZES.padding,
+        paddingBottom: SIZES.padding * 2,
+      }}
+      showsVerticalScrollIndicator={false}
+      rightOpenValue={-75}
+      renderItem={(data, rowMap) => {
+        return (
+          <View
+            style={{
+              marginTop: data.index == 0 ? SIZES.padding : 18,
+              marginBottom:
+                data.index == favourites.length - 1 ? SIZES.padding : 0,
+            }}
+          >
+            {/* <TouchableOpacity> */}
+            <HorizontalFoodCard
+              item={data.item}
+              contentContainerStyle={{
+                shadowColor: "#000",
+                shadowOpacity: 0.5,
+                shadowRadius: 5,
+                elevation: 10,
+              }}
+              imageStyle={{
+                height: 150,
+                width: 150,
+              }}
+              onPress={() => {
+                dispatch(
+                  navigateWithProps({
+                    path: "RestaurantDetail",
+                    query: {
+                      id: data.item.id,
+                    },
+                  })
+                );
+              }}
+            />
+            {/* </TouchableOpacity> */}
+          </View>
+        );
+      }}
+      renderHiddenItem={(data, rowMap) => (
+        <View
+          style={{
+            flexGrow: 1,
+          }}
+        >
+          <IconButton
+            containerStyle={{
+              flex: 1,
+              justifyContent: "flex-end",
+              backgroundColor: theme.colors.brand.primary,
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: data.index == 0 ? SIZES.padding : 18,
+              marginBottom:
+                data.index == favourites.length - 1 ? SIZES.padding : 0,
+              paddingHorizontal: SIZES.radius,
+              borderRadius: SIZES.radius,
+            }}
+            icon={icons.wrong}
+            iconStyle={{
+              marginRight: 10,
+            }}
+            onPress={() => {
+              Alert.alert(
+                "Remove from Favourite?",
+                "Are you sure you want to remove this restaurant from your favourites?",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => {
+                      console.log("Cancel Pressed");
+                    },
+                    style: "cancel",
+                  },
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      dispatch(
+                        removeRestaurantFromFavouriteReq({
+                          restaurant: data.item.id,
+                          username: user,
+                        })
+                      );
+                      dispatch(fetchFavouriteRestaurantsReq(user));
+                    },
+                  },
+                ]
+              );
+            }}
+          />
+        </View>
+      )}
+    />
+  );
+}
 
 export default Favourite;

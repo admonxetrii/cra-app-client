@@ -2,6 +2,22 @@ import axios from "../";
 import Storage from "../../Helper/Storage";
 
 export default {
+  addToFav: async (requestData) => {
+    const token = await Storage.getToken("access");
+    return await axios.post(`/edit-fav/`, requestData, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
+  removeFromFav: async (requestData) => {
+    const token = await Storage.getToken("access");
+    return await axios.patch(`/edit-fav/`, requestData, {
+      headers: {
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  },
   fetchAllRestaurant: async () => {
     const token = await Storage.getToken("access");
     return await axios.get("/restaurants/", {

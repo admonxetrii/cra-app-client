@@ -43,6 +43,12 @@ import {
   FETCH_IS_FAVOURITE_RESTAURANTS_REQ,
   FETCH_IS_FAVOURITE_RESTAURANTS_SUC,
   FETCH_IS_FAVOURITE_RESTAURANTS_FAILED,
+  ADD_RESTAURANT_TO_FAVOURITE_REQ,
+  ADD_RESTAURANT_TO_FAVOURITE_SUC,
+  ADD_RESTAURANT_TO_FAVOURITE_FAILED,
+  REMOVE_RESTAURANT_FROM_FAVOURITE_REQ,
+  REMOVE_RESTAURANT_FROM_FAVOURITE_SUC,
+  REMOVE_RESTAURANT_FROM_FAVOURITE_FAILED,
 } from "../actionConstant";
 
 const initialState = {
@@ -58,6 +64,18 @@ const initialState = {
   myReservations: [],
   favouriteRestaurant: [],
   isFavourite: [],
+  addToFav: {
+    requestData: {},
+    loading: false,
+    error: false,
+    data: {},
+  },
+  removeFromFav: {
+    requestData: {},
+    loading: false,
+    error: false,
+    data: {},
+  },
   fetchIsFavourite: {
     requestData: {},
     loading: false,
@@ -169,6 +187,80 @@ const restaurantReducer = (state = initialState, action) => {
           data: {},
         },
       };
+    case ADD_RESTAURANT_TO_FAVOURITE_REQ:
+      return {
+        ...state,
+        addToFav: {
+          requestData: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case ADD_RESTAURANT_TO_FAVOURITE_SUC:
+      return {
+        ...state,
+        addToFav: {
+          requestData: {},
+          loading: false,
+          error: false,
+          data: action.data,
+        },
+      };
+    case ADD_RESTAURANT_TO_FAVOURITE_FAILED:
+      return {
+        ...state,
+        addToFav: {
+          requestData: {},
+          loading: false,
+          error: true,
+          data: {},
+        },
+      };
+    case REMOVE_RESTAURANT_FROM_FAVOURITE_REQ:
+      return {
+        ...state,
+        fetchAllRestaurant: {
+          loading: true,
+        },
+        removeFromFav: {
+          requestData: action.data,
+          loading: true,
+          error: false,
+          data: {},
+        },
+      };
+    case REMOVE_RESTAURANT_FROM_FAVOURITE_SUC:
+      console.log("====================================");
+      console.log(favouriteRestaurant, "------------->", action.data.deletedId);
+      console.log("====================================");
+      const favouriteRestaurant = state.favouriteRestaurant.filter(
+        (item) => item.id !== action.data.deletedId
+      );
+      console.log(favouriteRestaurant);
+      return {
+        ...state,
+        favouriteRestaurant,
+        fetchAllRestaurant: {
+          loading: false,
+        },
+        removeFromFav: {
+          requestData: {},
+          loading: true,
+          error: false,
+          data: action.data,
+        },
+      };
+    case REMOVE_RESTAURANT_FROM_FAVOURITE_FAILED:
+      return {
+        ...state,
+        removeFromFav: {
+          requestData: {},
+          loading: false,
+          error: true,
+          data: {},
+        },
+      };
     case FETCH_FAVOURITE_RESTAURANTS_REQ:
       return {
         ...state,
@@ -176,7 +268,7 @@ const restaurantReducer = (state = initialState, action) => {
         fetchAllRestaurant: {
           loading: true,
           error: false,
-          data: {},
+          data: action.data,
         },
       };
     case FETCH_FAVOURITE_RESTAURANTS_SUC:

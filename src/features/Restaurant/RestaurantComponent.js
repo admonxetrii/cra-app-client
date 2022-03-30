@@ -8,6 +8,10 @@ import {
   navigate,
   navigateWithProps,
 } from "../../store/navigation/navigationAction";
+import {
+  addRestaurantToFavouriteReq,
+  removeRestaurantFromFavouriteReq,
+} from "../../store/restaurant/restaurantAction";
 
 const RestaurantComponent = () => {
   const dispatch = useDispatch();
@@ -16,9 +20,17 @@ const RestaurantComponent = () => {
     (state) => state.restaurant?.restaurantById
   );
 
-  const isFavourite = useSelector(
+  const favouriteState = useSelector(
     (state) => state.restaurant?.isFavourite[0].is_favourite
   );
+
+  const [isFavourite, setIsFavourite] = React.useState(favouriteState);
+
+  React.useEffect(() => {
+    // console.log(isFavourite);
+  }, [isFavourite]);
+
+  const user = useSelector((state) => state.auth.user?.username);
 
   return (
     <View
@@ -107,6 +119,8 @@ const RestaurantComponent = () => {
               // position: "absolute",
               bottom: 0,
               flexDirection: "row",
+              justifyContent: "space-between",
+              marginHorizontal: 15,
             }}
           >
             {/* Book a Table  */}
@@ -141,8 +155,27 @@ const RestaurantComponent = () => {
               containerStyle={{ height: 45, width: 45 }}
               label={isFavourite ? "Remove Favourite" : "Add Favourite"}
               labelStyle={{ color: theme.colors.brand.primary }}
-              icon={icons.favourite}
+              icon={isFavourite ? icons.love : icons.favourite}
               iconStyle={{ height: 28, resizeMode: "contain" }}
+              onPress={() => {
+                if (isFavourite) {
+                  dispatch(
+                    removeRestaurantFromFavouriteReq({
+                      restaurant: RestaurantDetail.id,
+                      username: user,
+                    })
+                  );
+                  setIsFavourite(!isFavourite);
+                } else {
+                  dispatch(
+                    addRestaurantToFavouriteReq({
+                      restaurant: RestaurantDetail.id,
+                      username: user,
+                    })
+                  );
+                  setIsFavourite(!isFavourite);
+                }
+              }}
             />
           </View>
         </View>

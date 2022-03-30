@@ -43,6 +43,12 @@ import {
   FETCH_IS_FAVOURITE_RESTAURANTS_REQ,
   FETCH_IS_FAVOURITE_RESTAURANTS_SUC,
   FETCH_IS_FAVOURITE_RESTAURANTS_FAILED,
+  ADD_RESTAURANT_TO_FAVOURITE_REQ,
+  ADD_RESTAURANT_TO_FAVOURITE_SUC,
+  ADD_RESTAURANT_TO_FAVOURITE_FAILED,
+  REMOVE_RESTAURANT_FROM_FAVOURITE_REQ,
+  REMOVE_RESTAURANT_FROM_FAVOURITE_SUC,
+  REMOVE_RESTAURANT_FROM_FAVOURITE_FAILED,
 } from "../actionConstant";
 
 export function fetchIsFavouriteRestaurantsReq(data) {
@@ -61,6 +67,46 @@ export function fetchIsFavouriteRestaurantsSuccess(data) {
 export function fetchIsFavouriteRestaurantsFailed(error) {
   return {
     type: FETCH_IS_FAVOURITE_RESTAURANTS_FAILED,
+    error,
+  };
+}
+
+export function addRestaurantToFavouriteReq(data) {
+  return {
+    type: ADD_RESTAURANT_TO_FAVOURITE_REQ,
+    data,
+  };
+}
+
+export function addRestaurantToFavouriteSuccess(data) {
+  return {
+    type: ADD_RESTAURANT_TO_FAVOURITE_SUC,
+    data,
+  };
+}
+export function addRestaurantToFavouriteFailed(error) {
+  return {
+    type: ADD_RESTAURANT_TO_FAVOURITE_FAILED,
+    error,
+  };
+}
+
+export function removeRestaurantFromFavouriteReq(data) {
+  return {
+    type: REMOVE_RESTAURANT_FROM_FAVOURITE_REQ,
+    data,
+  };
+}
+
+export function removeRestaurantFromFavouriteSuccess(data) {
+  return {
+    type: REMOVE_RESTAURANT_FROM_FAVOURITE_SUC,
+    data,
+  };
+}
+export function removeRestaurantFromFavouriteFailed(error) {
+  return {
+    type: REMOVE_RESTAURANT_FROM_FAVOURITE_FAILED,
     error,
   };
 }
@@ -84,9 +130,10 @@ export function fetchFavouriteRestaurantsFailed(error) {
   };
 }
 
-export function fetchFavouriteRestaurantsReq() {
+export function fetchFavouriteRestaurantsReq(data) {
   return {
     type: FETCH_FAVOURITE_RESTAURANTS_REQ,
+    data,
   };
 }
 
