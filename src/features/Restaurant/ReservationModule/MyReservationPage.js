@@ -170,7 +170,7 @@ function RenderReservationList({ reservations, dispatch }) {
       rightOpenValue={-75}
       leftOpenValue={75}
       renderItem={(data, rowMap) => {
-        var datetime = new DateObject(new Date(data.item.date));
+        var datetime = new DateObject(new Date(data.item.startDate));
         //   console.log(datetime);
         return (
           <View

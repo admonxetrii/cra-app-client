@@ -27,6 +27,8 @@ const ReserveTableStage = () => {
   const [groupSize, setGroupSize] = React.useState(0);
   const [date, setDate] = React.useState(new DateObject(Date.now()));
   const [time, setTime] = React.useState(new DateObject(Date.now()));
+  const [endTime, setEndTime] = React.useState(time);
+  const [endTimeActive, setEndTimeActive] = React.useState(false);
   const [buttonActive, setButtonActive] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ const ReserveTableStage = () => {
   const restaurantId = useSelector((state) => state.restaurant.restaurantId);
 
   let arrayIndex = 1;
+  let arrayIndexEnd = 1;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -61,14 +64,17 @@ const ReserveTableStage = () => {
 
   var openTime = moment(restaurant?.openingTime, "HH:mm:ss");
   var closeTime = moment(restaurant?.closingTime, "HH:mm:ss");
+  var endTimeMargin = new DateObject(
+    date.format() + " " + restaurant?.closingTime
+  );
 
   // calculate total duration
   var duration = moment.duration(closeTime.diff(openTime));
-
   // duration in hours
-  var hours = parseInt(duration.asHours()) + 1;
+  var hours = parseInt(duration.asHours());
   if (restaurant) {
     arrayIndex = hours;
+    arrayIndexEnd = 5;
   }
   const reservationTime = [...Array(arrayIndex).keys()].map((index) => ({
     id: `TIME_${index}`,
@@ -76,6 +82,18 @@ const ReserveTableStage = () => {
     fulldate: {
       hour: new DateObject(date.format() + " " + restaurant?.openingTime).add(
         index,
+        "hours"
+      ),
+    },
+    currentHour: new DateObject(Date.now()),
+  }));
+
+  const reservationEndTime = [...Array(arrayIndexEnd).keys()].map((index) => ({
+    id: `ENDTIME_${index}`,
+    hour: new DateObject(new Date(time)).add(index + 1, "hours").format("hh A"),
+    fulldate: {
+      hour: new DateObject(date.format() + " " + time.format("HH:mm:ss")).add(
+        index + 1,
         "hours"
       ),
     },
@@ -126,7 +144,7 @@ const ReserveTableStage = () => {
           style={{
             ...FONTS.h3,
             fontSize: 18,
-            marginTop: 20,
+            // marginTop: 20,
           }}
         >
           Group Size
@@ -147,15 +165,15 @@ const ReserveTableStage = () => {
               source={icons.group}
               style={{
                 tintColor: COLORS.lightGray1,
-                height: 60,
-                width: 60,
+                height: 40,
+                width: 40,
               }}
             />
             <Text
               style={{
-                marginBottom: -15,
+                marginBottom: -10,
                 fontFamily: "Poppins_600SemiBold",
-                fontSize: 70,
+                fontSize: 55,
                 color: theme.colors.brand.primary,
               }}
             >
@@ -170,14 +188,14 @@ const ReserveTableStage = () => {
           >
             <IconButton
               containerStyle={{
-                width: 70,
+                width: 50,
                 alignItems: "center",
                 justifyContent: "center",
               }}
               icon={icons.minus}
               iconStyle={{
-                height: 60,
-                width: 60,
+                height: 40,
+                width: 40,
                 tintColor: groupSize > 0 ? COLORS.black : COLORS.gray3,
               }}
               disabled={groupSize < 1 ? true : false}
@@ -185,14 +203,14 @@ const ReserveTableStage = () => {
             />
             <IconButton
               containerStyle={{
-                width: 70,
+                width: 50,
                 alignItems: "center",
                 justifyContent: "center",
               }}
               icon={icons.plus}
               iconStyle={{
-                height: 60,
-                width: 60,
+                height: 40,
+                width: 40,
                 tintColor:
                   groupSize < 29
                     ? theme.colors.brand.primary
@@ -219,6 +237,7 @@ const ReserveTableStage = () => {
             ...FONTS.h3,
             fontSize: 18,
             paddingLeft: SIZES.padding,
+            marginBottom: -SIZES.padding + 5,
           }}
         >
           Date:
@@ -236,14 +255,14 @@ const ReserveTableStage = () => {
               height: 100,
               // borderWidth: 1,
               // borderColor: COLORS.lightGray1,
-              marginBottom: SIZES.padding,
+              // marginBottom: SIZES.padding,
             }}
             showsHorizontalScrollIndicator={false}
             nestedScrollEnabled
             renderItem={({ item, index }) => (
               <TouchableOpacity
                 style={{
-                  paddingLeft: SIZES.padding,
+                  paddingLeft: index == 0 ? 0 : SIZES.padding,
                   paddingRight:
                     index == nextWeek.length - 1 ? SIZES.padding : 0,
                   alignItems: "center",
@@ -253,6 +272,7 @@ const ReserveTableStage = () => {
                   setDate(item.fulldate.date);
                   setTime(date);
                   setButtonActive(false);
+                  setEndTimeActive(false);
                 }}
               >
                 <Text
@@ -304,9 +324,10 @@ const ReserveTableStage = () => {
             ...FONTS.h3,
             fontSize: 18,
             paddingLeft: SIZES.padding,
+            marginBottom: -SIZES.padding,
           }}
         >
-          Time:
+          From Time:
         </Text>
         <View
           style={{
@@ -321,7 +342,7 @@ const ReserveTableStage = () => {
               height: 100,
               // borderWidth: 1,
               // borderColor: COLORS.lightGray1,
-              marginBottom: SIZES.padding,
+              // marginBottom: SIZES.padding,
             }}
             showsHorizontalScrollIndicator={false}
             nestedScrollEnabled
@@ -337,7 +358,7 @@ const ReserveTableStage = () => {
                       >
                         <Text
                           style={{
-                            marginTop: 10,
+                            marginTop: SIZES.padding,
                             ...FONTS.h3,
                             color: theme.colors.brand.primary,
                           }}
@@ -350,7 +371,7 @@ const ReserveTableStage = () => {
                 ) : (
                   <TouchableOpacity
                     style={{
-                      paddingLeft: SIZES.padding,
+                      paddingLeft: index == 0 ? 0 : SIZES.padding,
                       paddingRight:
                         index == reservationTime.length - 1 ? SIZES.padding : 0,
                       alignItems: "center",
@@ -359,6 +380,7 @@ const ReserveTableStage = () => {
                     onPress={() => {
                       setTime(item.fulldate.hour);
                       setButtonActive(true);
+                      setEndTimeActive(true);
                     }}
                   >
                     <Text
@@ -399,6 +421,122 @@ const ReserveTableStage = () => {
                       {item.hour.split(" ")[1]}
                     </Text>
                   </TouchableOpacity>
+                )}
+              </>
+            )}
+          />
+        </View>
+      </View>
+    );
+  }
+  function renderEndTimePicker() {
+    return (
+      <View style={{}}>
+        <Text
+          style={{
+            ...FONTS.h3,
+            fontSize: 18,
+            paddingLeft: SIZES.padding,
+            marginBottom: -SIZES.padding,
+          }}
+        >
+          To Time:
+        </Text>
+        <View
+          style={{
+            paddingLeft: SIZES.padding,
+          }}
+        >
+          <FlatList
+            data={reservationEndTime}
+            keyExtractor={(item) => `${item.id}`}
+            horizontal
+            style={{
+              height: 100,
+              // borderWidth: 1,
+              // borderColor: COLORS.lightGray1,
+              marginBottom: SIZES.padding,
+            }}
+            showsHorizontalScrollIndicator={false}
+            nestedScrollEnabled
+            renderItem={({ item, index }) => (
+              <>
+                {item.currentHour + 1800000 > item.fulldate.hour ? (
+                  <>
+                    {index == reservationEndTime.length - 1 ? (
+                      <View
+                        style={{
+                          paddingRight: SIZES.padding,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            marginTop: SIZES.padding,
+                            ...FONTS.h3,
+                            color: theme.colors.brand.primary,
+                          }}
+                        >
+                          Reservation Time has been exceeded.
+                        </Text>
+                      </View>
+                    ) : null}
+                  </>
+                ) : item.fulldate.hour <= endTimeMargin ? (
+                  <TouchableOpacity
+                    style={{
+                      paddingLeft: index == 0 ? 0 : SIZES.padding,
+                      paddingRight:
+                        index == reservationEndTime.length - 1
+                          ? SIZES.padding
+                          : 0,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    onPress={() => {
+                      setEndTime(item.fulldate.hour);
+                      setButtonActive(true);
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 60,
+                        fontFamily:
+                          endTime.format("hh mm A") ==
+                          item.fulldate.hour.format("hh mm A")
+                            ? "Poppins_600SemiBold"
+                            : "Poppins_400Regular",
+                        marginBottom: -15,
+                        color:
+                          endTime.format("hh mm A") ==
+                          item.fulldate.hour.format("hh mm A")
+                            ? theme.colors.brand.primary
+                            : COLORS.lightGray1,
+                      }}
+                    >
+                      {item.hour.split(" ")[0]}
+                    </Text>
+                    <Text
+                      style={{
+                        ...FONTS.body4,
+                        fontSize: 18,
+                        fontFamily:
+                          endTime.format("hh mm A") ==
+                          item.fulldate.hour.format("hh mm A")
+                            ? "Poppins_600SemiBold"
+                            : "Poppins_400Regular",
+                        marginTop: -10,
+                        color:
+                          endTime.format("hh mm A") ==
+                          item.fulldate.hour.format("hh mm A")
+                            ? theme.colors.brand.primary
+                            : COLORS.lightGray1,
+                      }}
+                    >
+                      {item.hour.split(" ")[1]}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <></>
                 )}
               </>
             )}
@@ -463,16 +601,14 @@ const ReserveTableStage = () => {
                   </Text>
                 </View>
               )}
-
               {/* Group Size  */}
               {renderGroupSize()}
-
               {/* Date  */}
               {renderDatePicker()}
-
-              {/* Time  */}
+              {/* Start Time  */}
               {renderTimePicker()}
-
+              {/* End Time  */}
+              {endTimeActive && <>{renderEndTimePicker()}</>}
               {/* Footer  */}
             </View>
           </View>
@@ -524,9 +660,9 @@ const ReserveTableStage = () => {
                       color: theme.colors.brand.primary,
                     }}
                   >
-                    {`${time.format("DD MMMM, YYYY")} at ${time.format(
-                      " hh:mm A"
-                    )} for ${groupSize} ${
+                    {`${time.format("DD MMMM, YYYY")} from ${time.format(
+                      "hh:mm A"
+                    )} till ${endTime.format("hh:mm A")} for ${groupSize} ${
                       groupSize > 1 ? "People" : "Person"
                     }.`}
                   </Text>
@@ -552,7 +688,8 @@ const ReserveTableStage = () => {
                       query: {
                         id: restaurantId,
                         restaurant: restaurant,
-                        time: time,
+                        startTime: time,
+                        endTime: endTime,
                         groupSize: groupSize,
                       },
                     })

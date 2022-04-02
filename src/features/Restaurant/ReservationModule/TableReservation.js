@@ -55,7 +55,11 @@ const TableReservation = () => {
   );
 
   const reservationTime = useSelector(
-    (state) => state.navigationRef.navigationQuery?.time
+    (state) => state.navigationRef.navigationQuery?.startTime
+  );
+
+  const reservationEndTime = useSelector(
+    (state) => state.navigationRef.navigationQuery?.endTime
   );
 
   const groupSize = useSelector(
@@ -69,10 +73,16 @@ const TableReservation = () => {
   const username = useSelector((state) => state.auth.user?.username);
 
   const handleConfirmBooking = () => {
-    if (groupSize != 0 && selectedTable.id != null && reservationTime != null) {
+    if (
+      groupSize != 0 &&
+      selectedTable.id != null &&
+      reservationTime != null &&
+      reservationEndTime != null
+    ) {
       dispatch(
         confirmTableBookingReq({
-          date: reservationTime,
+          startDate: reservationTime,
+          endDate: reservationEndTime,
           groupSize: groupSize,
           tableId: selectedTable.id,
           username: username,
@@ -156,7 +166,9 @@ const TableReservation = () => {
                 <Text style={{ ...FONTS.h4 }}>Reservation Date and Time: </Text>
                 <Text
                   style={{ ...FONTS.h4, color: theme.colors.brand.primary }}
-                >{`${reservationTime.format("DD MMMM, hh:mm A")}`}</Text>
+                >{`${reservationTime.format(
+                  "DD MMMM, hh:mm A"
+                )} to ${reservationEndTime.format("hh:mm A")}`}</Text>
               </View>
             </View>
 
@@ -204,6 +216,7 @@ const TableReservation = () => {
                   width: "100%",
                   borderBottomColor: COLORS.lightGray1,
                   borderBottomWidth: 2,
+                  marginTop: 5,
                   marginBottom: 5,
                 }}
               />
@@ -212,6 +225,7 @@ const TableReservation = () => {
               <RenderTables
                 tableDetails={tableDetails}
                 reservationTime={reservationTime}
+                reservationEndTime={reservationEndTime}
                 groupSize={groupSize}
                 setButtonActive={setButtonActive}
                 setSelectedTable={setSelectedTable}
@@ -340,6 +354,7 @@ function RenderHeader() {
 function RenderTables({
   tableDetails,
   reservationTime,
+  reservationEndTime,
   groupSize,
   setButtonActive,
   setSelectedTable,
@@ -382,14 +397,23 @@ function RenderTables({
                   nestedScrollEnabled
                   renderItem={({ item, index }) => {
                     let booked = false;
+                    var dateObj;
+                    var endDateObj;
+                    console.log(tableFloor);
                     item.reservation_dates.map((date) => {
-                      var dateObj = new DateObject(new Date(date.date));
+                      dateObj = new DateObject(new Date(date.startDate));
+                      endDateObj = new DateObject(new Date(date.endDate));
                       if (
-                        reservationTime.format("MM/DD hh A") ==
-                        dateObj.format("MM/DD hh A")
+                        (reservationTime.toUnix() <= dateObj.toUnix() &&
+                          reservationEndTime.toUnix() > dateObj.toUnix()) ||
+                        (reservationTime.toUnix() < endDateObj.toUnix() &&
+                          reservationEndTime.toUnix() >= endDateObj.toUnix())
                       ) {
-                        console.log(item.tableName + " is booked");
-                        booked = true;
+                        console.log(date);
+                        if (!date.cancelled) {
+                          console.log(item.tableName + " is booked");
+                          booked = true;
+                        }
                       }
                     });
 
@@ -415,6 +439,8 @@ function RenderTables({
                             selectedTable={selectedTable}
                             disabled={true}
                             booked={booked}
+                            startTime={dateObj}
+                            endTime={endDateObj}
                             tableFloor={tableFloor}
                             onPress={() => {
                               setSelectedTable(item);

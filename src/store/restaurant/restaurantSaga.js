@@ -1,4 +1,4 @@
-import { put, takeLatest, all, select, delay } from "redux-saga/effects";
+import { put, takeLatest, all, select, takeEvery } from "redux-saga/effects";
 import restaurantsService from "../../API/RestaurantAPI/restaurants.service";
 import {
   FETCH_ALL_RESTAURANTS_REQ,
@@ -397,6 +397,6 @@ export default function* restaurantSaga() {
   yield all([yield takeLatest(CANCEL_RESERVATION_REQ, cancelReservationAPI)]);
   yield all([yield takeLatest(ADD_RESTAURANT_TO_FAVOURITE_REQ, addToFavAPI)]);
   yield all([
-    yield takeLatest(REMOVE_RESTAURANT_FROM_FAVOURITE_REQ, removeFromFavAPI),
+    yield takeEvery(REMOVE_RESTAURANT_FROM_FAVOURITE_REQ, removeFromFavAPI),
   ]);
 }
