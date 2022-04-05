@@ -26,10 +26,6 @@ const RestaurantComponent = () => {
 
   const [isFavourite, setIsFavourite] = React.useState(favouriteState);
 
-  React.useEffect(() => {
-    // console.log(isFavourite);
-  }, [isFavourite]);
-
   const user = useSelector((state) => state.auth.user?.username);
 
   return (
@@ -161,7 +157,7 @@ const RestaurantComponent = () => {
                 if (isFavourite) {
                   dispatch(
                     removeRestaurantFromFavouriteReq({
-                      restaurant: RestaurantDetail.id,
+                      restaurant: RestaurantDetail?.id,
                       username: user,
                     })
                   );

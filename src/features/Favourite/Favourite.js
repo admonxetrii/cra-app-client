@@ -178,7 +178,6 @@ function RenderReservationList({ favourites, dispatch, user }) {
                           username: user,
                         })
                       );
-                      dispatch(fetchFavouriteRestaurantsReq(user));
                     },
                   },
                 ]
