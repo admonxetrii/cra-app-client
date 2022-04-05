@@ -304,7 +304,6 @@ function RenderReservationList({ reservations, dispatch }) {
                   {
                     text: "OK",
                     onPress: () => {
-                      console.log(data.item.id);
                       dispatch(
                         cancelReservationsReq({ reservationId: data.item.id })
                       );

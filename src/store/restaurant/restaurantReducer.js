@@ -231,13 +231,9 @@ const restaurantReducer = (state = initialState, action) => {
         },
       };
     case REMOVE_RESTAURANT_FROM_FAVOURITE_SUC:
-      console.log("====================================");
-      console.log(favouriteRestaurant, "------------->", action.data.deletedId);
-      console.log("====================================");
       const favouriteRestaurant = state.favouriteRestaurant.filter(
         (item) => item.id !== action.data.deletedId
       );
-      console.log(favouriteRestaurant);
       return {
         ...state,
         favouriteRestaurant,

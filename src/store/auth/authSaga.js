@@ -89,10 +89,8 @@ function* signupAPI() {
   try {
     const inputData = yield select((state) => state.auth.signup.inputData);
     const response = yield usersServices.signup(inputData);
-    console.log(response.data);
     if (response.data.status === 201) {
       // console.log("here");
-      console.log(response.data);
       yield put(navigate("Otp"));
       yield Toast.success("User registered successfully.");
       yield put(signupSuccess(response.data));

@@ -319,7 +319,6 @@ function* removeFromFavAPI() {
     );
     const response = yield restaurantsService.removeFromFav(inputData);
     if (response.data.status === 200) {
-      console.log(response.data.deletedId);
       yield put(removeRestaurantFromFavouriteSuccess(response.data));
       yield Toast.success(response.data.message);
     } else {

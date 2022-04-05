@@ -399,7 +399,7 @@ function RenderTables({
                     let booked = false;
                     var dateObj;
                     var endDateObj;
-                    console.log(tableFloor);
+                    // console.log(tableFloor);
                     item.reservation_dates.map((date) => {
                       dateObj = new DateObject(new Date(date.startDate));
                       endDateObj = new DateObject(new Date(date.endDate));
@@ -409,10 +409,22 @@ function RenderTables({
                         (reservationTime.toUnix() < endDateObj.toUnix() &&
                           reservationEndTime.toUnix() >= endDateObj.toUnix())
                       ) {
-                        console.log(date);
+                        // console.log(date);
                         if (!date.cancelled) {
-                          if (date.success && !date.relesed) {
-                            console.log(item.tableName + " is booked");
+                          console.log(date);
+                          if (date.success && !date.tableReleased) {
+                            console.log(
+                              item.tableName + " is success but not released"
+                            );
+                            booked = true;
+                          } else if (date.success && date.tableReleased) {
+                            console.log(item.tableName + " is released");
+                            booked = false;
+                          } else {
+                            console.log(
+                              item.tableName +
+                                "not success nor released nor cancelled"
+                            );
                             booked = true;
                           }
                         }
