@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "855494770574",
+    "project_id": "cra-d8aa2",
+    "storage_bucket": "cra-d8aa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855494770574:android:05a31baf1f17a2d699aedf",
+        "android_client_info": {
+          "package_name": "com.admonxetrii.craappclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855494770574-5bs1e2s6i4j5tfocde0jg6peac07lbih.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYN-GlBRajATN7URKU2U05rWST7jM-6Rg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855494770574-5bs1e2s6i4j5tfocde0jg6peac07lbih.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
