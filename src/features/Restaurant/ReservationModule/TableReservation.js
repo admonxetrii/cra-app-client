@@ -411,8 +411,10 @@ function RenderTables({
                       ) {
                         console.log(date);
                         if (!date.cancelled) {
-                          console.log(item.tableName + " is booked");
-                          booked = true;
+                          if (date.success && !date.relesed) {
+                            console.log(item.tableName + " is booked");
+                            booked = true;
+                          }
                         }
                       }
                     });
