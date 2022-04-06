@@ -21,6 +21,12 @@ import {
   CHANGE_PASSWORD_FAILED,
   CHANGE_PASSWORD_REQ,
   CHANGE_PASSWORD_SUCCESS,
+  FETCH_TAGS_REQ,
+  FETCH_TAGS_SUC,
+  FETCH_TAGS_FAILED,
+  SAVE_USER_TAGS_REQ,
+  SAVE_USER_TAGS_SUC,
+  SAVE_USER_TAGS_FAILED,
 } from "../actionConstant";
 
 export function loginRequest(data) {
@@ -176,6 +182,51 @@ export function resendOtpSuccess(data) {
 export function resendOtpFailed(error) {
   return {
     type: RESEND_OTP_FAILED,
+    error,
+  };
+}
+
+// tags
+
+export function fetchTagReq(data) {
+  return {
+    type: FETCH_TAGS_REQ,
+    data,
+  };
+}
+
+export function fetchTagSuccess(data) {
+  return {
+    type: FETCH_TAGS_SUC,
+    data,
+  };
+}
+
+export function fetchTagFailed(error) {
+  return {
+    type: FETCH_TAGS_FAILED,
+    error,
+  };
+}
+
+// save tags
+
+export function saveUserTagReq(data) {
+  return {
+    type: SAVE_USER_TAGS_REQ,
+    data,
+  };
+}
+export function saveUserTagSuc(data) {
+  return {
+    type: SAVE_USER_TAGS_SUC,
+    data,
+  };
+}
+
+export function saveUserTagFailed(error) {
+  return {
+    type: SAVE_USER_TAGS_FAILED,
     error,
   };
 }

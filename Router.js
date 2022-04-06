@@ -46,6 +46,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { verifyTokenRequest } from "./src/store/auth/authAction";
 import Storage from "./src/Helper/Storage";
 import { setNavigation } from "./src/store/navigation/navigationAction";
+import Tags from "./src/features/Authentication/Tags";
 const Stack = createStackNavigator();
 
 const NavigationRefHandler = () => {
@@ -139,6 +140,7 @@ const Router = () => {
                 name="TableReservation"
                 component={TableReservation}
               />
+              <Stack.Screen name="tags" component={Tags} />
             </>
           ) : (
             <>

@@ -14,13 +14,12 @@ async function registerForPushNotificationsAsync() {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      alert(finalStatus);
+
       if (finalStatus !== "granted") {
         alert("Failed to get push token for push notification!");
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      alert(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }

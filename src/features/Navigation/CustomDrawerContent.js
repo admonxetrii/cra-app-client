@@ -177,7 +177,11 @@ export const CustomDrawerContent = ({
               );
             }}
           />
-          <CustomDrawerItem label="Coupon" icon={icons.coupon} />
+          <CustomDrawerItem
+            label="Coupon"
+            onPress={() => navigation.navigate("tags")}
+            icon={icons.coupon}
+          />
           <CustomDrawerItem label="Settings" icon={icons.setting} />
           <CustomDrawerItem label="Invite a friend" icon={icons.profile} />
           <CustomDrawerItem label="Help Center" icon={icons.help} />

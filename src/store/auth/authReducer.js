@@ -21,6 +21,12 @@ import {
   CHANGE_PASSWORD_FAILED,
   CHANGE_PASSWORD_REQ,
   CHANGE_PASSWORD_SUCCESS,
+  FETCH_TAGS_REQ,
+  FETCH_TAGS_SUC,
+  FETCH_TAGS_FAILED,
+  SAVE_USER_TAGS_REQ,
+  SAVE_USER_TAGS_SUC,
+  SAVE_USER_TAGS_FAILED,
 } from "../actionConstant";
 
 const initialState = {
@@ -74,6 +80,18 @@ const initialState = {
     inputData: {},
     data: {},
     loadingButtonContent: "Change Password",
+  },
+  tags: {
+    data: [],
+    loading: false,
+    error: null,
+  },
+  saveUserTags: {
+    loading: false,
+    error: null,
+    data: {},
+    inputData: {},
+    loadingButtonContent: "Get Started",
   },
 };
 
@@ -329,6 +347,66 @@ const authReducer = (state = initialState, action) => {
           error: action.error,
           data: {},
           loadingButtonContent: "Resend OTP",
+        },
+      };
+    case FETCH_TAGS_REQ:
+      return {
+        ...state,
+        tags: {
+          data: [],
+          loading: true,
+          error: null,
+        },
+      };
+    case FETCH_TAGS_SUC:
+      return {
+        ...state,
+        tags: {
+          data: action.data,
+          loading: false,
+          error: null,
+        },
+      };
+    case FETCH_TAGS_FAILED:
+      return {
+        ...state,
+        tags: {
+          data: [],
+          loading: false,
+          error: action.error,
+        },
+      };
+    case SAVE_USER_TAGS_REQ:
+      return {
+        ...state,
+        saveUserTags: {
+          loading: true,
+          error: null,
+          data: {},
+          inputData: action.data,
+          loadingButtonContent: "Please wait..",
+        },
+      };
+    case SAVE_USER_TAGS_SUC:
+      return {
+        ...state,
+        saveUserTags: {
+          loading: false,
+          error: null,
+          data: action.data,
+          inputData: {},
+          loadingButtonContent: "Get Started",
+        },
+      };
+    case SAVE_USER_TAGS_FAILED:
+      return {
+        ...state,
+        saveUserTags: {
+          loading: false,
+          error: action.error,
+          data: {},
+          inputData: {},
+          loadingButtonContent: "Get Started",
         },
       };
     default:
