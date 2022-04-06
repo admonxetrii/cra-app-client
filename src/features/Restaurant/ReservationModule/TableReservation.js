@@ -407,9 +407,7 @@ function RenderTables({
                         (reservationTime.toUnix() <= dateObj.toUnix() &&
                           reservationEndTime.toUnix() > dateObj.toUnix()) ||
                         (reservationTime.toUnix() < endDateObj.toUnix() &&
-                          reservationEndTime.toUnix() >= endDateObj.toUnix()) ||
-                        (reservationTime.toUnix() > dateObj.toUnix() &&
-                          reservationEndTime.toUnix() < endDateObj.toUnix())
+                          reservationEndTime.toUnix() >= endDateObj.toUnix())
                       ) {
                         // console.log(date);
                         if (!date.cancelled) {
@@ -517,6 +515,8 @@ function RenderTables({
                             selectedTable={selectedTable}
                             disabled={true}
                             booked={booked}
+                            startTime={dateObj}
+                            endTime={endDateObj}
                             tableFloor={tableFloor}
                             onPress={() => {
                               setSelectedTable(item);
