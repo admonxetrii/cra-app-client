@@ -5,6 +5,7 @@ import { COLORS, FONTS, SIZES, svg, icons } from "../../../constants";
 import { TextButton, PrimaryButton } from "../../components";
 import { AuthLayout } from "..";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
+import Clipboard from "expo-clipboard";
 import { theme } from "../../infrastructure/theme";
 import { useDispatch, useSelector } from "react-redux";
 import { resendOtpReq, signupVerifyReq } from "../../store/auth/authAction";

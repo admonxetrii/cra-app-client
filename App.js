@@ -10,7 +10,7 @@ import PushNotification from "./src/components/notifications/PushNotification";
 const App = () => {
   return (
     <Provider store={store}>
-      <PushNotification />
+      {/* <PushNotification /> */}
       <Router />
       <Toast ref={(ref) => (global["toast"] = ref)} />
     </Provider>

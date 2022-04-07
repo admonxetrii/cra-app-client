@@ -42,8 +42,6 @@ const Tags = () => {
     );
   };
 
-  console.log(tags, "<______--------");
-
   return (
     <AuthLayout
       banner={svg.tags}

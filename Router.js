@@ -118,29 +118,37 @@ const Router = () => {
         >
           {auth.isLoggedIn ? (
             <>
-              <Stack.Screen name="CustomDrawer" component={CustomDrawer} />
-              <Stack.Screen
-                name="RestaurantDetail"
-                component={RestaurantDetail}
-              />
-              <Stack.Screen name="MyCart" component={CartTab} />
-              <Stack.Screen name="ScanTable" component={ScanTable} />
-              <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen name="EditProfile" component={EditProfile} />
-              <Stack.Screen name="ChangePassword" component={ChangePassword} />
-              <Stack.Screen
-                name="ReserveTableStage"
-                component={ReserveTableStage}
-              />
-              <Stack.Screen
-                name="MyReservationPage"
-                component={MyReservationPage}
-              />
-              <Stack.Screen
-                name="TableReservation"
-                component={TableReservation}
-              />
-              <Stack.Screen name="tags" component={Tags} />
+              {auth.user?.has_tags ? (
+                <>
+                  <Stack.Screen name="CustomDrawer" component={CustomDrawer} />
+                  <Stack.Screen
+                    name="RestaurantDetail"
+                    component={RestaurantDetail}
+                  />
+                  <Stack.Screen name="MyCart" component={CartTab} />
+                  <Stack.Screen name="ScanTable" component={ScanTable} />
+                  <Stack.Screen name="Profile" component={Profile} />
+                  <Stack.Screen name="EditProfile" component={EditProfile} />
+                  <Stack.Screen
+                    name="ChangePassword"
+                    component={ChangePassword}
+                  />
+                  <Stack.Screen
+                    name="ReserveTableStage"
+                    component={ReserveTableStage}
+                  />
+                  <Stack.Screen
+                    name="MyReservationPage"
+                    component={MyReservationPage}
+                  />
+                  <Stack.Screen
+                    name="TableReservation"
+                    component={TableReservation}
+                  />
+                </>
+              ) : (
+                <Stack.Screen name="tags" component={Tags} />
+              )}
             </>
           ) : (
             <>
