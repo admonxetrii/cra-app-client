@@ -98,9 +98,8 @@ const Router = () => {
   console.log(auth?.user);
 
   useEffect(() => {
-    if (!auth?.user?.hasTags && auth?.user?.is_verified) {
+    if (!auth?.user?.has_tags && auth?.user?.is_verified) {
       dispatch(navigate("tags"));
-      console.log("dispatched");
     }
   }, [auth.user]);
 
@@ -152,6 +151,7 @@ const Router = () => {
                 name="TableReservation"
                 component={TableReservation}
               />
+
               <Stack.Screen name="tags" component={Tags} />
             </>
           ) : (
