@@ -21,7 +21,7 @@ const RestaurantComponent = () => {
   );
 
   const favouriteState = useSelector(
-    (state) => state.restaurant?.isFavourite[0].is_favourite
+    (state) => state.restaurant?.isFavourite[0]?.is_favourite
   );
 
   const [isFavourite, setIsFavourite] = React.useState(favouriteState);

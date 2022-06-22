@@ -7,6 +7,7 @@ const signup = require("../assets/images/undraw/signup.png");
 const otp = require("../assets/images/undraw/otp.png");
 const forgotPassword = require("../assets/images/undraw/forgotPassword.png");
 const changePass = require("../assets/images/undraw/changePass.png");
+const tags = require("../assets/images/undraw/tags.png");
 
 export default {
   dinein,
@@ -18,4 +19,5 @@ export default {
   otp,
   forgotPassword,
   changePass,
+  tags,
 };

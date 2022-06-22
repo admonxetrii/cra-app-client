@@ -32,4 +32,10 @@ export default {
   changePassword: async (requestData) => {
     return await axios.post("/auth/change-password/", requestData);
   },
+  getTags: async () => {
+    return await axios.get("/tags");
+  },
+  saveTags: async (data) => {
+    return await axios.post("/save-user-tags/", data);
+  },
 };

@@ -11,6 +11,8 @@ const TableComponent = ({
   index,
   disabled,
   booked,
+  startTime,
+  endTime,
 }) => {
   return (
     <TouchableOpacity
@@ -59,19 +61,6 @@ const TableComponent = ({
           alignItems: "center",
         }}
       >
-        {/* <Text
-          style={{
-            fontFamily:
-              selectedTable.id == item.id
-                ? "Poppins_500Medium"
-                : "Poppins_400Regular",
-            color: selectedTable.id == item.id ? COLORS.white : COLORS.black,
-            fontSize: 12,
-            marginBottom: -8,
-          }}
-        >
-          Seat Capacity:
-        </Text> */}
         <Text
           style={{
             fontFamily:
@@ -83,10 +72,13 @@ const TableComponent = ({
                 ? COLORS.white
                 : theme.colors.brand.primary,
             fontSize: 12,
+            textAlign: "center",
           }}
         >
           {booked
-            ? "Booked"
+            ? `Booked\n${startTime.format("hh:mm A")} to ${endTime.format(
+                "hh:mm A"
+              )}`
             : `${item.seatCapacity} ${
                 item.seatCapacity > 1 ? "People" : "Person"
               }`}

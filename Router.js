@@ -45,7 +45,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { verifyTokenRequest } from "./src/store/auth/authAction";
 import Storage from "./src/Helper/Storage";
-import { setNavigation } from "./src/store/navigation/navigationAction";
+import {
+  navigate,
+  setNavigation,
+} from "./src/store/navigation/navigationAction";
+import Tags from "./src/features/Authentication/Tags";
 const Stack = createStackNavigator();
 
 const NavigationRefHandler = () => {
@@ -90,6 +94,14 @@ const Router = () => {
   }, []);
 
   const auth = useSelector((state) => state.auth);
+
+  console.log(auth?.user);
+
+  useEffect(() => {
+    if (!auth?.user?.has_tags && auth?.user?.is_verified) {
+      dispatch(navigate("tags"));
+    }
+  }, [auth.user]);
 
   if (auth.verify.loading || !poppinsLoaded) {
     return (
@@ -139,6 +151,8 @@ const Router = () => {
                 name="TableReservation"
                 component={TableReservation}
               />
+
+              <Stack.Screen name="tags" component={Tags} />
             </>
           ) : (
             <>

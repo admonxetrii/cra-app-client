@@ -170,7 +170,7 @@ function RenderReservationList({ reservations, dispatch }) {
       rightOpenValue={-75}
       leftOpenValue={75}
       renderItem={(data, rowMap) => {
-        var datetime = new DateObject(new Date(data.item.date));
+        var datetime = new DateObject(new Date(data.item.startDate));
         //   console.log(datetime);
         return (
           <View
@@ -180,7 +180,7 @@ function RenderReservationList({ reservations, dispatch }) {
               ...styles.ItemContainer,
             }}
           >
-            {/* Food Info  */}
+            {/* Reservation Info  */}
             <View
               style={{
                 flex: 1,
@@ -231,6 +231,17 @@ function RenderReservationList({ reservations, dispatch }) {
                 >
                   {datetime.format("hh:mm A")}
                 </Text>
+                <Text
+                  style={{
+                    ...FONTS.h4,
+                    textAlign: "right",
+                    color: data.item.confirmation
+                      ? COLORS.green
+                      : COLORS.orange,
+                  }}
+                >
+                  {`${data.item.confirmation ? "Reserved" : "Pending..."}`}
+                </Text>
               </View>
             </View>
           </View>
@@ -247,11 +258,14 @@ function RenderReservationList({ reservations, dispatch }) {
               flex: 1,
               height: 100,
               justifyContent: "flex-start",
-              backgroundColor: COLORS.blue,
+              backgroundColor: data.item.confirmation
+                ? COLORS.lightGray1
+                : COLORS.blue,
               ...styles.ItemContainer,
               borderTopRightRadius: 0,
               borderBottomRightRadius: 0,
             }}
+            disabled={data.item.confirmation}
             icon={icons.edit}
             iconStyle={{
               marginLeft: 10,
@@ -263,7 +277,9 @@ function RenderReservationList({ reservations, dispatch }) {
               flex: 1,
               height: 100,
               justifyContent: "flex-end",
-              backgroundColor: theme.colors.brand.primary,
+              backgroundColor: data.item.confirmation
+                ? COLORS.lightGray1
+                : theme.colors.brand.primary,
               ...styles.ItemContainer,
               borderTopLeftRadius: 0,
               borderBottomLeftRadius: 0,
@@ -272,6 +288,7 @@ function RenderReservationList({ reservations, dispatch }) {
             iconStyle={{
               marginRight: 10,
             }}
+            disabled={data.item.confirmation}
             onPress={() => {
               Alert.alert(
                 "Cancel Reservation",
@@ -287,7 +304,6 @@ function RenderReservationList({ reservations, dispatch }) {
                   {
                     text: "OK",
                     onPress: () => {
-                      console.log(data.item.id);
                       dispatch(
                         cancelReservationsReq({ reservationId: data.item.id })
                       );

@@ -12,6 +12,8 @@ import {
   VERIFY_TOKEN_REQ,
   FORGOT_PASSWORD_REQ,
   CHANGE_PASSWORD_REQ,
+  FETCH_TAGS_REQ,
+  SAVE_USER_TAGS_REQ,
 } from "../actionConstant";
 import { navigate, replace } from "../navigation/navigationAction";
 import {
@@ -30,6 +32,10 @@ import {
   forgotPasswordFailed,
   changePasswordSuccess,
   changePasswordFailed,
+  fetchTagSuccess,
+  fetchTagFailed,
+  saveUserTagSuc,
+  saveUserTagFailed,
 } from "./authAction";
 
 function* loginAPI(action) {
@@ -89,10 +95,8 @@ function* signupAPI() {
   try {
     const inputData = yield select((state) => state.auth.signup.inputData);
     const response = yield usersServices.signup(inputData);
-    console.log(response.data);
     if (response.data.status === 201) {
       // console.log("here");
-      console.log(response.data);
       yield put(navigate("Otp"));
       yield Toast.success("User registered successfully.");
       yield put(signupSuccess(response.data));
@@ -196,6 +200,39 @@ function* changePasswordAPI() {
   }
 }
 
+function* fetchTagsAPI() {
+  try {
+    const response = yield userService.getTags();
+    if (response.status === 200) {
+      yield put(fetchTagSuccess(response.data));
+    } else {
+      yield put(fetchTagFailed(response.data.error));
+    }
+  } catch (error) {
+    yield put(fetchTagFailed(error));
+  }
+}
+
+function* saveTagsAPI() {
+  try {
+    const inputData = yield select(
+      (state) => state.auth.saveUserTags.inputData
+    );
+    const response = yield userService.saveTags(inputData);
+    if (response.data.status === 200) {
+      yield put(saveUserTagSuc(response.data));
+      yield put(navigate("CustomDrawer"));
+      yield Toast.success("Tags Saved Successfully");
+    } else {
+      yield put(saveUserTagFailed(response.data.error));
+      yield Toast.error(response.data.message);
+    }
+  } catch (error) {
+    yield put(saveUserTagFailed(error));
+    yield Toast.error(error.response.data.message);
+  }
+}
+
 export default function* authSaga() {
   yield all([yield takeLatest(LOGIN_REQ, loginAPI)]);
   yield all([yield takeLatest(VERIFY_TOKEN_REQ, verifyTokenAPI)]);
@@ -205,4 +242,6 @@ export default function* authSaga() {
   yield all([yield takeLatest(RESEND_OTP_REQ, resendOTPAPI)]);
   yield all([yield takeLatest(FORGOT_PASSWORD_REQ, forgotPasswordAPI)]);
   yield all([yield takeLatest(CHANGE_PASSWORD_REQ, changePasswordAPI)]);
+  yield all([yield takeLatest(FETCH_TAGS_REQ, fetchTagsAPI)]);
+  yield all([yield takeLatest(SAVE_USER_TAGS_REQ, saveTagsAPI)]);
 }

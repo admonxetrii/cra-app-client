@@ -1,4 +1,4 @@
-import { put, takeLatest, all, select, delay } from "redux-saga/effects";
+import { put, takeLatest, all, select, takeEvery } from "redux-saga/effects";
 import restaurantsService from "../../API/RestaurantAPI/restaurants.service";
 import {
   FETCH_ALL_RESTAURANTS_REQ,
@@ -319,7 +319,6 @@ function* removeFromFavAPI() {
     );
     const response = yield restaurantsService.removeFromFav(inputData);
     if (response.data.status === 200) {
-      console.log(response.data.deletedId);
       yield put(removeRestaurantFromFavouriteSuccess(response.data));
       yield Toast.success(response.data.message);
     } else {
@@ -397,6 +396,6 @@ export default function* restaurantSaga() {
   yield all([yield takeLatest(CANCEL_RESERVATION_REQ, cancelReservationAPI)]);
   yield all([yield takeLatest(ADD_RESTAURANT_TO_FAVOURITE_REQ, addToFavAPI)]);
   yield all([
-    yield takeLatest(REMOVE_RESTAURANT_FROM_FAVOURITE_REQ, removeFromFavAPI),
+    yield takeEvery(REMOVE_RESTAURANT_FROM_FAVOURITE_REQ, removeFromFavAPI),
   ]);
 }
